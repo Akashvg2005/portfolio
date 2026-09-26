@@ -26,6 +26,128 @@
 </head>
 <body>
 
+  <!-- Custom High-Tech Cyber Cursor UI -->
+  <div id="custom-cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+  <div id="custom-cursor-ring" class="cursor-ring" aria-hidden="true">
+    <div class="cursor-ring-reticle"></div>
+  </div>
+
+  <!-- ========================================================================
+       CINEMATIC ENTRY INTRO ANIMATION WITH AKASH'S NAME & PHOTO
+       ======================================================================== -->
+  <!-- ========================================================================
+       AURA NEXUS // ULTRA-PREMIUM KINETIC PORTAL ENTRY EXPERIENCE
+       ======================================================================== -->
+  <div id="entry-overlay" class="nexus-entry-overlay" aria-label="Welcome and Portfolio Loading Experience">
+    <!-- Ambient Aurora Mesh & Deep Space Background -->
+    <div class="nexus-ambient-bg">
+      <div class="nexus-aurora-glow aura-1"></div>
+      <div class="nexus-aurora-glow aura-2"></div>
+      <div class="nexus-aurora-glow aura-3"></div>
+    </div>
+
+    <!-- Interactive Stardust & Cosmic Filament Particles Canvas -->
+    <canvas id="entry-particle-canvas" class="nexus-particle-canvas"></canvas>
+
+    <!-- Expanding Portal Iris Flash & Dual Optical Shutter Plates -->
+    <div class="nexus-shutter-plate shutter-left"></div>
+    <div class="nexus-shutter-plate shutter-right"></div>
+    <div class="nexus-portal-burst" id="entry-warp-flash"></div>
+
+    <!-- Top Floating Minimal Action Bar -->
+    <div class="nexus-top-bar">
+      <div class="nexus-sys-badge">
+        <span class="nexus-badge-dot"></span>
+        <span class="nexus-badge-text">PORTFOLIO EDITION // 2026</span>
+      </div>
+
+      <div class="nexus-top-actions">
+        <button id="entry-sound-btn" class="nexus-ctrl-btn active" aria-label="Toggle Sound Effects" title="Sound (Enabled)">
+          <svg class="entry-sound-icon-off hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg class="entry-sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span id="entry-sound-label">Audio: ON</span>
+        </button>
+
+        <button id="skip-intro-btn" class="nexus-ctrl-btn skip-btn" aria-label="Skip Intro (Press ESC)">
+          <span>Skip</span>
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+    </div>
+
+    <!-- Central Kinetic Monolith Card -->
+    <div class="nexus-stage" id="entry-card">
+      <div class="nexus-halo-ring"></div>
+      <div class="nexus-glass-card">
+        <!-- Decorative Header Pill -->
+        <div class="nexus-pretitle-pill">
+          <span class="nexus-sparkle">✦</span>
+          <span class="nexus-pretitle-text">CREATIVE TECHNOLOGIST &amp; FILMMAKER</span>
+          <span class="nexus-sparkle">✦</span>
+        </div>
+
+        <!-- Monumental Kinetic Masked Title -->
+        <div class="nexus-title-wrap">
+          <h1 class="nexus-title-name" id="entry-name" aria-label="Akash V G">
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:1">A</span></span>
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:2">K</span></span>
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:3">A</span></span>
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:4">S</span></span>
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:5">H</span></span>
+            <span class="nexus-title-space">&nbsp;</span>
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:6">V</span></span>
+            <span class="nexus-title-space">&nbsp;</span>
+            <span class="nexus-char-mask"><span class="nexus-char" style="--i:7">G</span></span>
+          </h1>
+          <div class="nexus-title-reflection"></div>
+        </div>
+
+        <!-- Sleek Role Pills -->
+        <div class="nexus-roles-row">
+          <span class="nexus-role-pill">🎬 VIDEOGRAPHER // IEEE SB CECTL</span>
+          <span class="nexus-role-sep">•</span>
+          <span class="nexus-role-pill">📢 PR HEAD // TPC CEC</span>
+          <span class="nexus-role-sep">•</span>
+          <span class="nexus-role-pill">⚡ VIBE CODING</span>
+          <span class="nexus-role-sep">•</span>
+          <span class="nexus-role-pill">🤖 AI TOOLS &amp; AGENTS</span>
+          <span class="nexus-role-sep">•</span>
+          <span class="nexus-role-pill">📑 LATEX ARCHITECT</span>
+        </div>
+
+        <!-- Futuristic Laser Progress & Numeric HUD -->
+        <div class="nexus-loader-engine">
+          <div class="nexus-loader-header">
+            <span class="nexus-status-indicator" id="entry-loader-status">Initializing neural interface &amp; visual reels...</span>
+            <span class="nexus-percent-counter" id="entry-loader-percent">00%</span>
+          </div>
+
+          <div class="nexus-laser-track">
+            <div class="nexus-laser-fill" id="entry-progress-fill"></div>
+            <div class="nexus-laser-head"></div>
+          </div>
+        </div>
+
+        <!-- Immediate Access CTA -->
+        <button id="enter-site-btn" class="nexus-enter-btn" aria-label="Enter Portfolio">
+          <span class="nexus-enter-bg"></span>
+          <span class="nexus-enter-text">ENTER PORTFOLIO</span>
+          <svg class="nexus-enter-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Accessibility Skip Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -52,26 +174,51 @@
     </div>
   </div>
 
-  <!-- Header Navigation -->
+  <!-- Top Neon Laser Scroll Progress Bar -->
+  <div id="scroll-progress-bar" class="scroll-progress-bar">
+    <div class="scroll-progress-glow"></div>
+  </div>
+
+  <!-- Floating Quantum Scroll Telemetry HUD (Right Rail) -->
+  <aside id="scroll-telemetry-hud" class="scroll-telemetry-hud" aria-label="Scroll Progress and Section Telemetry">
+    <div class="scroll-hud-pill" id="scroll-hud-pill" title="Scroll Telemetry">
+      <span class="scroll-hud-beacon"></span>
+      <span id="scroll-hud-section" class="scroll-hud-section">HERO</span>
+      <span class="scroll-hud-divider">//</span>
+      <span id="scroll-hud-percent" class="scroll-hud-percent">0%</span>
+    </div>
+  </aside>
+
+  <!-- Header Navigation (Floating Liquid Glass Island) -->
   <header class="navbar" id="navbar">
-    <div class="nav-container">
+    <div class="nav-container" id="nav-container">
+      <div class="navbar-liquid-sheen" id="navbar-liquid-sheen"></div>
+      <div class="navbar-liquid-caustics"></div>
       <a href="#hero" class="nav-logo" aria-label="Akash V G Home">
         <span class="logo-badge">&lt;/&gt;</span>
         <span class="logo-text">Akash<span>.vg</span></span>
       </a>
 
-      <!-- Desktop Nav Links -->
+      <!-- Desktop Nav Links with Magnetic Liquid Indicator Pill -->
       <nav class="nav-links" id="nav-links" aria-label="Primary Navigation">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#education" class="nav-link">Education</a>
-        <a href="#arcade" class="nav-link arcade-link">🎮 Arcade</a>
-        <a href="#contact" class="nav-link">Contact</a>
+        <div class="nav-liquid-pill" id="nav-liquid-pill"></div>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+        <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+        <a href="#education" class="nav-link" data-section="education">Leadership &amp; Certs</a>
+        <a href="#arcade" class="nav-link arcade-link" data-section="arcade">🎮 Arcade</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       </nav>
 
       <!-- Nav Actions -->
       <div class="nav-actions">
+        <!-- Replay Entry Animation Trigger -->
+        <button id="replay-intro-btn" class="btn-icon" aria-label="Replay Entry Intro Animation" title="Replay Intro Animation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+        </button>
+
         <!-- Command Palette Trigger -->
         <button id="cmd-palette-btn" class="btn-icon" aria-label="Open Command Palette (Ctrl+K)" title="Quick Actions (Ctrl+K)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -82,13 +229,13 @@
         </button>
 
         <!-- Sound FX Toggle -->
-        <button id="sound-toggle" class="btn-icon" aria-label="Toggle Sound Effects & Scroll Audio" title="Sound FX (Off)">
-          <svg class="sound-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button id="sound-toggle" class="btn-icon active" aria-label="Toggle Sound Effects & Scroll Audio" title="Sound FX (ON)">
+          <svg class="sound-icon-off hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <line x1="23" y1="9" x2="17" y2="15"></line>
             <line x1="17" y1="9" x2="23" y2="15"></line>
           </svg>
-          <svg class="sound-icon-on hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="sound-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
@@ -147,20 +294,43 @@
       <div class="container hero-grid">
         <!-- Hero Left / Bio Intro -->
         <div class="hero-text-col fade-in-up">
-          <div class="location-badge">
-            <span class="pulse-dot"></span>
-            <span>📍 Vaikom, Kerala, India</span>
-            <span class="badge-divider">•</span>
-            <span class="status-tag">Open for Collaboration</span>
+          <div class="hero-author-row">
+            <div class="hero-status-pill">
+              <span class="pulse-dot"></span>
+              <span class="hero-status-tag">🎬 VIDEOGRAPHER • IEEE SB CECTL</span>
+              <span class="badge-divider">•</span>
+              <span class="hero-status-tag">📢 PR HEAD • TPC CEC</span>
+              <span class="badge-divider">•</span>
+              <span class="status-tag">Open for Collaboration</span>
+            </div>
           </div>
 
           <h1 class="hero-title">
             Hi, I'm <span class="gradient-text">Akash V G</span>
           </h1>
 
+          <!-- Active Campus Leadership Roles Row -->
+          <div class="hero-leadership-row">
+            <div class="hero-role-badge">
+              <span class="role-badge-icon">🎬</span>
+              <div class="role-badge-content">
+                <span class="role-badge-title">Videographer</span>
+                <span class="role-badge-sub">IEEE SB CECTL</span>
+              </div>
+            </div>
+            <div class="hero-role-badge">
+              <span class="role-badge-icon">📢</span>
+              <div class="role-badge-content">
+                <span class="role-badge-title">PR Team Head</span>
+                <span class="role-badge-sub">Training &amp; Placement Cell, CEC</span>
+              </div>
+            </div>
+          </div>
+
           <p class="hero-subtitle">
-            Computer Science & Engineering student passionate about <strong>AI Accessibility</strong>, 
-            building <strong>SignBridge</strong>, real-time Flutter applications, and clean interactive web experiences.
+            <strong>Videographer at IEEE SB CECTL</strong> and <strong>Public Relations Team Head at Training and Placement Cell, CEC</strong>. 
+            Computer Science &amp; Engineering student skilled in <strong>mobile cinematography &amp; videography</strong>, expert in 
+            <strong>LaTeX document engineering</strong>, <strong>AI tools orchestration</strong>, and <strong>vibe coding</strong>.
           </p>
 
           <!-- Action CTA Buttons -->
@@ -172,13 +342,19 @@
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
+            <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-hero">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+              <span>Chat on WhatsApp</span>
+            </a>
             <a href="assets/resume.pdf" download class="btn btn-secondary" id="resume-download-btn">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
-              <span>Download Resume</span>
+              <span>Resume</span>
             </a>
           </div>
 
@@ -195,6 +371,18 @@
                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
               </svg>
               <span>LinkedIn</span>
+            </a>
+            <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer" class="social-link social-link-insta" aria-label="Instagram Profile (@a.k_a.s_h__)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              <span>Instagram</span>
+            </a>
+            <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="social-link social-link-wa" aria-label="WhatsApp (+91 88489 48105)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+              <span>WhatsApp</span>
             </a>
             <a href="#contact" class="social-link" aria-label="Email Contact">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -226,17 +414,24 @@
 
               <form id="terminal-form" class="terminal-input-row" autocomplete="off">
                 <span class="terminal-prompt">akash@portfolio:~$</span>
-                <input type="text" id="terminal-input" placeholder="try 'signbridge' or 'skills'..." aria-label="Terminal input prompt" />
+                <input type="text" id="terminal-input" placeholder="try 'whatsapp', 'signbridge', or 'skills'..." aria-label="Terminal input prompt" />
               </form>
             </div>
 
             <!-- Command Quick Buttons -->
             <div class="terminal-quick-cmds">
               <button class="cmd-pill" data-cmd="help">help</button>
+              <button class="cmd-pill" data-cmd="vibecoding">vibecoding</button>
+              <button class="cmd-pill" data-cmd="aitools">aitools</button>
+              <button class="cmd-pill" data-cmd="latex">latex</button>
+              <button class="cmd-pill" data-cmd="roles">roles</button>
+              <button class="cmd-pill" data-cmd="ieee">ieee</button>
+              <button class="cmd-pill" data-cmd="placement">placement</button>
+              <button class="cmd-pill" data-cmd="cinematography">cinematography</button>
+              <button class="cmd-pill" data-cmd="security">security</button>
               <button class="cmd-pill" data-cmd="signbridge">signbridge</button>
               <button class="cmd-pill" data-cmd="skills">skills</button>
               <button class="cmd-pill" data-cmd="projects">projects</button>
-              <button class="cmd-pill" data-cmd="matrix">matrix</button>
             </div>
           </div>
         </div>
@@ -248,53 +443,163 @@
       <div class="container">
         <div class="section-header center fade-in-up">
           <span class="section-tag">01. ABOUT ME</span>
-          <h2 class="section-title">Bridging Code & Accessibility</h2>
+          <h2 class="section-title">Bridging Code &amp; Accessibility</h2>
+          <p class="section-subtitle">Passionate engineer developing inclusive AI platforms and modern web ecosystems.</p>
         </div>
 
-        <div class="about-grid">
-          <div class="about-card glass-panel fade-in-up">
-            <div class="about-icon-box">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-              </svg>
+        <div class="about-layout fade-in-up">
+          <!-- Featured Cybernetic Developer Holographic Badge (Engineering Artifact) -->
+          <div class="about-profile-card glass-panel tilt-card">
+            <div class="cyber-id-display">
+              <div class="cyber-id-scanline"></div>
+              <div class="cyber-id-glow"></div>
+              
+              <div class="cyber-id-header">
+                <div class="cyber-id-chip">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                    <rect x="9" y="9" width="6" height="6"></rect>
+                    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path>
+                  </svg>
+                  <span>SPEC://DEV-CORE</span>
+                </div>
+                <span class="cyber-id-status">
+                  <span class="pulse-dot"></span> VERIFIED
+                </span>
+              </div>
+
+              <div class="cyber-id-core">
+                <div class="cyber-core-rings">
+                  <div class="core-ring core-ring-1"></div>
+                  <div class="core-ring core-ring-2"></div>
+                  <div class="core-ring core-ring-3"></div>
+                  <div class="cyber-core-icon">
+                    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      <polyline points="9 12 11 14 15 10"></polyline>
+                    </svg>
+                  </div>
+                </div>
+                <div class="cyber-core-label">ETHICAL HACKING // GRADE 'S'</div>
+              </div>
+
+              <div class="cyber-id-telemetry">
+                <div class="cyber-telemetry-row">
+                  <span class="telemetry-label">LOCATION HUB</span>
+                  <span class="telemetry-val text-cyan">Vaikom, Kerala</span>
+                </div>
+                <div class="cyber-telemetry-bar"><div class="cyber-bar-fill" style="width: 100%;"></div></div>
+
+                <div class="cyber-telemetry-row">
+                  <span class="telemetry-label">ISL RECOGNITION</span>
+                  <span class="telemetry-val text-cyan">98.4% ACC</span>
+                </div>
+                <div class="cyber-telemetry-bar"><div class="cyber-bar-fill" style="width: 98%;"></div></div>
+
+                <div class="cyber-telemetry-row">
+                  <span class="telemetry-label">SECURITY CLEARANCE</span>
+                  <span class="telemetry-val text-emerald">NIELIT S-TIER</span>
+                </div>
+                <div class="cyber-telemetry-bar"><div class="cyber-bar-fill emerald" style="width: 100%;"></div></div>
+              </div>
+
+              <div class="cyber-id-footer">
+                <span class="cyber-hash">ID: #VG-2005-VKM</span>
+                <span class="cyber-protocol">SEC: AES-256</span>
+              </div>
             </div>
-            <h3>Computer Science Student</h3>
-            <p>
-              Currently pursuing <strong>B.Tech in Computer Science and Engineering (2023–2027)</strong> 
-              at <strong>College of Engineering, Cherthala</strong>. Driven by real-world problems and hands-on engineering.
-            </p>
+            <div class="profile-meta">
+              <h3 class="profile-name">Akash V G</h3>
+              <p class="profile-role">Videographer @ IEEE SB CECTL • PR Team Head @ Placement Cell CEC • Cinematographer</p>
+              
+              <div class="profile-chips">
+                <span class="profile-chip chip-highlight">🎬 Videographer — IEEE SB CECTL</span>
+                <span class="profile-chip chip-highlight">📢 PR Team Head — TPC CEC</span>
+                <span class="profile-chip">⚡ Vibe Coding</span>
+                <span class="profile-chip">🤖 AI Tools &amp; Agents</span>
+                <span class="profile-chip">📑 LaTeX Typesetting</span>
+                <span class="profile-chip">🎥 Mobile Cinematography</span>
+                <span class="profile-chip">📸 Mobile Photography</span>
+                <span class="profile-chip">🎨 Color Grading &amp; LUTs</span>
+                <span class="profile-chip">🛡️ Cyber Security (Grade 'S')</span>
+                <span class="profile-chip">🚀 SignBridge AI Lead</span>
+              </div>
+
+              <div class="profile-social-actions">
+                <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp" aria-label="Message on WhatsApp (+91 88489 48105)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                  </svg>
+                  <span>WhatsApp</span>
+                </a>
+                <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-instagram" aria-label="Visit Instagram Profile (@a.k_a.s_h__)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div class="about-card glass-panel fade-in-up delay-100">
-            <div class="about-icon-box">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                <line x1="15" y1="9" x2="15.01" y2="9"></line>
-              </svg>
+          <!-- About Pillars Grid (4 Key Dimensions) -->
+          <div class="about-pillars">
+            <div class="about-card glass-panel fade-in-up">
+              <div class="about-icon-box">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                </svg>
+              </div>
+              <h3>Cinematographer &amp; Mobile Filmmaker</h3>
+              <p>
+                Skilled in <strong>mobile cinematography, creative framing, and videography</strong>. 
+                Shooting 4K mobile films, choreographing fluid camera moves, and color grading scenes to evoke raw visual emotion.
+              </p>
             </div>
-            <h3>AI Accessibility Innovator</h3>
-            <p>
-              Creator of <strong>SignBridge</strong>, an AI-driven interview platform designed to empower Deaf and 
-              Hard-of-Hearing candidates using real-time Indian Sign Language (ISL) recognition without requiring human interpreters.
-            </p>
-          </div>
 
-          <div class="about-card glass-panel fade-in-up delay-200">
-            <div class="about-icon-box">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
+            <div class="about-card glass-panel fade-in-up delay-100">
+              <div class="about-icon-box">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+              </div>
+              <h3>Computer Science Student</h3>
+              <p>
+                Pursuing <strong>B.Tech in CSE (2023–2027)</strong> 
+                at <strong>College of Engineering, Cherthala</strong>. Driven by real-world problems and hands-on engineering.
+              </p>
             </div>
-            <h3>Cross-Platform & Web Dev</h3>
-            <p>
-              Specialized in <strong>Dart & Flutter</strong>, full-stack web development, computer vision integration with MediaPipe/OpenCV, 
-              and crafting smooth responsive user interfaces.
-            </p>
+
+            <div class="about-card glass-panel fade-in-up delay-200">
+              <div class="about-icon-box">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="15.01" x2="15.01" y2="15"></line>
+                </svg>
+              </div>
+              <h3>AI Accessibility Innovator</h3>
+              <p>
+                Creator of <strong>SignBridge</strong>, an AI-driven interview platform empowering Deaf and 
+                Hard-of-Hearing candidates using real-time Indian Sign Language (ISL) recognition.
+              </p>
+            </div>
+
+            <div class="about-card glass-panel fade-in-up delay-300">
+              <div class="about-icon-box">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3>Cyber Security Specialist</h3>
+              <p>
+                <strong>NIELIT Certified (Grade 'S')</strong> in Cyber Security &amp; Ethical Hacking. 
+                Proficient in network penetration testing, system hardening, and secure protocols.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -312,17 +617,162 @@
         <!-- Filter Pills -->
         <div class="skills-filter-row fade-in-up">
           <button class="filter-btn active" data-filter="all">All Skills</button>
+          <button class="filter-btn" data-filter="ai-vibe">⚡ AI &amp; Vibe Coding</button>
+          <button class="filter-btn" data-filter="cinema">🎬 Cinematography</button>
+          <button class="filter-btn" data-filter="security">🛡️ Cyber Security</button>
           <button class="filter-btn" data-filter="lang">Languages</button>
-          <button class="filter-btn" data-filter="framework">Frameworks & AI</button>
-          <button class="filter-btn" data-filter="tools">Tools & Cloud</button>
+          <button class="filter-btn" data-filter="framework">Frameworks</button>
+          <button class="filter-btn" data-filter="tools">Tools &amp; LaTeX</button>
         </div>
 
         <!-- Skills Grid -->
         <div class="skills-grid" id="skills-grid">
 
+          <!-- Vibe Coding & Rapid Prototyping (Flagship Modern Engineering Skill) -->
+          <div class="skill-card glass-panel tilt-card" data-cat="ai-vibe">
+            <div class="skill-header">
+              <span class="skill-name">⚡ Vibe Coding &amp; Rapid Prototyping</span>
+              <span class="skill-xp skill-badge-highlight">Level 98%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 98%;"></div></div>
+            <p class="skill-desc">High-velocity AI-assisted software synthesis. Translating ideas and conceptual architecture into production-ready full-stack systems at lightspeed with fluid, iterative design.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">High Velocity Dev</span>
+              <span class="micro-badge">AI Pair Programming</span>
+              <span class="micro-badge">Zero-to-One Prototyping</span>
+              <span class="micro-badge">Prompt Architecture</span>
+            </div>
+          </div>
+
+          <!-- AI Tools Handling & Agentic Orchestration -->
+          <div class="skill-card glass-panel tilt-card" data-cat="ai-vibe">
+            <div class="skill-header">
+              <span class="skill-name">🤖 AI Tools Handling &amp; Multi-Agent Systems</span>
+              <span class="skill-xp skill-badge-highlight">Level 97%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 97%;"></div></div>
+            <p class="skill-desc">Expert orchestration of generative LLMs, autonomous agentic loops, MediaPipe computer vision pipelines, custom tool synthesis, and multimodal AI integrations.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">Autonomous Agents</span>
+              <span class="micro-badge">MediaPipe ML</span>
+              <span class="micro-badge">LLM Pipelines</span>
+              <span class="micro-badge">Antigravity AI</span>
+            </div>
+          </div>
+
+          <!-- LaTeX Document Engineering & Scientific Typesetting -->
+          <div class="skill-card glass-panel tilt-card" data-cat="tools">
+            <div class="skill-header">
+              <span class="skill-name">📑 LaTeX Document Engineering &amp; Typesetting</span>
+              <span class="skill-xp skill-badge-highlight">Level 95%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
+            <p class="skill-desc">Expert preparation of academic research publications, IEEE/ACM conference papers, mathematical proofs, thesis manuscripts, TikZ vector diagrams, and automated BibTeX bibliographies.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">Scientific Papers</span>
+              <span class="micro-badge">IEEE/ACM Layout</span>
+              <span class="micro-badge">TikZ Diagrams</span>
+              <span class="micro-badge">BibTeX Citations</span>
+            </div>
+          </div>
+
+          <!-- Cinematography & Mobile Filmmaking (Featured Creative Skill) -->
+          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
+            <div class="skill-header">
+              <span class="skill-name">🎬 Mobile Cinematography &amp; Filmmaking</span>
+              <span class="skill-xp skill-badge-highlight">Level 96%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 96%;"></div></div>
+            <p class="skill-desc">4K 60fps ProRes/Log mobile capture, dynamic camera choreography, lighting staging, gimbal stabilization, 180° shutter rule, and visual rhythm.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">4K Log Capture</span>
+              <span class="micro-badge">Camera Choreography</span>
+              <span class="micro-badge">Lighting Staging</span>
+              <span class="micro-badge">Gimbal Rigging</span>
+            </div>
+          </div>
+
+          <!-- Mobile Photography & Visual Composition -->
+          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
+            <div class="skill-header">
+              <span class="skill-name">📸 Mobile Photography &amp; Framing</span>
+              <span class="skill-xp skill-badge-highlight">Level 94%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 94%;"></div></div>
+            <p class="skill-desc">Visual balance, golden ratio, leading lines, low-light street photography, macro perspectives, and creative portrait focal depth.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">Rule of Thirds</span>
+              <span class="micro-badge">Golden Hour</span>
+              <span class="micro-badge">Depth of Field</span>
+              <span class="micro-badge">Street Photography</span>
+            </div>
+          </div>
+
+          <!-- Cinematic Color Grading & Post-Production -->
+          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
+            <div class="skill-header">
+              <span class="skill-name">🎨 Color Grading &amp; Post-Production</span>
+              <span class="skill-xp">Level 90%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 90%;"></div></div>
+            <p class="skill-desc">Color timing, custom cinematic LUTs, tone curves, DaVinci Resolve &amp; Premiere Pro mobile grading, sound design, and pacing.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">DaVinci Resolve</span>
+              <span class="micro-badge">Cinematic LUTs</span>
+              <span class="micro-badge">Sound Design</span>
+              <span class="micro-badge">Premiere Pro</span>
+            </div>
+          </div>
+
+          <!-- Visual Storyboarding & Creative Direction -->
+          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
+            <div class="skill-header">
+              <span class="skill-name">🎥 Storyboarding &amp; Creative Direction</span>
+              <span class="skill-xp">Level 88%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
+            <p class="skill-desc">Scene staging, visual narrative scripting, camera shot list planning, montage pacing, and transforming concepts into cinematic stories.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">Shot Lists</span>
+              <span class="micro-badge">Scene Staging</span>
+              <span class="micro-badge">Montage Pacing</span>
+            </div>
+          </div>
+
+          <!-- Cyber Security & Ethical Hacking (NIELIT Certified) -->
+          <div class="skill-card glass-panel tilt-card" data-cat="security">
+            <div class="skill-header">
+              <span class="skill-name">Cyber Security &amp; Ethical Hacking</span>
+              <span class="skill-xp skill-badge-highlight">Grade 'S' (Distinction)</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
+            <p class="skill-desc">NIELIT Calicut Certified (Govt. of India, ISEA Project). Network penetration testing, vulnerability assessment, cryptographic analysis &amp; ethical exploitation.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">NIELIT Certified</span>
+              <span class="micro-badge">Grade 'S' (≥80%)</span>
+              <span class="micro-badge">Penetration Testing</span>
+              <span class="micro-badge">Network Security</span>
+            </div>
+          </div>
+
+          <!-- Defensive Security & Hardening -->
+          <div class="skill-card glass-panel tilt-card" data-cat="security">
+            <div class="skill-header">
+              <span class="skill-name">Defensive Security &amp; Vulnerability Assessment</span>
+              <span class="skill-xp">Level 88%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
+            <p class="skill-desc">OWASP Top 10 mitigation, secure API communication, system hardening, access control policies, and packet analysis with Wireshark.</p>
+            <div class="skill-tags-row">
+              <span class="micro-badge">OWASP Top 10</span>
+              <span class="micro-badge">System Hardening</span>
+              <span class="micro-badge">Wireshark</span>
+            </div>
+          </div>
+
           <div class="skill-card glass-panel tilt-card" data-cat="lang">
             <div class="skill-header">
-              <span class="skill-name">Dart & Flutter</span>
+              <span class="skill-name">Dart &amp; Flutter</span>
               <span class="skill-xp">Level 90%</span>
             </div>
             <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 90%;"></div></div>
@@ -331,7 +781,7 @@
 
           <div class="skill-card glass-panel tilt-card" data-cat="lang">
             <div class="skill-header">
-              <span class="skill-name">JavaScript & HTML5/CSS3</span>
+              <span class="skill-name">JavaScript &amp; HTML5/CSS3</span>
               <span class="skill-xp">Level 92%</span>
             </div>
             <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 92%;"></div></div>
@@ -340,7 +790,7 @@
 
           <div class="skill-card glass-panel tilt-card" data-cat="lang">
             <div class="skill-header">
-              <span class="skill-name">Python & Computer Vision</span>
+              <span class="skill-name">Python &amp; Computer Vision</span>
               <span class="skill-xp">Level 85%</span>
             </div>
             <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 85%;"></div></div>
@@ -349,7 +799,7 @@
 
           <div class="skill-card glass-panel tilt-card" data-cat="framework">
             <div class="skill-header">
-              <span class="skill-name">React Native & Node.js</span>
+              <span class="skill-name">React Native &amp; Node.js</span>
               <span class="skill-xp">Level 80%</span>
             </div>
             <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 80%;"></div></div>
@@ -358,7 +808,7 @@
 
           <div class="skill-card glass-panel tilt-card" data-cat="tools">
             <div class="skill-header">
-              <span class="skill-name">Firebase & Firestore</span>
+              <span class="skill-name">Firebase &amp; Firestore</span>
               <span class="skill-xp">Level 88%</span>
             </div>
             <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
@@ -367,7 +817,7 @@
 
           <div class="skill-card glass-panel tilt-card" data-cat="tools">
             <div class="skill-header">
-              <span class="skill-name">Git, GitHub & Antigravity AI</span>
+              <span class="skill-name">Git, GitHub &amp; Antigravity AI</span>
               <span class="skill-xp">Level 95%</span>
             </div>
             <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
@@ -588,55 +1038,8 @@
                     <polyline points="7 7 17 7 17 17"></polyline>
                   </svg>
                 </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- EDUCATION & EXPERIENCE SECTION -->
-    <section id="education" class="education-section section">
-      <div class="container">
-        <div class="section-header center fade-in-up">
-          <span class="section-tag">04. BACKGROUND</span>
-          <h2 class="section-title">Education & Milestones</h2>
-        </div>
-
-        <div class="timeline">
-
-          <!-- Timeline Item 1 -->
-          <div class="timeline-item fade-in-up">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass-panel">
-              <span class="timeline-date">2023 — 2027 (Expected)</span>
-              <h3 class="timeline-title">B.Tech in Computer Science and Engineering</h3>
-              <h4 class="timeline-subtitle">College of Engineering, Cherthala</h4>
-              <p class="timeline-text">
-                Focusing on Data Structures, Algorithms, Artificial Intelligence, Mobile Application Engineering, 
-                Computer Vision, and Software Engineering. Active participant in technical events and coding circles.
-              </p>
-            </div>
-          </div>
-
-          <!-- Timeline Item 2 -->
-          <div class="timeline-item fade-in-up delay-100">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass-panel">
-              <span class="timeline-date">2024 — Present</span>
-              <h3 class="timeline-title">Internships & Technical Workshops</h3>
-              <h4 class="timeline-subtitle">Hands-on Industry Learning & Certifications</h4>
-              <p class="timeline-text">
-                Engaged in industry-oriented workshops, AI accessibility sprints, and mobile app development internships. 
-                Detailed credentials, certificates, and project milestones are featured on my LinkedIn profile.
-              </p>
-              <div class="timeline-action">
-                <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-secondary">
-                  <span>View LinkedIn Profile & Certifications</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
+                <a href="assets/devtown-netflix-certificate.pdf" target="_blank" rel="noopener noreferrer" class="card-link cert-pill-link" style="color: var(--accent-text);">
+                  <span>🏆 DevTown &amp; GDG Certificate</span>
                 </a>
               </div>
             </div>
@@ -646,17 +1049,313 @@
       </div>
     </section>
 
-    <!-- NEW: ARCADE ZONE (MINI-GAMES HUB: WHIRLY BIRD & TIC-TAC-TOE) -->
+    <!-- EDUCATION & CERTIFICATIONS SECTION -->
+    <section id="education" class="education-section section">
+      <div class="container">
+        <div class="section-header center fade-in-up">
+          <span class="section-tag">04. LEADERSHIP &amp; EDUCATION</span>
+          <h2 class="section-title">Leadership Roles &amp; Academic Milestones</h2>
+          <p class="section-subtitle">Active campus leadership positions, technical societies, and formal engineering education.</p>
+        </div>
+
+        <div class="timeline">
+
+          <!-- Timeline Item 1: Videographer @ IEEE SB CECTL -->
+          <div class="timeline-item fade-in-up">
+            <div class="timeline-dot active-dot"></div>
+            <div class="timeline-content glass-panel">
+              <div class="timeline-badge-row">
+                <span class="timeline-role-pill live">ACTIVE ROLE</span>
+                <span class="timeline-date">2024 — PRESENT</span>
+              </div>
+              <h3 class="timeline-title">Videographer</h3>
+              <h4 class="timeline-subtitle">IEEE Student Branch CECTL (College of Engineering Cherthala)</h4>
+              <p class="timeline-text">
+                Directing official event videography, promotional teasers, dynamic camera choreography, and cinematic aftermovies for IEEE SB CECTL technical summits, workshops, and hackathons. Managing end-to-end mobile filmmaking and post-production color grading.
+              </p>
+              <div class="timeline-tags">
+                <span class="timeline-tag">🎬 Mobile Cinematography</span>
+                <span class="timeline-tag">🎥 Event Aftermovies</span>
+                <span class="timeline-tag">🎨 Color Grading</span>
+                <span class="timeline-tag">⚡ IEEE Student Branch</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Item 2: PR Team Head @ Placement Cell CEC -->
+          <div class="timeline-item fade-in-up delay-100">
+            <div class="timeline-dot active-dot"></div>
+            <div class="timeline-content glass-panel">
+              <div class="timeline-badge-row">
+                <span class="timeline-role-pill live">ACTIVE LEADERSHIP</span>
+                <span class="timeline-date">2024 — PRESENT</span>
+              </div>
+              <h3 class="timeline-title">Public Relations (PR) Team Head</h3>
+              <h4 class="timeline-subtitle">Training and Placement Cell (TPC), College of Engineering Cherthala (CEC)</h4>
+              <p class="timeline-text">
+                Leading the Public Relations team for the Training and Placement Cell of CEC. Driving campus placement drive announcements, corporate outreach, recruitment campaign publicity, digital media strategy, and student-industry relations.
+              </p>
+              <div class="timeline-tags">
+                <span class="timeline-tag">📢 Public Relations</span>
+                <span class="timeline-tag">💼 Corporate Outreach</span>
+                <span class="timeline-tag">🤝 Placement Drives</span>
+                <span class="timeline-tag">👥 Team Leadership</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Item 3: B.Tech CSE -->
+          <div class="timeline-item fade-in-up delay-200">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass-panel">
+              <span class="timeline-date">2023 — 2027 (EXPECTED)</span>
+              <h3 class="timeline-title">B.Tech in Computer Science and Engineering</h3>
+              <h4 class="timeline-subtitle">College of Engineering, Cherthala</h4>
+              <p class="timeline-text">
+                Focusing on Data Structures, Algorithms, Artificial Intelligence, Mobile Application Engineering, 
+                Computer Vision, and Software Engineering. Active participant in technical events and coding circles.
+              </p>
+              <div class="timeline-tags">
+                <span class="timeline-tag">💻 Computer Science</span>
+                <span class="timeline-tag">🤖 AI &amp; Accessibility</span>
+                <span class="timeline-tag">🛡️ Cyber Security</span>
+                <span class="timeline-tag">📱 Flutter</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- VERIFIED INDUSTRY CREDENTIALS & CERTIFICATES SHOWCASE -->
+        <div class="certs-section-header fade-in-up">
+          <div class="certs-header-row">
+            <div>
+              <span class="section-tag">VERIFIED CREDENTIALS</span>
+              <h3 class="certs-main-title">Professional Bootcamps &amp; Industry Certifications</h3>
+              <p class="certs-subtitle">Government-accredited programs, Google Developer Groups collaborations, and technical internships.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="certs-grid">
+
+          <!-- CERTIFICATE 1: NIELIT CYBER SECURITY & ETHICAL HACKING (GRADE 'S') -->
+          <div class="cert-card-item glass-panel tilt-card fade-in-up">
+            <div class="cert-card-badge-row">
+              <span class="cert-ribbon">🛡️ GOVT. OF INDIA</span>
+              <span class="cert-grade">🏆 GRADE 'S' (TOP DISTINCTION • ≥80%)</span>
+            </div>
+            
+            <div class="cert-card-img-box">
+              <img src="assets/images/nielit_certificate.png" alt="NIELIT Cyber Security &amp; Ethical Hacking Certificate — Akash V G" class="cert-card-img" />
+              <a href="assets/nielit-cyber-security-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open NIELIT Certificate PDF">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+                <span>View Full PDF Certificate</span>
+              </a>
+            </div>
+
+            <div class="cert-card-body">
+              <span class="cert-date-text">07-09-2026 to 11-09-2026 • Offline Intensive Bootcamp</span>
+              <h4 class="cert-card-title">Cyber Security &amp; Ethical Hacking</h4>
+              <p class="cert-card-org">
+                <strong>National Institute of Electronics &amp; Information Technology (NIELIT)</strong>, Calicut
+              </p>
+              <p class="cert-meta-sub">
+                ISEA Phase III Project • Sponsored by <strong>Ministry of Electronics &amp; IT (MeitY)</strong>
+              </p>
+              <div class="cert-id-tag">
+                <span>Cert No:</span>
+                <code>NIELIT/ISEAPHASEIII/BC/26-27/OO9</code>
+              </div>
+              <p class="cert-card-desc">
+                Network penetration testing, vulnerability assessment, cryptographic integrity, Wireshark packet capture, and defensive security. Awarded highest Grade 'S'.
+              </p>
+              <div class="cert-card-actions">
+                <a href="assets/nielit-cyber-security-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                  </svg>
+                  <span>View PDF</span>
+                </a>
+                <a href="assets/nielit-cyber-security-certificate.pdf" download class="btn btn-secondary btn-sm">
+                  <span>Download</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERTIFICATE 2: FAWSTECH APP DEVELOPMENT (FLUTTER) -->
+          <div class="cert-card-item glass-panel tilt-card fade-in-up delay-100">
+            <div class="cert-card-badge-row">
+              <span class="cert-ribbon cert-blue">📱 FLUTTER &amp; DART</span>
+              <span class="cert-badge-ksum">🚀 KERALA STARTUP MISSION</span>
+            </div>
+
+            <div class="cert-card-img-box">
+              <img src="assets/images/fawstech_certificate.png" alt="Fawstech Innovations App Development Flutter Certificate — Akash V G" class="cert-card-img" />
+              <a href="assets/fawstech-flutter-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open Fawstech Certificate PDF">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+                <span>View Full PDF Certificate</span>
+              </a>
+            </div>
+
+            <div class="cert-card-body">
+              <span class="cert-date-text">June 27 — June 29 • 3 Days Intensive Program</span>
+              <h4 class="cert-card-title">App Development (Flutter)</h4>
+              <p class="cert-card-org">
+                <strong>Fawstech Innovations Pvt. Ltd.</strong> (Kochi)
+              </p>
+              <p class="cert-meta-sub">
+                ISO 9001:2015 Certified • #startupindia • MSME Govt. of India
+              </p>
+              <div class="cert-id-tag">
+                <span>Honors:</span>
+                <code>Outstanding Completion</code>
+              </div>
+              <p class="cert-card-desc">
+                Cross-platform mobile application development with Flutter &amp; Dart, reactive widget hierarchy, state management, and real-time backend integrations.
+              </p>
+              <div class="cert-card-actions">
+                <a href="assets/fawstech-flutter-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                  </svg>
+                  <span>View PDF</span>
+                </a>
+                <a href="assets/fawstech-flutter-certificate.pdf" download class="btn btn-secondary btn-sm">
+                  <span>Download</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERTIFICATE 3: DEVTOWN & GOOGLE DEVELOPER GROUPS NETFLIX CLONE -->
+          <div class="cert-card-item glass-panel tilt-card fade-in-up delay-200">
+            <div class="cert-card-badge-row">
+              <span class="cert-ribbon cert-purple">🌐 GDG ON CAMPUS</span>
+              <span class="cert-badge-netflix">🎬 NETFLIX CLONE</span>
+            </div>
+
+            <div class="cert-card-img-box">
+              <img src="assets/images/devtown_certificate.png" alt="DevTown GDG Netflix Clone Bootcamp Certificate — Akash V G" class="cert-card-img" />
+              <a href="assets/devtown-netflix-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open DevTown Certificate PDF">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+                <span>View Full PDF Certificate</span>
+              </a>
+            </div>
+
+            <div class="cert-card-body">
+              <span class="cert-date-text">Issued 09 June 2025 • Verified Web Bootcamp</span>
+              <h4 class="cert-card-title">Netflix Clone Using HTML</h4>
+              <p class="cert-card-org">
+                <strong>DevTown</strong> in collaboration with <strong>Google Developer Groups (GDG) - VIT-AP</strong>
+              </p>
+              <p class="cert-meta-sub">
+                Signed by Ashish Modi, Co-Founder DevTown
+              </p>
+              <div class="cert-id-tag">
+                <span>Verification ID:</span>
+                <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" rel="noopener noreferrer" class="highlight-link"><code>ZNOH6B</code></a>
+              </div>
+              <p class="cert-card-desc">
+                Constructed a responsive clone of Netflix streaming UI with semantic HTML5, CSS Grid/Flexbox layouts, responsive design tokens, and clean frontend assets.
+              </p>
+              <div class="cert-card-actions">
+                <a href="assets/devtown-netflix-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                  </svg>
+                  <span>View PDF</span>
+                </a>
+                <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+                  <span>Verify Online</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERTIFICATE 4: TECHMAGHI EV DESIGN & VIRTUAL REALITY (VR) -->
+          <div class="cert-card-item glass-panel tilt-card fade-in-up delay-300">
+            <div class="cert-card-badge-row">
+              <span class="cert-ribbon cert-teal">⚡ EV &amp; SIMULINK</span>
+              <span class="cert-badge-vr">🥽 VIRTUAL REALITY</span>
+            </div>
+
+            <div class="cert-card-img-box">
+              <img src="assets/images/techmaghi_certificate.png" alt="Techmaghi EV Design &amp; Virtual Reality Internship Certificate — Akash V G" class="cert-card-img" />
+              <a href="assets/techmaghi-ev-vr-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open Techmaghi Certificate PDF">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+                <span>View Full PDF Certificate</span>
+              </a>
+            </div>
+
+            <div class="cert-card-body">
+              <span class="cert-date-text">15 June 2025 to 21 June 2025 • 7-Day Technical Internship</span>
+              <h4 class="cert-card-title">EV Design &amp; Testing in Virtual Reality</h4>
+              <p class="cert-card-org">
+                <strong>Techmaghi</strong> (Kinfra Hi-Tech Park • Kerala Startup Mission)
+              </p>
+              <p class="cert-meta-sub">
+                STEM Accredited • ISO Certified • #startupindia
+              </p>
+              <div class="cert-id-tag">
+                <span>Core Tools:</span>
+                <code>MATLAB Simulink &amp; VR</code>
+              </div>
+              <p class="cert-card-desc">
+                Powertrain mathematical modeling using MATLAB Simulink, electric vehicle chassis ergonomics, motor controller algorithms, and simulated virtual reality testing.
+              </p>
+              <div class="cert-card-actions">
+                <a href="assets/techmaghi-ev-vr-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                  </svg>
+                  <span>View PDF</span>
+                </a>
+                <a href="assets/techmaghi-ev-vr-certificate.pdf" download class="btn btn-secondary btn-sm">
+                  <span>Download</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: ARCADE ZONE (MINI-GAMES HUB: BLOCK STACKER, CYBER BRICKS, WHIRLY BIRD & TIC-TAC-TOE) -->
     <section id="arcade" class="arcade-section section">
       <div class="container">
         <div class="section-header center fade-in-up">
           <span class="section-tag">05. DEV ARCADE ZONE</span>
-          <h2 class="section-title">Interactive Mini-Games</h2>
-          <p class="section-subtitle">Take a coding break! Play Whirly Bird or challenge the Tic-Tac-Toe AI.</p>
+          <h2 class="section-title">Interactive Mini-Games Hub</h2>
+          <p class="section-subtitle">Take a coding break! Play Cyber Stacker block building, Neon Bricks, Whirly Bird, or challenge the Minimax AI.</p>
         </div>
 
         <div class="arcade-tabs fade-in-up">
-          <button class="arcade-tab-btn active" data-game="whirly">
+          <button class="arcade-tab-btn active" data-game="stacker">
+            <span>🏗️ Cyber Stacker</span>
+          </button>
+          <button class="arcade-tab-btn" data-game="bricks">
+            <span>🧱 Cyber Bricks</span>
+          </button>
+          <button class="arcade-tab-btn" data-game="whirly">
             <span>🐦 Whirly Bird</span>
           </button>
           <button class="arcade-tab-btn" data-game="tictactoe">
@@ -666,15 +1365,85 @@
 
         <div class="arcade-viewport glass-panel fade-in-up">
           
-          <!-- GAME 1: WHIRLY BIRD -->
-          <div id="game-whirly" class="game-container">
+          <!-- GAME 1: CYBER STACKER (BLOCK BUILDING TOWER) -->
+          <div id="game-stacker" class="game-container">
+            <div class="arcade-hud">
+              <div class="hud-item">Height: <span id="stacker-height" class="hud-val">0</span></div>
+              <div class="hud-item hud-combo" id="stacker-combo-box">Streak: <span id="stacker-combo">0</span>x</div>
+              <div class="hud-item">Best: <span id="stacker-high" class="hud-val">0</span></div>
+            </div>
+
+            <div class="canvas-wrapper">
+              <canvas id="stacker-canvas" width="600" height="380"></canvas>
+
+              <div id="stacker-start-overlay" class="game-overlay">
+                <h3>🏗️ Cyber Stacker — Block Tower Builder</h3>
+                <p>Stack moving blocks to construct the ultimate cyber skyscraper! Tap screen or press <kbd>SPACE</kbd> to drop!</p>
+                <button class="btn btn-primary" id="start-stacker-btn">Start Building</button>
+              </div>
+
+              <div id="stacker-over-overlay" class="game-overlay hidden">
+                <h3 class="over-text">💥 Tower Collapsed!</h3>
+                <p>Height reached: <strong id="stacker-final-height">0</strong> floors! Perfect Placements: <span id="stacker-final-perfects">0</span></p>
+                <button class="btn btn-primary" id="restart-stacker-btn">Rebuild Tower</button>
+              </div>
+            </div>
+
+            <div class="game-action-row">
+              <button class="btn btn-primary btn-game-action" id="drop-block-btn">
+                <span>👇 Place Block (<kbd>SPACE</kbd>)</span>
+              </button>
+            </div>
+
+            <div class="game-controls-hint">
+              <span>💡 Controls: Click canvas, press button, or press <kbd>SPACE</kbd> • Perfect alignment gives bonus streak!</span>
+            </div>
+          </div>
+
+          <!-- GAME 2: CYBER BRICKS (NEON BLOCK BREAKER) -->
+          <div id="game-bricks" class="game-container hidden">
+            <div class="arcade-hud">
+              <div class="hud-item">Score: <span id="bricks-score" class="hud-val">0</span></div>
+              <div class="hud-item">Lives: <span id="bricks-lives" class="hud-val">❤️❤️❤️</span></div>
+              <div class="hud-item">High: <span id="bricks-high" class="hud-val">0</span></div>
+            </div>
+
+            <div class="canvas-wrapper">
+              <canvas id="bricks-canvas" width="600" height="380"></canvas>
+
+              <div id="bricks-start-overlay" class="game-overlay">
+                <h3>🧱 Cyber Bricks — Neon Block Breaker</h3>
+                <p>Deflect the energy ball to demolish the cyber firewall! Move paddle with Mouse, Touch, or <kbd>←</kbd> <kbd>→</kbd> keys.</p>
+                <button class="btn btn-primary" id="start-bricks-btn">Launch Ball</button>
+              </div>
+
+              <div id="bricks-over-overlay" class="game-overlay hidden">
+                <h3 class="over-text">💥 Core Breached!</h3>
+                <p>Final Score: <span id="bricks-final-score">0</span></p>
+                <button class="btn btn-primary" id="restart-bricks-btn">Play Again</button>
+              </div>
+
+              <div id="bricks-win-overlay" class="game-overlay hidden">
+                <h3 style="color:#10b981;">🏆 Firewall Demolished!</h3>
+                <p>Victory! Final Score: <span id="bricks-win-score">0</span></p>
+                <button class="btn btn-primary" id="next-bricks-btn">Play Again</button>
+              </div>
+            </div>
+
+            <div class="game-controls-hint">
+              <span>💡 Controls: Move mouse or slide finger to position paddle • Break all neon blocks to win!</span>
+            </div>
+          </div>
+
+          <!-- GAME 3: WHIRLY BIRD -->
+          <div id="game-whirly" class="game-container hidden">
             <div class="whirly-hud">
               <div class="hud-score">Score: <span id="whirly-score">0</span></div>
               <div class="hud-high">High Score: <span id="whirly-high">0</span></div>
             </div>
 
             <div class="canvas-wrapper">
-              <canvas id="whirly-canvas" width="600" height="360"></canvas>
+              <canvas id="whirly-canvas" width="600" height="380"></canvas>
 
               <div id="whirly-start-overlay" class="game-overlay">
                 <h3>🐦 Whirly Bird Developer Edition</h3>
@@ -694,7 +1463,7 @@
             </div>
           </div>
 
-          <!-- GAME 2: TIC-TAC-TOE -->
+          <!-- GAME 4: TIC-TAC-TOE -->
           <div id="game-tictactoe" class="game-container hidden">
             <div class="ttt-hud">
               <span class="ttt-turn" id="ttt-status">Your Turn (X)</span>
@@ -754,6 +1523,30 @@
                 </div>
 
                 <div class="method-item">
+                  <div class="method-icon whatsapp-icon-bg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="method-label">WhatsApp &amp; Phone</span>
+                    <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="method-value highlight-link">+91 88489 48105</a>
+                  </div>
+                </div>
+
+                <div class="method-item">
+                  <div class="method-icon instagram-icon-bg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="method-label">Instagram</span>
+                    <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer" class="method-value highlight-link">@a.k_a.s_h__</a>
+                  </div>
+                </div>
+
+                <div class="method-item">
                   <div class="method-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -767,15 +1560,21 @@
                 </div>
               </div>
 
-              <!-- Resume Download Option -->
+              <!-- Quick Action Options -->
               <div class="contact-resume-box">
-                <a href="assets/resume.pdf" download class="btn btn-primary">
+                <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-hero">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                  </svg>
+                  <span>Chat on WhatsApp</span>
+                </a>
+                <a href="assets/resume.pdf" download class="btn btn-secondary">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                   </svg>
-                  <span>Download Curriculum Vitae (PDF)</span>
+                  <span>Download CV (PDF)</span>
                 </a>
               </div>
             </div>
@@ -817,10 +1616,12 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-content">
-      <p>© 2026 Akash V G. Crafted with care & AI accessibility focus.</p>
+      <p>© 2026 Akash V G. Crafted with care &amp; AI accessibility focus.</p>
       <div class="footer-links">
         <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer">WhatsApp</a>
         <a href="#hero" class="back-to-top" aria-label="Back to Top">
           ↑ Top
         </a>
