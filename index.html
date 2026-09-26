@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="indigo">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akash V G — AI Accessibility & Full-Stack Developer</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Personal Portfolio of Akash V G — CSE Student at College of Engineering Cherthala, Creator of SignBridge ISL AI platform, Flutter & Full-Stack Developer." />
+  <meta name="keywords" content="Akash V G, Portfolio, SignBridge, Flutter, AI Accessibility, Cherthala, College of Engineering, Indian Sign Language, Dart, Web Developer" />
+  <meta name="author" content="Akash V G" />
+  
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:title" content="Akash V G — Developer Portfolio" />
+  <meta property="og:description" content="Building AI accessibility tools like SignBridge and real-time mobile/web applications." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/Akashvg2005" />
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Command Palette Modal (Cmd+K / Ctrl+K) -->
+  <div id="cmd-palette" class="cmd-modal" aria-hidden="true" role="dialog" aria-label="Command Palette">
+    <div class="cmd-modal-backdrop" id="cmd-backdrop"></div>
+    <div class="cmd-modal-content glass-panel">
+      <div class="cmd-header">
+        <svg class="cmd-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="cmd-input" placeholder="Type a command or section name (e.g. 'projects', 'theme', 'signbridge')..." aria-label="Command input" />
+        <span class="cmd-badge">ESC</span>
+      </div>
+      <div class="cmd-results" id="cmd-results">
+        <!-- Dynamically populated -->
+      </div>
+      <div class="cmd-footer">
+        <span><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
+        <span><kbd>↵</kbd> to select</span>
+        <span><kbd>ESC</kbd> to close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo" aria-label="Akash V G Home">
+        <span class="logo-badge">&lt;/&gt;</span>
+        <span class="logo-text">Akash<span>.vg</span></span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-links" id="nav-links" aria-label="Primary Navigation">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <!-- Command Palette Trigger -->
+        <button id="cmd-palette-btn" class="btn-icon" aria-label="Open Command Palette (Ctrl+K)" title="Quick Actions (Ctrl+K)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="cmd-key-hint">⌘K</span>
+        </button>
+
+        <!-- Sound FX Toggle -->
+        <button id="sound-toggle" class="btn-icon" aria-label="Toggle Sound Effects" title="Sound FX (Off)">
+          <svg class="sound-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg class="sound-icon-on hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Accent Color Selector Dropdown -->
+        <div class="accent-dropdown-container">
+          <button id="accent-picker-btn" class="btn-icon" aria-label="Change Accent Color" title="Change Theme Accent">
+            <span class="accent-dot-preview"></span>
+          </button>
+          <div class="accent-menu hidden" id="accent-menu" role="menu">
+            <button class="accent-opt" data-accent="indigo" style="--opt-color:#6366F1;">Indigo</button>
+            <button class="accent-opt" data-accent="teal" style="--opt-color:#14B8A6;">Cyber Teal</button>
+            <button class="accent-opt" data-accent="emerald" style="--opt-color:#10B981;">Emerald</button>
+            <button class="accent-opt" data-accent="rose" style="--opt-color:#F43F5E;">Sunset Rose</button>
+            <button class="accent-opt" data-accent="amber" style="--opt-color:#F59E0B;">Neon Amber</button>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+          <svg class="sun-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="btn-icon mobile-only" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section section">
+      <div class="background-grid"></div>
+      <div class="hero-glow"></div>
+
+      <div class="container hero-grid">
+        <!-- Hero Left / Bio Intro -->
+        <div class="hero-text-col fade-in-up">
+          <div class="location-badge">
+            <span class="pulse-dot"></span>
+            <span>📍 Vaikom, Kerala, India</span>
+            <span class="badge-divider">•</span>
+            <span class="status-tag">Open for Collaboration</span>
+          </div>
+
+          <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Akash V G</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Computer Science & Engineering student passionate about <strong>AI Accessibility</strong>, 
+            building <strong>SignBridge</strong>, real-time Flutter applications, and clean interactive web experiences.
+          </p>
+
+          <!-- Action CTA Buttons -->
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary">
+              <span>Explore Projects</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="assets/resume.pdf" download class="btn btn-secondary" id="resume-download-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Download Resume</span>
+            </a>
+          </div>
+
+          <!-- Social Quick Links -->
+          <div class="hero-socials">
+            <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub Profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn Profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+            <a href="#contact" class="social-link" aria-label="Email Contact">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>Email</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Right / Gamified Interactive CLI Terminal Widget -->
+        <div class="hero-terminal-col fade-in-up delay-200">
+          <div class="terminal-card glass-panel tilt-card">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="terminal-title">akash-v-g@dev-box:~</span>
+              <button class="terminal-copy-btn" id="terminal-clear-btn" title="Clear screen">Clear</button>
+            </div>
+            
+            <div class="terminal-body" id="terminal-body">
+              <div class="terminal-line text-dim">Welcome to Akash's interactive terminal v2.0!</div>
+              <div class="terminal-line text-accent">Type <span class="highlight-code">'help'</span> or click a command below to explore.</div>
+              <div class="terminal-output-area" id="terminal-output"></div>
+
+              <form id="terminal-form" class="terminal-input-row" autocomplete="off">
+                <span class="terminal-prompt">akash@portfolio:~$</span>
+                <input type="text" id="terminal-input" placeholder="try 'signbridge' or 'skills'..." aria-label="Terminal input prompt" />
+              </form>
+            </div>
+
+            <!-- Command Quick Buttons -->
+            <div class="terminal-quick-cmds">
+              <button class="cmd-pill" data-cmd="help">help</button>
+              <button class="cmd-pill" data-cmd="signbridge">signbridge</button>
+              <button class="cmd-pill" data-cmd="skills">skills</button>
+              <button class="cmd-pill" data-cmd="projects">projects</button>
+              <button class="cmd-pill" data-cmd="matrix">matrix</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about-section section">
+      <div class="container">
+        <div class="section-header center fade-in-up">
+          <span class="section-tag">01. ABOUT ME</span>
+          <h2 class="section-title">Bridging Code & Accessibility</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card glass-panel fade-in-up">
+            <div class="about-icon-box">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
+            </div>
+            <h3>Computer Science Student</h3>
+            <p>
+              Currently pursuing <strong>B.Tech in Computer Science and Engineering (2023–2027)</strong> 
+              at <strong>College of Engineering, Cherthala</strong>. Driven by real-world problems and hands-on engineering.
+            </p>
+          </div>
+
+          <div class="about-card glass-panel fade-in-up delay-100">
+            <div class="about-icon-box">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+            </div>
+            <h3>AI Accessibility Innovator</h3>
+            <p>
+              Creator of <strong>SignBridge</strong>, an AI-driven interview platform designed to empower Deaf and 
+              Hard-of-Hearing candidates using real-time Indian Sign Language (ISL) recognition without requiring human interpreters.
+            </p>
+          </div>
+
+          <div class="about-card glass-panel fade-in-up delay-200">
+            <div class="about-icon-box">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3>Cross-Platform & Web Dev</h3>
+            <p>
+              Specialized in <strong>Dart & Flutter</strong>, full-stack web development, computer vision integration with MediaPipe/OpenCV, 
+              and crafting smooth responsive user interfaces.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="skills-section section">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <span class="section-tag">02. TECHNICAL SKILLS</span>
+          <h2 class="section-title">My Tech Stack & Level Stats</h2>
+          <p class="section-subtitle">Click filter categories or hover cards to inspect proficiency metrics.</p>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="skills-filter-row fade-in-up">
+          <button class="filter-btn active" data-filter="all">All Skills</button>
+          <button class="filter-btn" data-filter="lang">Languages</button>
+          <button class="filter-btn" data-filter="framework">Frameworks & AI</button>
+          <button class="filter-btn" data-filter="tools">Tools & Cloud</button>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="skills-grid" id="skills-grid">
+
+          <div class="skill-card glass-panel tilt-card" data-cat="lang">
+            <div class="skill-header">
+              <span class="skill-name">Dart & Flutter</span>
+              <span class="skill-xp">Level 90%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 90%;"></div></div>
+            <p class="skill-desc">Cross-platform mobile apps, Flame 2.5D game engine, Forge2D physics, Firebase.</p>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="lang">
+            <div class="skill-header">
+              <span class="skill-name">JavaScript & HTML5/CSS3</span>
+              <span class="skill-xp">Level 92%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 92%;"></div></div>
+            <p class="skill-desc">Modern ES6+, DOM manipulation, responsive CSS Grid/Flexbox, dynamic animations.</p>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="lang">
+            <div class="skill-header">
+              <span class="skill-name">Python & Computer Vision</span>
+              <span class="skill-xp">Level 85%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 85%;"></div></div>
+            <p class="skill-desc">MediaPipe hand landmark detection, TensorFlow, OpenCV model pipelines.</p>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="framework">
+            <div class="skill-header">
+              <span class="skill-name">React Native & Node.js</span>
+              <span class="skill-xp">Level 80%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 80%;"></div></div>
+            <p class="skill-desc">Expo full-stack music players, RESTful APIs, Express servers, AI API integration.</p>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="tools">
+            <div class="skill-header">
+              <span class="skill-name">Firebase & Firestore</span>
+              <span class="skill-xp">Level 88%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
+            <p class="skill-desc">Real-time database sync, Auth, Security Rules, Cloud Functions, Hosting.</p>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="tools">
+            <div class="skill-header">
+              <span class="skill-name">Git, GitHub & Antigravity AI</span>
+              <span class="skill-xp">Level 95%</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
+            <p class="skill-desc">Version control, agentic AI workflows, pair programming, CI/CD static deployments.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED & OTHER PROJECTS SECTION -->
+    <section id="projects" class="projects-section section">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <span class="section-tag">03. CURATED PROJECTS</span>
+          <h2 class="section-title">Featured Showcase</h2>
+          <p class="section-subtitle">Flagship accessibility applications and web/mobile projects.</p>
+        </div>
+
+        <!-- HERO FEATURED PROJECT CARD: SIGNBRIDGE -->
+        <div class="hero-project-card glass-panel fade-in-up">
+          <div class="featured-badge-ribbon">
+            <span class="star-icon">✦</span> FLAGSHIP AI ACCESSIBILITY PROJECT
+          </div>
+
+          <div class="hero-project-grid">
+            <div class="hero-project-content">
+              <div class="project-status-row">
+                <span class="status-pill active-build">
+                  <span class="pulse-dot"></span> Current Build: Phase 2 (Active Development)
+                </span>
+                <span class="status-pill platform-pill">Web & Mobile AI</span>
+              </div>
+
+              <h3 class="hero-project-title">SignBridge</h3>
+              <p class="hero-project-lead">
+                An AI-powered interview platform designed specifically for Deaf and Hard-of-Hearing candidates. 
+                Using Indian Sign Language (ISL) recognition, candidates can participate in live technical interviews without needing a human sign language interpreter.
+              </p>
+
+              <div class="hero-project-highlights">
+                <div class="highlight-item">
+                  <span class="highlight-icon">⚡</span>
+                  <div>
+                    <strong>Real-Time ISL Translation:</strong> Captures hand landmarks via webcam and translates gestures into text/audio instantly.
+                  </div>
+                </div>
+                <div class="highlight-item">
+                  <span class="highlight-icon">🚀</span>
+                  <div>
+                    <strong>Antigravity Powered:</strong> Built phase by phase leveraging Antigravity AI agentic workflows and computer vision models.
+                  </div>
+                </div>
+              </div>
+
+              <div class="tech-tags">
+                <span class="tag">Python</span>
+                <span class="tag">MediaPipe</span>
+                <span class="tag">Flutter</span>
+                <span class="tag">TensorFlow</span>
+                <span class="tag">OpenCV</span>
+                <span class="tag">Antigravity</span>
+              </div>
+
+              <!-- Interactive Demo Toggle Button for SignBridge -->
+              <div class="hero-project-actions">
+                <button class="btn btn-primary" id="open-isl-sim-btn">
+                  <span>Try Live ISL Gesture Simulator</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </button>
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  <span>GitHub Repository</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- SignBridge Interactive Visual Card / Simulator Frame -->
+            <div class="hero-project-visual">
+              <div class="project-img-wrapper glass-panel">
+                <img src="assets/images/signbridge.png" alt="SignBridge AI Indian Sign Language Recognition Interface Showcase" loading="lazy" />
+                <div class="overlay-caption">
+                  <span>SignBridge ISL Real-Time Neural Detection</span>
+                </div>
+              </div>
+
+              <!-- Interactive ISL Gesture Simulator Drawer Widget -->
+              <div id="isl-sim-widget" class="isl-sim-card glass-panel hidden">
+                <div class="sim-header">
+                  <span class="sim-title">🤟 Interactive ISL Recognition Simulator</span>
+                  <button id="close-isl-sim" class="btn-icon-sm" title="Close simulator">✕</button>
+                </div>
+                
+                <div class="sim-screen">
+                  <canvas id="landmark-canvas" width="300" height="180"></canvas>
+                  <div class="sim-camera-overlay">
+                    <span id="sim-gesture-output">Target: "Hello / Namaste"</span>
+                    <span id="sim-confidence-output">Confidence: 99.4%</span>
+                  </div>
+                </div>
+
+                <div class="sim-controls">
+                  <span class="sim-label">Test Gesture Signal:</span>
+                  <div class="sim-btn-group">
+                    <button class="sim-btn active" data-gesture="Hello" data-conf="99.4%">✌️ Hello</button>
+                    <button class="sim-btn" data-gesture="I Love Coding" data-conf="98.7%">🤟 Love Code</button>
+                    <button class="sim-btn" data-gesture="Thank You" data-conf="99.1%">🖐️ Thank You</button>
+                    <button class="sim-btn" data-gesture="Ready for Interview" data-conf="97.9%">✊ Ready</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- OTHER PROJECTS GRID -->
+        <div class="projects-grid">
+
+          <!-- Project 2: Smart Bus Tracking -->
+          <div class="project-card glass-panel tilt-card fade-in-up">
+            <div class="card-img-container">
+              <img src="assets/images/smartbus.png" alt="Smart Bus Tracking & Monitoring System UI" loading="lazy" />
+              <div class="card-badge">Collaborator</div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Smart Bus Tracking & Monitoring</h3>
+              <p class="card-text">
+                A college bus tracking system utilizing driver-phone facial recognition camera capture to automate student boarding/departure attendance, live GPS updates, and Firestore sync.
+              </p>
+
+              <div class="tech-tags">
+                <span class="tag">Dart</span>
+                <span class="tag">Flutter</span>
+                <span class="tag">Firebase Firestore</span>
+                <span class="tag">TFLite</span>
+                <span class="tag">GPS API</span>
+              </div>
+
+              <div class="card-footer">
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="card-link">
+                  <span>View Project Details</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Layam Music Player -->
+          <div class="project-card glass-panel tilt-card fade-in-up delay-100">
+            <div class="card-img-container">
+              <img src="assets/images/layammusic.png" alt="Layam Music Player App Interface" loading="lazy" />
+              <div class="card-badge">Full Stack</div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Layam – The Music Mate</h3>
+              <p class="card-text">
+                A production-grade music streaming application with futuristic dark mode UI, mood-based playlist AI generator, YouTube Music playback integration, and voice DJ mode.
+              </p>
+
+              <div class="tech-tags">
+                <span class="tag">React Native</span>
+                <span class="tag">Expo</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Claude AI</span>
+                <span class="tag">Express</span>
+              </div>
+
+              <div class="card-footer">
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="card-link">
+                  <span>View Repository</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4: Netflix UI Clone -->
+          <div class="project-card glass-panel tilt-card fade-in-up delay-200">
+            <div class="card-img-container">
+              <div class="placeholder-banner netflix-banner">
+                <span class="netflix-logo-text">NETFLIX</span>
+                <span class="banner-sub">Responsive Web Clone</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Netflix UI Clone</h3>
+              <p class="card-text">
+                A high-fidelity replica of the Netflix streaming interface built with modern vanilla HTML5, custom CSS layout grids, responsive media queries, and dynamic JS carousels.
+              </p>
+
+              <div class="tech-tags">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS3</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Responsive UI</span>
+              </div>
+
+              <div class="card-footer">
+                <a href="https://github.com/Akashvg2005/netflix-clone" target="_blank" rel="noopener noreferrer" class="card-link">
+                  <span>Explore Source Code</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION & EXPERIENCE SECTION -->
+    <section id="education" class="education-section section">
+      <div class="container">
+        <div class="section-header center fade-in-up">
+          <span class="section-tag">04. BACKGROUND</span>
+          <h2 class="section-title">Education & Milestones</h2>
+        </div>
+
+        <div class="timeline">
+
+          <!-- Timeline Item 1 -->
+          <div class="timeline-item fade-in-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass-panel">
+              <span class="timeline-date">2023 — 2027 (Expected)</span>
+              <h3 class="timeline-title">B.Tech in Computer Science and Engineering</h3>
+              <h4 class="timeline-subtitle">College of Engineering, Cherthala</h4>
+              <p class="timeline-text">
+                Focusing on Data Structures, Algorithms, Artificial Intelligence, Mobile Application Engineering, 
+                Computer Vision, and Software Engineering. Active participant in technical events and coding circles.
+              </p>
+            </div>
+          </div>
+
+          <!-- Timeline Item 2 -->
+          <div class="timeline-item fade-in-up delay-100">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass-panel">
+              <span class="timeline-date">2024 — Present</span>
+              <h3 class="timeline-title">Internships & Technical Workshops</h3>
+              <h4 class="timeline-subtitle">Hands-on Industry Learning & Certifications</h4>
+              <p class="timeline-text">
+                Engaged in industry-oriented workshops, AI accessibility sprints, and mobile app development internships. 
+                Detailed credentials, certificates, and project milestones are featured on my LinkedIn profile.
+              </p>
+              <div class="timeline-action">
+                <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-secondary">
+                  <span>View LinkedIn Profile & Certifications</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section section">
+      <div class="container">
+        <div class="contact-card glass-panel fade-in-up">
+          <div class="contact-grid">
+            
+            <div class="contact-info">
+              <span class="section-tag">05. GET IN TOUCH</span>
+              <h2 class="contact-title">Let's build something accessible & impactful together.</h2>
+              <p class="contact-desc">
+                Whether you have a question about <strong>SignBridge</strong>, an opportunity for collaboration, 
+                or just want to talk about Flutter and AI, my inbox is always open!
+              </p>
+
+              <div class="contact-methods">
+                <div class="method-item">
+                  <div class="method-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="method-label">Direct Email</span>
+                    <a href="mailto:akashvg2005@gmail.com" class="method-value">akashvg2005@gmail.com</a>
+                  </div>
+                </div>
+
+                <div class="method-item">
+                  <div class="method-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="method-label">Location</span>
+                    <span class="method-value">Vaikom, Kerala, India</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Resume Download Option -->
+              <div class="contact-resume-box">
+                <a href="assets/resume.pdf" download class="btn btn-primary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Download Curriculum Vitae (PDF)</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Quick Contact Form -->
+            <form id="contact-form" class="contact-form">
+              <div class="form-group">
+                <label for="form-name">Your Name</label>
+                <input type="text" id="form-name" required placeholder="John Doe" autocomplete="name" />
+              </div>
+
+              <div class="form-group">
+                <label for="form-email">Your Email Address</label>
+                <input type="email" id="form-email" required placeholder="john@example.com" autocomplete="email" />
+              </div>
+
+              <div class="form-group">
+                <label for="form-message">Message</label>
+                <textarea id="form-message" rows="4" required placeholder="Hello Akash, I'd like to talk about..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full" id="form-submit-btn">
+                <span>Send Message</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+              <div id="form-feedback" class="form-feedback hidden"></div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© 2026 Akash V G. Crafted with care & AI accessibility focus.</p>
+      <div class="footer-links">
+        <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="#hero" class="back-to-top" aria-label="Back to Top">
+          ↑ Top
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
