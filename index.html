@@ -38,7 +38,7 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="cmd-input" placeholder="Type a command or section name (e.g. 'projects', 'theme', 'signbridge')..." aria-label="Command input" />
+        <input type="text" id="cmd-input" placeholder="Type a command or section name (e.g. 'arcade', 'whirly', 'projects')..." aria-label="Command input" />
         <span class="cmd-badge">ESC</span>
       </div>
       <div class="cmd-results" id="cmd-results">
@@ -66,6 +66,7 @@
         <a href="#skills" class="nav-link">Skills</a>
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#education" class="nav-link">Education</a>
+        <a href="#arcade" class="nav-link arcade-link">🎮 Arcade</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
@@ -81,7 +82,7 @@
         </button>
 
         <!-- Sound FX Toggle -->
-        <button id="sound-toggle" class="btn-icon" aria-label="Toggle Sound Effects" title="Sound FX (Off)">
+        <button id="sound-toggle" class="btn-icon" aria-label="Toggle Sound Effects & Scroll Audio" title="Sound FX (Off)">
           <svg class="sound-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <line x1="23" y1="9" x2="17" y2="15"></line>
@@ -645,6 +646,85 @@
       </div>
     </section>
 
+    <!-- NEW: ARCADE ZONE (MINI-GAMES HUB: WHIRLY BIRD & TIC-TAC-TOE) -->
+    <section id="arcade" class="arcade-section section">
+      <div class="container">
+        <div class="section-header center fade-in-up">
+          <span class="section-tag">05. DEV ARCADE ZONE</span>
+          <h2 class="section-title">Interactive Mini-Games</h2>
+          <p class="section-subtitle">Take a coding break! Play Whirly Bird or challenge the Tic-Tac-Toe AI.</p>
+        </div>
+
+        <div class="arcade-tabs fade-in-up">
+          <button class="arcade-tab-btn active" data-game="whirly">
+            <span>🐦 Whirly Bird</span>
+          </button>
+          <button class="arcade-tab-btn" data-game="tictactoe">
+            <span>❌ Tic-Tac-Toe AI</span>
+          </button>
+        </div>
+
+        <div class="arcade-viewport glass-panel fade-in-up">
+          
+          <!-- GAME 1: WHIRLY BIRD -->
+          <div id="game-whirly" class="game-container">
+            <div class="whirly-hud">
+              <div class="hud-score">Score: <span id="whirly-score">0</span></div>
+              <div class="hud-high">High Score: <span id="whirly-high">0</span></div>
+            </div>
+
+            <div class="canvas-wrapper">
+              <canvas id="whirly-canvas" width="600" height="360"></canvas>
+
+              <div id="whirly-start-overlay" class="game-overlay">
+                <h3>🐦 Whirly Bird Developer Edition</h3>
+                <p>Press <strong>SPACEBAR</strong> or <strong>CLICK / TAP</strong> to flap!</p>
+                <button class="btn btn-primary" id="start-whirly-btn">Start Game</button>
+              </div>
+
+              <div id="whirly-over-overlay" class="game-overlay hidden">
+                <h3 class="over-text">💥 Game Over!</h3>
+                <p>Final Score: <span id="whirly-final-score">0</span></p>
+                <button class="btn btn-primary" id="restart-whirly-btn">Play Again</button>
+              </div>
+            </div>
+
+            <div class="game-controls-hint">
+              <span>💡 Controls: Press <kbd>SPACE</kbd> or Click screen to flap • Sound active when 🔊 is ON</span>
+            </div>
+          </div>
+
+          <!-- GAME 2: TIC-TAC-TOE -->
+          <div id="game-tictactoe" class="game-container hidden">
+            <div class="ttt-hud">
+              <span class="ttt-turn" id="ttt-status">Your Turn (X)</span>
+              <div class="ttt-scores">
+                <span>Player (X): <strong id="ttt-score-x">0</strong></span>
+                <span>AI (O): <strong id="ttt-score-o">0</strong></span>
+              </div>
+            </div>
+
+            <div class="ttt-board" id="ttt-board">
+              <button class="ttt-cell" data-idx="0" aria-label="Cell 1"></button>
+              <button class="ttt-cell" data-idx="1" aria-label="Cell 2"></button>
+              <button class="ttt-cell" data-idx="2" aria-label="Cell 3"></button>
+              <button class="ttt-cell" data-idx="3" aria-label="Cell 4"></button>
+              <button class="ttt-cell" data-idx="4" aria-label="Cell 5"></button>
+              <button class="ttt-cell" data-idx="5" aria-label="Cell 6"></button>
+              <button class="ttt-cell" data-idx="6" aria-label="Cell 7"></button>
+              <button class="ttt-cell" data-idx="7" aria-label="Cell 8"></button>
+              <button class="ttt-cell" data-idx="8" aria-label="Cell 9"></button>
+            </div>
+
+            <div class="ttt-actions">
+              <button class="btn btn-secondary btn-sm" id="reset-ttt-btn">Reset Board</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- CONTACT SECTION -->
     <section id="contact" class="contact-section section">
       <div class="container">
@@ -652,7 +732,7 @@
           <div class="contact-grid">
             
             <div class="contact-info">
-              <span class="section-tag">05. GET IN TOUCH</span>
+              <span class="section-tag">06. GET IN TOUCH</span>
               <h2 class="contact-title">Let's build something accessible & impactful together.</h2>
               <p class="contact-desc">
                 Whether you have a question about <strong>SignBridge</strong>, an opportunity for collaboration, 

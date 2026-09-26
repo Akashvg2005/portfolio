@@ -374,6 +374,11 @@ img {
   border-radius: var(--radius-full);
 }
 
+.arcade-link {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -1310,7 +1315,180 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   10. CONTACT SECTION & FORM
+   10. ARCADE ZONE & MINI-GAMES STYLING
+   -------------------------------------------------------------------------- */
+.arcade-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.arcade-tab-btn {
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--tr-fast);
+}
+
+.arcade-tab-btn.active, .arcade-tab-btn:hover {
+  color: #ffffff;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.arcade-viewport {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px;
+  position: relative;
+  border: 2px solid var(--border-subtle);
+}
+
+.whirly-hud {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-text);
+  margin-bottom: 16px;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 360px;
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #090d16;
+  border: 1px solid var(--border-subtle);
+}
+
+#whirly-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.game-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 15, 25, 0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.game-overlay h3 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.game-overlay p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.over-text {
+  color: #ef4444;
+}
+
+.game-controls-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+}
+
+/* Tic Tac Toe Grid */
+.ttt-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
+
+.ttt-turn {
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+.ttt-scores {
+  display: flex;
+  gap: 16px;
+  color: var(--text-muted);
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto 24px;
+}
+
+.ttt-cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--tr-fast);
+}
+
+.ttt-cell:hover {
+  background: var(--accent-glow-subtle);
+  border-color: var(--accent-primary);
+}
+
+.ttt-cell.x-mark {
+  color: var(--accent-primary);
+}
+
+.ttt-cell.o-mark {
+  color: #10b981;
+}
+
+.ttt-cell.win-cell {
+  background: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 0 20px var(--accent-primary);
+}
+
+.ttt-actions {
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   11. CONTACT SECTION & FORM
    -------------------------------------------------------------------------- */
 .contact-card {
   padding: 48px;
@@ -1425,7 +1603,7 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   11. COMMAND PALETTE MODAL (CMD+K)
+   12. COMMAND PALETTE MODAL (CMD+K)
    -------------------------------------------------------------------------- */
 .cmd-modal {
   position: fixed;
@@ -1552,7 +1730,7 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   12. FOOTER
+   13. FOOTER
    -------------------------------------------------------------------------- */
 .footer {
   border-top: 1px solid var(--border-subtle);
@@ -1582,7 +1760,7 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   13. ENTRANCE ANIMATIONS & SCROLL OBSERVER
+   14. ENTRANCE ANIMATIONS & SCROLL OBSERVER
    -------------------------------------------------------------------------- */
 .fade-in-up {
   opacity: 0;

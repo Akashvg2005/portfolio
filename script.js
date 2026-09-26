@@ -1,496 +1,885 @@
 /* ==========================================================================
-   Akash V G — Personal Portfolio JavaScript Engine
-   Gamification, Interactive Terminal, SignBridge Simulator, Cmd+K Palette,
-   Theme Customizer, Sound Effects Synthesizer, 3D Tilt, Accessibility.
+   Akash V G — Personal Portfolio Script
+   Terminal Engine, Web Audio FX, Scroll Sound Synthesizer, 
+   Cmd+K Palette, ISL Simulator, Whirly Bird Game & Tic-Tac-Toe AI
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* --------------------------------------------------------------------------
-     1. SOUND EFFECTS SYNTHESIZER (WEB AUDIO API)
-     -------------------------------------------------------------------------- */
-  let soundEnabled = false;
+  // --------------------------------------------------------------------------
+  // 1. STATE & AUDIO SYNTHESIZER ENGINE (Web Audio API)
+  // --------------------------------------------------------------------------
+  const state = {
+    soundEnabled: false,
+    currentTheme: localStorage.getItem('theme') || 'dark',
+    currentAccent: localStorage.getItem('accent') || 'indigo',
+    whirlyHighScore: parseInt(localStorage.getItem('whirly_high') || '0', 10),
+    tttScoreX: 0,
+    tttScoreO: 0,
+    tttBoard: Array(9).fill(null),
+    tttActive: true,
+    lastScrollY: window.scrollY
+  };
+
+  // Audio Context Setup
   let audioCtx = null;
 
   function initAudio() {
     if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        audioCtx = new AudioContext();
-      }
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
     }
   }
 
-  function playBlip(freq = 440, type = 'sine', duration = 0.08) {
-    if (!soundEnabled || !audioCtx) return;
+  // Play Retro Synthesizer Tone
+  function playSound(type) {
+    if (!state.soundEnabled) return;
+    initAudio();
+    if (!audioCtx) return;
+
     try {
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      osc.start();
-      osc.stop(audioCtx.currentTime + duration);
-    } catch (e) {
-      // Audio fallback silent
+      const now = audioCtx.currentTime;
+
+      if (type === 'click') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else if (type === 'scroll') {
+        // Subtle low-freq soft blip for scrolling
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.05);
+        gain.gain.setValueAtTime(0.03, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } else if (type === 'jump') {
+        // Whirly bird flap jump
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(260, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.12);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (type === 'score') {
+        // Score chime
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'hit') {
+        // Game Over explosion
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.25);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'win') {
+        // Tic Tac Toe Win
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(554.37, now + 0.1);
+        osc.frequency.setValueAtTime(659.25, now + 0.2);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      }
+    } catch (err) {
+      console.warn('Audio play error:', err);
     }
   }
 
+  // Sound FX Toggle Listener
   const soundToggleBtn = document.getElementById('sound-toggle');
   const soundIconOff = soundToggleBtn?.querySelector('.sound-icon-off');
   const soundIconOn = soundToggleBtn?.querySelector('.sound-icon-on');
 
   soundToggleBtn?.addEventListener('click', () => {
-    initAudio();
-    soundEnabled = !soundEnabled;
-    if (soundEnabled) {
+    state.soundEnabled = !state.soundEnabled;
+    if (state.soundEnabled) {
+      initAudio();
       soundIconOff?.classList.add('hidden');
       soundIconOn?.classList.remove('hidden');
-      soundToggleBtn.title = "Sound FX (On)";
-      playBlip(587.33, 'triangle', 0.15); // D5 chime
+      soundToggleBtn.setAttribute('title', 'Sound FX (ON)');
+      playSound('score');
     } else {
-      soundIconOn?.classList.add('hidden');
       soundIconOff?.classList.remove('hidden');
-      soundToggleBtn.title = "Sound FX (Off)";
+      soundIconOn?.classList.add('hidden');
+      soundToggleBtn.setAttribute('title', 'Sound FX (OFF)');
     }
   });
 
-  // Attach hover sound to interactive elements
-  document.querySelectorAll('button, a, .skill-card, .project-card, .cmd-pill').forEach(elem => {
-    elem.addEventListener('mouseenter', () => playBlip(329.63, 'sine', 0.04));
-    elem.addEventListener('click', () => playBlip(523.25, 'triangle', 0.08));
-  });
+  // --------------------------------------------------------------------------
+  // 2. THROTTLED SCROLL SOUND SYNTHESIZER
+  // --------------------------------------------------------------------------
+  let lastScrollSoundTime = 0;
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    const now = Date.now();
 
-  /* --------------------------------------------------------------------------
-     2. THEME & ACCENT COLOR MANAGER
-     -------------------------------------------------------------------------- */
-  const htmlElem = document.documentElement;
+    // Play scroll sound if user scrolled more than 120px and 200ms elapsed
+    if (state.soundEnabled && Math.abs(currentY - state.lastScrollY) > 120 && now - lastScrollSoundTime > 200) {
+      playSound('scroll');
+      lastScrollSoundTime = now;
+      state.lastScrollY = currentY;
+    }
+  }, { passive: true });
+
+  // --------------------------------------------------------------------------
+  // 3. THEME & ACCENT COLOR SYSTEM
+  // --------------------------------------------------------------------------
+  const htmlEl = document.documentElement;
   const themeToggleBtn = document.getElementById('theme-toggle');
   const sunIcon = themeToggleBtn?.querySelector('.sun-icon');
   const moonIcon = themeToggleBtn?.querySelector('.moon-icon');
 
-  // Load saved theme or default dark
-  const savedTheme = localStorage.getItem('akash_portfolio_theme') || 'dark';
-  setTheme(savedTheme);
-
-  function setTheme(theme) {
-    htmlElem.setAttribute('data-theme', theme);
-    localStorage.setItem('akash_portfolio_theme', theme);
+  function applyTheme(theme) {
+    state.currentTheme = theme;
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
 
     if (theme === 'light') {
-      moonIcon?.classList.add('hidden');
       sunIcon?.classList.remove('hidden');
+      moonIcon?.classList.add('hidden');
     } else {
       sunIcon?.classList.add('hidden');
       moonIcon?.classList.remove('hidden');
     }
   }
 
+  applyTheme(state.currentTheme);
+
   themeToggleBtn?.addEventListener('click', () => {
-    const currentTheme = htmlElem.getAttribute('data-theme');
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    playSound('click');
+    applyTheme(state.currentTheme === 'dark' ? 'light' : 'dark');
   });
 
-  // Accent Color Customizer Dropdown
-  const accentBtn = document.getElementById('accent-picker-btn');
+  // Accent Color Customizer
+  const accentPickerBtn = document.getElementById('accent-picker-btn');
   const accentMenu = document.getElementById('accent-menu');
-  const savedAccent = localStorage.getItem('akash_portfolio_accent') || 'indigo';
-  
-  setAccent(savedAccent);
+  const accentOpts = document.querySelectorAll('.accent-opt');
 
-  function setAccent(accentName) {
-    htmlElem.setAttribute('data-accent', accentName);
-    localStorage.setItem('akash_portfolio_accent', accentName);
+  function applyAccent(accent) {
+    state.currentAccent = accent;
+    htmlEl.setAttribute('data-accent', accent);
+    localStorage.setItem('accent', accent);
   }
 
-  accentBtn?.addEventListener('click', (e) => {
+  applyAccent(state.currentAccent);
+
+  accentPickerBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
+    playSound('click');
     accentMenu?.classList.toggle('hidden');
   });
 
-  document.querySelectorAll('.accent-opt').forEach(opt => {
+  accentOpts.forEach(opt => {
     opt.addEventListener('click', () => {
-      const selectedAccent = opt.getAttribute('data-accent');
-      if (selectedAccent) setAccent(selectedAccent);
-      accentMenu?.classList.add('hidden');
-    });
-  });
-
-  document.addEventListener('click', () => {
-    accentMenu?.classList.add('hidden');
-  });
-
-  /* --------------------------------------------------------------------------
-     3. INTERACTIVE CLI DEVELOPER TERMINAL WIDGET
-     -------------------------------------------------------------------------- */
-  const terminalForm = document.getElementById('terminal-form');
-  const terminalInput = document.getElementById('terminal-input');
-  const terminalOutput = document.getElementById('terminal-output');
-  const terminalClearBtn = document.getElementById('terminal-clear-btn');
-  const terminalBody = document.getElementById('terminal-body');
-
-  const COMMANDS = {
-    help: `Available commands:
-• <span class="highlight-code">bio</span>       — Summary of Akash V G's developer focus
-• <span class="highlight-code">signbridge</span>— Details on SignBridge AI Accessibility platform
-• <span class="highlight-code">skills</span>    — Technical skills matrix
-• <span class="highlight-code">projects</span>  — List featured projects
-• <span class="highlight-code">education</span> — B.Tech college details
-• <span class="highlight-code">contact</span>   — Contact information & social links
-• <span class="highlight-code">theme</span>     — Switch theme between dark and light
-• <span class="highlight-code">matrix</span>    — Run digital rain simulator
-• <span class="highlight-code">clear</span>     — Clear terminal screen`,
-
-    bio: `Akash V G | Computer Science & Engineering Student (2023-2027)
-Location: Vaikom, Kerala, India
-Focus: AI Accessibility, Flutter Apps, Computer Vision (MediaPipe/OpenCV), Web Systems.`,
-
-    signbridge: `✦ SIGNBRIDGE (Flagship Project)
-Description: AI-Powered Interview Platform for Deaf and Hard-of-Hearing candidates.
-Tech Stack: Python, MediaPipe, Flutter, TensorFlow, OpenCV, Antigravity AI.
-Status: Current Build Phase 2 (Active Development).
-Feature: Converts Indian Sign Language (ISL) gestures to live text & synthetic audio.`,
-
-    skills: `[SKILL MATRIX]
-• Dart & Flutter ........ [90%] Mobile Apps & Flame Game Physics
-• JavaScript & Web ..... [92%] ES6+, Responsive Layouts, DOM
-• Python & CV .......... [85%] MediaPipe, OpenCV, TensorFlow
-• React Native & Node .. [80%] Full-stack Expo & REST APIs
-• Firebase & Cloud ..... [88%] Firestore, Auth, Security Rules
-• Git & Antigravity AI . [95%] Version Control & Agentic Pair Programming`,
-
-    projects: `[FEATURED PROJECTS]
-1. SignBridge (AI ISL Interview Platform)
-2. Smart Bus Tracking & Monitoring System ("FaceIt!" Face Attendance)
-3. Layam — The Music Mate (Full-Stack AI Music App)
-4. Netflix UI Clone (HTML/CSS/JS)`,
-
-    education: `[EDUCATION]
-Degree: B.Tech in Computer Science and Engineering (2023–2027)
-Institution: College of Engineering, Cherthala, Kerala, India`,
-
-    contact: `[CONTACT INFO]
-• Email: akashvg2005@gmail.com
-• GitHub: https://github.com/Akashvg2005
-• LinkedIn: https://www.linkedin.com/in/akash-v-g-76b46a291/
-• Location: Vaikom, Kerala, India`,
-
-    matrix: `<span class="highlight-code">01000001 01101011 01100001 01110011 01101000</span>
-<span style="color:#10b981;">[MATRIX MODE ENGAGED] Entering Indian Sign Language AI neural space...</span>`
-  };
-
-  function executeTerminalCmd(cmdRaw) {
-    const cmd = cmdRaw.trim().toLowerCase();
-    if (!cmd) return;
-
-    // Append user line
-    const userLine = document.createElement('div');
-    userLine.className = 'terminal-line';
-    userLine.innerHTML = `<span class="terminal-prompt">akash@portfolio:~$</span> ${escapeHtml(cmdRaw)}`;
-    terminalOutput.appendChild(userLine);
-
-    if (cmd === 'clear') {
-      terminalOutput.innerHTML = '';
-      terminalInput.value = '';
-      return;
-    }
-
-    if (cmd === 'theme') {
-      const currentTheme = htmlElem.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      setTheme(newTheme);
-      appendTerminalOutput(`Theme switched to: <span class="highlight-code">${newTheme}</span> mode`);
-      terminalInput.value = '';
-      return;
-    }
-
-    if (cmd === 'signbridge') {
-      // Trigger opening simulator
-      openIslSimulator();
-    }
-
-    const response = COMMANDS[cmd] || `Command not found: '${escapeHtml(cmdRaw)}'. Type <span class="highlight-code">'help'</span> for a list of valid commands.`;
-    appendTerminalOutput(response);
-
-    terminalInput.value = '';
-    terminalBody.scrollTop = terminalBody.scrollHeight;
-  }
-
-  function appendTerminalOutput(text) {
-    const resLine = document.createElement('div');
-    resLine.className = 'terminal-line text-dim';
-    resLine.innerHTML = text.replace(/\n/g, '<br/>');
-    terminalOutput.appendChild(resLine);
-  }
-
-  terminalForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    executeTerminalCmd(terminalInput.value);
-  });
-
-  terminalClearBtn?.addEventListener('click', () => {
-    terminalOutput.innerHTML = '';
-  });
-
-  // Quick Command Pills
-  document.querySelectorAll('.cmd-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      const cmd = pill.getAttribute('data-cmd');
-      if (cmd) {
-        terminalInput.value = cmd;
-        executeTerminalCmd(cmd);
+      const accent = opt.getAttribute('data-accent');
+      if (accent) {
+        applyAccent(accent);
+        playSound('click');
+        accentMenu?.classList.add('hidden');
       }
     });
   });
 
-  function escapeHtml(text) {
-    return text.replace(/[&<>"']/g, function(m) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
-    });
-  }
-
-  /* --------------------------------------------------------------------------
-     4. SIGNBRIDGE LIVE ISL GESTURE SIMULATOR WIDGET
-     -------------------------------------------------------------------------- */
-  const openIslSimBtn = document.getElementById('open-isl-sim-btn');
-  const closeIslSimBtn = document.getElementById('close-isl-sim');
-  const islSimWidget = document.getElementById('isl-sim-widget');
-  const simGestureOutput = document.getElementById('sim-gesture-output');
-  const simConfidenceOutput = document.getElementById('sim-confidence-output');
-  const canvas = document.getElementById('landmark-canvas');
-
-  let animFrameId = null;
-
-  function openIslSimulator() {
-    islSimWidget?.classList.remove('hidden');
-    islSimWidget?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    startLandmarkCanvasAnimation();
-  }
-
-  openIslSimBtn?.addEventListener('click', openIslSimulator);
-
-  closeIslSimBtn?.addEventListener('click', () => {
-    islSimWidget?.classList.add('hidden');
-    if (animFrameId) cancelAnimationFrame(animFrameId);
+  document.addEventListener('click', (e) => {
+    if (!accentPickerBtn?.contains(e.target) && !accentMenu?.contains(e.target)) {
+      accentMenu?.classList.add('hidden');
+    }
   });
 
-  // Simulator Gesture Buttons
-  document.querySelectorAll('.sim-btn').forEach(btn => {
+  // Navbar Scroll Background Effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
+  const navLinksRow = document.getElementById('nav-links');
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    playSound('click');
+    const isOpen = navLinksRow?.classList.toggle('open');
+    mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // Close mobile nav on link click
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      playSound('click');
+      navLinksRow?.classList.remove('open');
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 4. INTERACTIVE CLI TERMINAL ENGINE
+  // --------------------------------------------------------------------------
+  const terminalInput = document.getElementById('terminal-input');
+  const terminalForm = document.getElementById('terminal-form');
+  const terminalOutput = document.getElementById('terminal-output');
+  const terminalClearBtn = document.getElementById('terminal-clear-btn');
+  const cmdPills = document.querySelectorAll('.cmd-pill');
+
+  const terminalCommands = {
+    help: `Available commands:
+  - <span class="highlight-code">signbridge</span> : Flagship AI Sign Language platform details
+  - <span class="highlight-code">skills</span>     : Technical stack & proficiency metrics
+  - <span class="highlight-code">projects</span>   : Full project repository list
+  - <span class="highlight-code">education</span>  : Academic background at COE Cherthala
+  - <span class="highlight-code">arcade</span>     : Launch minigames (Whirly Bird / Tic-Tac-Toe)
+  - <span class="highlight-code">contact</span>    : Direct email & social links
+  - <span class="highlight-code">theme</span>      : Toggle light/dark mode
+  - <span class="highlight-code">clear</span>      : Clear screen`,
+
+    signbridge: `🚀 <strong class="text-accent">SignBridge (Flagship Project)</strong>
+AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indian Sign Language (ISL) recognition.
+• Tech: Python, MediaPipe, Flutter, TensorFlow, OpenCV, Antigravity AI
+• Status: Phase 2 Active Development`,
+
+    skills: `⚡ <strong class="text-accent">Technical Stack:</strong>
+• Languages  : Dart, JavaScript (ES6+), Python, HTML5/CSS3
+• Frameworks : Flutter, React Native, Node.js, Express, Flame 2.5D
+• AI & Vision: MediaPipe, OpenCV, TensorFlow, Antigravity Workflows
+• Databases  : Firebase Firestore, Realtime DB, Cloud Storage`,
+
+    projects: `📁 <strong class="text-accent">Key Projects:</strong>
+1. SignBridge (AI ISL Interview Platform)
+2. Smart Bus Tracking & Monitoring System ("FaceIt!")
+3. Layam – The Music Mate (React Native / Expo Music Player)
+4. Netflix UI Clone (HTML/CSS/JS)`,
+
+    education: `🎓 <strong class="text-accent">Education:</strong>
+• B.Tech Computer Science and Engineering (2023–2027)
+  College of Engineering, Cherthala, Kerala, India`,
+
+    arcade: `🎮 <strong class="text-accent">Arcade Zone:</strong>
+Opening Arcade Zone... Jump down to play Whirly Bird or Tic-Tac-Toe!`,
+
+    contact: `📬 <strong class="text-accent">Get in Touch:</strong>
+• Email   : akashvg2005@gmail.com
+• GitHub  : https://github.com/Akashvg2005
+• LinkedIn: https://www.linkedin.com/in/akash-v-g-76b46a291/`,
+
+    matrix: `<span style="color:#10b981;">01010011 01001001 01000111 01001110 01000010 01010010 01001001 01000100 01000111 01000101</span><br><span class="text-accent">System initialized. Antigravity core online.</span>`
+  };
+
+  function printTerminalLine(cmd, output) {
+    const entry = document.createElement('div');
+    entry.className = 'terminal-line';
+    entry.innerHTML = `<span class="terminal-prompt">akash@portfolio:~$</span> <strong>${cmd}</strong><br>${output}`;
+    terminalOutput?.appendChild(entry);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+  }
+
+  terminalForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const rawCmd = terminalInput.value.trim().toLowerCase();
+    if (!rawCmd) return;
+
+    playSound('click');
+    terminalInput.value = '';
+
+    if (rawCmd === 'clear') {
+      terminalOutput.innerHTML = '';
+      return;
+    }
+
+    if (rawCmd === 'theme') {
+      applyTheme(state.currentTheme === 'dark' ? 'light' : 'dark');
+      printTerminalLine(rawCmd, `Switched theme to ${state.currentTheme} mode.`);
+      return;
+    }
+
+    if (rawCmd === 'arcade') {
+      document.getElementById('arcade')?.scrollIntoView({ behavior: 'smooth' });
+      printTerminalLine(rawCmd, terminalCommands.arcade);
+      return;
+    }
+
+    const output = terminalCommands[rawCmd] || `Command not found: <span style="color:#ef4444;">'${rawCmd}'</span>. Type <span class="highlight-code">'help'</span> for list.`;
+    printTerminalLine(rawCmd, output);
+  });
+
+  cmdPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const cmd = pill.getAttribute('data-cmd');
+      if (cmd && terminalInput) {
+        terminalInput.value = cmd;
+        terminalForm.dispatchEvent(new Event('submit'));
+      }
+    });
+  });
+
+  terminalClearBtn?.addEventListener('click', () => {
+    playSound('click');
+    terminalOutput.innerHTML = '';
+  });
+
+  // --------------------------------------------------------------------------
+  // 5. SIGNBRIDGE ISL SIMULATOR CANVAS ANIMATION
+  // --------------------------------------------------------------------------
+  const openSimBtn = document.getElementById('open-isl-sim-btn');
+  const closeSimBtn = document.getElementById('close-isl-sim');
+  const simWidget = document.getElementById('isl-sim-widget');
+  const landmarkCanvas = document.getElementById('landmark-canvas');
+  const simGestureOutput = document.getElementById('sim-gesture-output');
+  const simConfidenceOutput = document.getElementById('sim-confidence-output');
+  const simBtns = document.querySelectorAll('.sim-btn');
+
+  let canvasCtx = landmarkCanvas?.getContext('2d');
+  let animationFrameId = null;
+  let animTime = 0;
+
+  openSimBtn?.addEventListener('click', () => {
+    playSound('click');
+    simWidget?.classList.remove('hidden');
+    startLandmarkAnimation();
+  });
+
+  closeSimBtn?.addEventListener('click', () => {
+    playSound('click');
+    simWidget?.classList.add('hidden');
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+  });
+
+  simBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+      playSound('click');
+      simBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const gesture = btn.getAttribute('data-gesture');
       const conf = btn.getAttribute('data-conf');
 
-      if (simGestureOutput && simConfidenceOutput) {
-        simGestureOutput.textContent = `Target: "${gesture}"`;
-        simConfidenceOutput.textContent = `Confidence: ${conf}`;
-      }
+      if (simGestureOutput) simGestureOutput.textContent = `Target: "${gesture}"`;
+      if (simConfidenceOutput) simConfidenceOutput.textContent = `Confidence: ${conf}`;
     });
   });
 
-  // Canvas Landmark Motion Render Loop
-  function startLandmarkCanvasAnimation() {
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let angle = 0;
+  function startLandmarkAnimation() {
+    if (!canvasCtx || !landmarkCanvas) return;
 
-    // Simulated 21 MediaPipe hand landmark points
-    const baseNodes = [
-      { x: 150, y: 140 }, // Wrist (0)
-      { x: 130, y: 120 }, { x: 115, y: 95 }, { x: 105, y: 75 }, { x: 95, y: 55 }, // Thumb
-      { x: 135, y: 80 },  { x: 132, y: 55 }, { x: 130, y: 35 }, { x: 128, y: 20 }, // Index
-      { x: 150, y: 75 },  { x: 150, y: 50 }, { x: 150, y: 30 }, { x: 150, y: 15 }, // Middle
-      { x: 165, y: 80 },  { x: 168, y: 58 }, { x: 170, y: 40 }, { x: 172, y: 25 }, // Ring
-      { x: 180, y: 90 },  { x: 185, y: 70 }, { x: 190, y: 55 }, { x: 195, y: 40 }  // Pinky
-    ];
+    function render() {
+      animTime += 0.04;
+      canvasCtx.clearRect(0, 0, landmarkCanvas.width, landmarkCanvas.height);
 
-    const connections = [
-      [0,1],[1,2],[2,3],[3,4], // Thumb
-      [0,5],[5,6],[6,7],[7,8], // Index
-      [0,9],[9,10],[10,11],[11,12], // Middle
-      [0,13],[13,14],[14,15],[15,16], // Ring
-      [0,17],[17,18],[18,19],[19,20], // Pinky
-      [5,9],[9,13],[13,17] // Palm bridge
-    ];
+      const centerX = landmarkCanvas.width / 2;
+      const centerY = landmarkCanvas.height / 2 + 20;
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw Hand Landmark Skeleton Lines
+      const wrist = { x: centerX, y: centerY + 40 };
+      const palmCenter = { x: centerX + Math.sin(animTime) * 4, y: centerY };
 
-      // Camera feed simulation background grid
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 20) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-      }
+      const fingertips = [
+        { x: centerX - 50 + Math.cos(animTime * 1.2) * 6, y: centerY - 60 },
+        { x: centerX - 25 + Math.sin(animTime * 1.5) * 6, y: centerY - 80 },
+        { x: centerX + Math.sin(animTime * 0.9) * 6, y: centerY - 85 },
+        { x: centerX + 25 + Math.cos(animTime * 1.1) * 6, y: centerY - 75 },
+        { x: centerX + 45 + Math.sin(animTime * 1.4) * 6, y: centerY - 55 }
+      ];
 
-      angle += 0.04;
-      const wave = Math.sin(angle) * 4;
+      // Draw Connection Lines
+      canvasCtx.strokeStyle = '#10b981';
+      canvasCtx.lineWidth = 2.5;
 
-      // Draw Connection Skeleton Lines
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 2;
-      connections.forEach(([i, j]) => {
-        const p1 = baseNodes[i];
-        const p2 = baseNodes[j];
-        ctx.beginPath();
-        ctx.moveTo(p1.x + (i > 0 ? wave : 0), p1.y);
-        ctx.lineTo(p2.x + (j > 0 ? wave : 0), p2.y);
-        ctx.stroke();
+      fingertips.forEach(pt => {
+        canvasCtx.beginPath();
+        canvasCtx.moveTo(wrist.x, wrist.y);
+        canvasCtx.lineTo(palmCenter.x, palmCenter.y);
+        canvasCtx.lineTo(pt.x, pt.y);
+        canvasCtx.stroke();
       });
 
-      // Draw Glowing Nodes
-      baseNodes.forEach((node, idx) => {
-        const nx = node.x + (idx > 0 ? wave : 0);
-        const ny = node.y;
-
-        ctx.beginPath();
-        ctx.arc(nx, ny, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = idx === 0 ? '#6366f1' : '#34d399';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(nx, ny, 6, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
-        ctx.stroke();
+      // Draw Landmark Nodes
+      canvasCtx.fillStyle = '#6366f1';
+      [wrist, palmCenter, ...fingertips].forEach(pt => {
+        canvasCtx.beginPath();
+        canvasCtx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
+        canvasCtx.fill();
+        canvasCtx.strokeStyle = '#ffffff';
+        canvasCtx.lineWidth = 1.5;
+        canvasCtx.stroke();
       });
 
-      animFrameId = requestAnimationFrame(draw);
+      animationFrameId = requestAnimationFrame(render);
     }
 
-    draw();
+    render();
   }
 
-  /* --------------------------------------------------------------------------
-     5. SKILLS FILTERING MECHANISM
-     -------------------------------------------------------------------------- */
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const skillCards = document.querySelectorAll('.skill-card');
+  // --------------------------------------------------------------------------
+  // 6. WHIRLY BIRD CANVAS GAME ENGINE
+  // --------------------------------------------------------------------------
+  const whirlyCanvas = document.getElementById('whirly-canvas');
+  const whirlyCtx = whirlyCanvas?.getContext('2d');
+  const startWhirlyBtn = document.getElementById('start-whirly-btn');
+  const restartWhirlyBtn = document.getElementById('restart-whirly-btn');
+  const whirlyStartOverlay = document.getElementById('whirly-start-overlay');
+  const whirlyOverOverlay = document.getElementById('whirly-over-overlay');
+  const whirlyScoreEl = document.getElementById('whirly-score');
+  const whirlyHighEl = document.getElementById('whirly-high');
+  const whirlyFinalScoreEl = document.getElementById('whirly-final-score');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  if (whirlyHighEl) whirlyHighEl.textContent = state.whirlyHighScore;
 
-      const cat = btn.getAttribute('data-filter');
+  let whirlyState = {
+    running: false,
+    birdY: 180,
+    birdVelocity: 0,
+    gravity: 0.38,
+    jumpStrength: -6.5,
+    pipes: [],
+    score: 0,
+    pipeTimer: 0,
+    animId: null
+  };
 
-      skillCards.forEach(card => {
-        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
+  function resetWhirlyGame() {
+    whirlyState = {
+      running: true,
+      birdY: 180,
+      birdVelocity: 0,
+      gravity: 0.38,
+      jumpStrength: -6.5,
+      pipes: [],
+      score: 0,
+      pipeTimer: 0,
+      animId: null
+    };
+    if (whirlyScoreEl) whirlyScoreEl.textContent = '0';
+  }
+
+  function flapWhirly() {
+    if (!whirlyState.running) return;
+    whirlyState.birdVelocity = whirlyState.jumpStrength;
+    playSound('jump');
+  }
+
+  startWhirlyBtn?.addEventListener('click', () => {
+    playSound('click');
+    whirlyStartOverlay?.classList.add('hidden');
+    resetWhirlyGame();
+    runWhirlyLoop();
+  });
+
+  restartWhirlyBtn?.addEventListener('click', () => {
+    playSound('click');
+    whirlyOverOverlay?.classList.add('hidden');
+    resetWhirlyGame();
+    runWhirlyLoop();
+  });
+
+  // Canvas / Key Controls for Whirly Bird
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && whirlyState.running) {
+      e.preventDefault();
+      flapWhirly();
+    }
+  });
+
+  whirlyCanvas?.addEventListener('click', () => {
+    if (whirlyState.running) {
+      flapWhirly();
+    }
+  });
+
+  function runWhirlyLoop() {
+    if (!whirlyCtx || !whirlyCanvas) return;
+
+    function loop() {
+      if (!whirlyState.running) return;
+
+      // Update Bird Physics
+      whirlyState.birdVelocity += whirlyState.gravity;
+      whirlyState.birdY += whirlyState.birdVelocity;
+
+      // Clear Frame
+      whirlyCtx.fillStyle = '#090d16';
+      whirlyCtx.fillRect(0, 0, whirlyCanvas.width, whirlyCanvas.height);
+
+      // Draw Grid Background lines
+      whirlyCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+      whirlyCtx.lineWidth = 1;
+      for (let x = 0; x < whirlyCanvas.width; x += 40) {
+        whirlyCtx.beginPath();
+        whirlyCtx.moveTo(x, 0);
+        whirlyCtx.lineTo(x, whirlyCanvas.height);
+        whirlyCtx.stroke();
+      }
+
+      // Spawn Pipes
+      whirlyState.pipeTimer++;
+      if (whirlyState.pipeTimer > 100) {
+        whirlyState.pipeTimer = 0;
+        const gap = 110;
+        const minTop = 40;
+        const maxTop = whirlyCanvas.height - gap - 60;
+        const topHeight = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
+
+        whirlyState.pipes.push({
+          x: whirlyCanvas.width,
+          top: topHeight,
+          bottom: whirlyCanvas.height - topHeight - gap,
+          passed: false
+        });
+      }
+
+      // Update & Draw Pipes
+      whirlyState.pipes.forEach((pipe, index) => {
+        pipe.x -= 2.5;
+
+        // Draw Top Pipe
+        whirlyCtx.fillStyle = '#6366f1';
+        whirlyCtx.fillRect(pipe.x, 0, 48, pipe.top);
+        whirlyCtx.fillStyle = '#818cf8';
+        whirlyCtx.fillRect(pipe.x - 4, pipe.top - 12, 56, 12);
+
+        // Draw Bottom Pipe
+        const bottomY = whirlyCanvas.height - pipe.bottom;
+        whirlyCtx.fillStyle = '#6366f1';
+        whirlyCtx.fillRect(pipe.x, bottomY, 48, pipe.bottom);
+        whirlyCtx.fillStyle = '#818cf8';
+        whirlyCtx.fillRect(pipe.x - 4, bottomY, 56, 12);
+
+        // Check Score Passing
+        if (!pipe.passed && pipe.x < 120) {
+          pipe.passed = true;
+          whirlyState.score++;
+          if (whirlyScoreEl) whirlyScoreEl.textContent = whirlyState.score;
+          playSound('score');
+
+          if (whirlyState.score > state.whirlyHighScore) {
+            state.whirlyHighScore = whirlyState.score;
+            localStorage.setItem('whirly_high', state.whirlyHighScore);
+            if (whirlyHighEl) whirlyHighEl.textContent = state.whirlyHighScore;
+          }
+        }
+
+        // Collision Check
+        const birdX = 120;
+        const birdRadius = 14;
+        if (birdX + birdRadius > pipe.x && birdX - birdRadius < pipe.x + 48) {
+          if (whirlyState.birdY - birdRadius < pipe.top || whirlyState.birdY + birdRadius > bottomY) {
+            endWhirlyGame();
+          }
+        }
+
+        // Remove Off-screen Pipes
+        if (pipe.x < -60) {
+          whirlyState.pipes.splice(index, 1);
         }
       });
+
+      // Check Floor & Ceiling Collision
+      if (whirlyState.birdY > whirlyCanvas.height - 14 || whirlyState.birdY < 14) {
+        endWhirlyGame();
+      }
+
+      // Draw Whirly Developer Avatar / Bird
+      whirlyCtx.save();
+      whirlyCtx.translate(120, whirlyState.birdY);
+      const angle = Math.min(Math.max(whirlyState.birdVelocity * 0.05, -0.5), 0.7);
+      whirlyCtx.rotate(angle);
+
+      // Body Circle
+      whirlyCtx.fillStyle = '#10b981';
+      whirlyCtx.beginPath();
+      whirlyCtx.arc(0, 0, 14, 0, Math.PI * 2);
+      whirlyCtx.fill();
+
+      // Eye & Beak
+      whirlyCtx.fillStyle = '#ffffff';
+      whirlyCtx.beginPath();
+      whirlyCtx.arc(5, -4, 4, 0, Math.PI * 2);
+      whirlyCtx.fill();
+      whirlyCtx.fillStyle = '#000000';
+      whirlyCtx.beginPath();
+      whirlyCtx.arc(6, -4, 2, 0, Math.PI * 2);
+      whirlyCtx.fill();
+
+      whirlyCtx.fillStyle = '#f59e0b';
+      whirlyCtx.beginPath();
+      whirlyCtx.moveTo(12, 0);
+      whirlyCtx.lineTo(20, 3);
+      whirlyCtx.lineTo(12, 6);
+      whirlyCtx.closePath();
+      whirlyCtx.fill();
+
+      whirlyCtx.restore();
+
+      whirlyState.animId = requestAnimationFrame(loop);
+    }
+
+    loop();
+  }
+
+  function endWhirlyGame() {
+    whirlyState.running = false;
+    if (whirlyState.animId) cancelAnimationFrame(whirlyState.animId);
+    playSound('hit');
+
+    if (whirlyFinalScoreEl) whirlyFinalScoreEl.textContent = whirlyState.score;
+    whirlyOverOverlay?.classList.remove('hidden');
+  }
+
+  // Arcade Tab Switcher
+  const arcadeTabs = document.querySelectorAll('.arcade-tab-btn');
+  const gameWhirly = document.getElementById('game-whirly');
+  const gameTicTacToe = document.getElementById('game-tictactoe');
+
+  arcadeTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      playSound('click');
+      arcadeTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const targetGame = tab.getAttribute('data-game');
+      if (targetGame === 'whirly') {
+        gameWhirly?.classList.remove('hidden');
+        gameTicTacToe?.classList.add('hidden');
+      } else {
+        gameWhirly?.classList.add('hidden');
+        gameTicTacToe?.classList.remove('hidden');
+      }
     });
   });
 
-  /* --------------------------------------------------------------------------
-     6. COMMAND PALETTE MODAL (CMD+K / CTRL+K)
-     -------------------------------------------------------------------------- */
-  const cmdModal = document.getElementById('cmd-palette');
-  const cmdBtn = document.getElementById('cmd-palette-btn');
+  // --------------------------------------------------------------------------
+  // 7. TIC-TAC-TOE MINIMAX AI DUEL
+  // --------------------------------------------------------------------------
+  const tttCells = document.querySelectorAll('.ttt-cell');
+  const tttStatus = document.getElementById('ttt-status');
+  const resetTttBtn = document.getElementById('reset-ttt-btn');
+  const scoreXEl = document.getElementById('ttt-score-x');
+  const scoreOEl = document.getElementById('ttt-score-o');
+
+  const winPatterns = [
+    [0,1,2], [3,4,5], [6,7,8], // Rows
+    [0,3,6], [1,4,7], [2,5,8], // Cols
+    [0,4,8], [2,4,6]          // Diagonals
+  ];
+
+  tttCells.forEach(cell => {
+    cell.addEventListener('click', () => {
+      const idx = parseInt(cell.getAttribute('data-idx') || '0', 10);
+      if (state.tttBoard[idx] || !state.tttActive) return;
+
+      makeTTTMove(idx, 'X');
+
+      if (state.tttActive) {
+        setTimeout(makeAIMove, 300);
+      }
+    });
+  });
+
+  function makeTTTMove(idx, player) {
+    state.tttBoard[idx] = player;
+    const cell = tttCells[idx];
+    if (cell) {
+      cell.textContent = player;
+      cell.classList.add(player === 'X' ? 'x-mark' : 'o-mark');
+    }
+    playSound('click');
+
+    const winInfo = checkTTTWin(state.tttBoard);
+    if (winInfo) {
+      state.tttActive = false;
+      highlightTTTWin(winInfo.pattern);
+      if (winInfo.winner === 'X') {
+        state.tttScoreX++;
+        if (scoreXEl) scoreXEl.textContent = state.tttScoreX;
+        if (tttStatus) tttStatus.textContent = '🎉 You Won (X)!';
+        playSound('win');
+      } else {
+        state.tttScoreO++;
+        if (scoreOEl) scoreOEl.textContent = state.tttScoreO;
+        if (tttStatus) tttStatus.textContent = '🤖 AI Bot Won (O)!';
+        playSound('hit');
+      }
+    } else if (state.tttBoard.every(cell => cell !== null)) {
+      state.tttActive = false;
+      if (tttStatus) tttStatus.textContent = '🤝 Game Draw!';
+    } else {
+      if (tttStatus) tttStatus.textContent = player === 'X' ? 'AI Bot Thinking (O)...' : 'Your Turn (X)';
+    }
+  }
+
+  function makeAIMove() {
+    if (!state.tttActive) return;
+    // Find best move for O
+    const emptyIndices = state.tttBoard.map((val, i) => val === null ? i : null).filter(val => val !== null);
+    if (emptyIndices.length === 0) return;
+
+    // Check if AI can win in 1 move
+    for (let idx of emptyIndices) {
+      const boardCopy = [...state.tttBoard];
+      boardCopy[idx] = 'O';
+      if (checkTTTWin(boardCopy)?.winner === 'O') {
+        makeTTTMove(idx, 'O');
+        return;
+      }
+    }
+
+    // Check if Player X can win in 1 move and block
+    for (let idx of emptyIndices) {
+      const boardCopy = [...state.tttBoard];
+      boardCopy[idx] = 'X';
+      if (checkTTTWin(boardCopy)?.winner === 'X') {
+        makeTTTMove(idx, 'O');
+        return;
+      }
+    }
+
+    // Pick center or random move
+    const choice = emptyIndices.includes(4) ? 4 : emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+    makeTTTMove(choice, 'O');
+  }
+
+  function checkTTTWin(board) {
+    for (let p of winPatterns) {
+      const [a, b, c] = p;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return { winner: board[a], pattern: p };
+      }
+    }
+    return null;
+  }
+
+  function highlightTTTWin(pattern) {
+    pattern.forEach(idx => {
+      tttCells[idx]?.classList.add('win-cell');
+    });
+  }
+
+  resetTttBtn?.addEventListener('click', () => {
+    playSound('click');
+    state.tttBoard = Array(9).fill(null);
+    state.tttActive = true;
+    if (tttStatus) tttStatus.textContent = 'Your Turn (X)';
+    tttCells.forEach(cell => {
+      cell.textContent = '';
+      cell.className = 'ttt-cell';
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 8. COMMAND PALETTE MODAL ENGINE (CMD+K / CTRL+K)
+  // --------------------------------------------------------------------------
+  const cmdPaletteModal = document.getElementById('cmd-palette');
+  const cmdPaletteBtn = document.getElementById('cmd-palette-btn');
   const cmdBackdrop = document.getElementById('cmd-backdrop');
   const cmdInput = document.getElementById('cmd-input');
   const cmdResults = document.getElementById('cmd-results');
 
-  const PALETTE_ITEMS = [
-    { title: "Jump to About Section", cat: "Navigation", action: () => scrollToSection('#about') },
-    { title: "Jump to Skills Matrix", cat: "Navigation", action: () => scrollToSection('#skills') },
-    { title: "Jump to Projects Showcase", cat: "Navigation", action: () => scrollToSection('#projects') },
-    { title: "Launch SignBridge AI Simulator", cat: "Featured Project", action: () => { scrollToSection('#projects'); openIslSimulator(); } },
-    { title: "Jump to Education & Milestones", cat: "Navigation", action: () => scrollToSection('#education') },
-    { title: "Jump to Contact Form", cat: "Navigation", action: () => scrollToSection('#contact') },
-    { title: "Download Resume (PDF)", cat: "Action", action: () => document.getElementById('resume-download-btn')?.click() },
-    { title: "Toggle Light / Dark Mode", cat: "Theme", action: () => themeToggleBtn?.click() },
-    { title: "Open GitHub Profile", cat: "External Link", action: () => window.open('https://github.com/Akashvg2005', '_blank') },
-    { title: "Open LinkedIn Profile", cat: "External Link", action: () => window.open('https://www.linkedin.com/in/akash-v-g-76b46a291/', '_blank') }
+  const cmdActions = [
+    { title: 'Jump to About Section', cat: 'Navigation', action: () => scrollToSection('about') },
+    { title: 'Jump to Skills Matrix', cat: 'Navigation', action: () => scrollToSection('skills') },
+    { title: 'Jump to Projects Showcase', cat: 'Navigation', action: () => scrollToSection('projects') },
+    { title: 'Launch SignBridge AI Simulator', cat: 'Featured Project', action: () => { scrollToSection('projects'); openSimBtn?.click(); } },
+    { title: 'Launch Whirly Bird Game', cat: 'Arcade', action: () => scrollToSection('arcade') },
+    { title: 'Play Tic-Tac-Toe AI', cat: 'Arcade', action: () => { scrollToSection('arcade'); document.querySelectorAll('.arcade-tab-btn')[1]?.click(); } },
+    { title: 'Jump to Education & Milestones', cat: 'Navigation', action: () => scrollToSection('education') },
+    { title: 'Jump to Contact Form', cat: 'Navigation', action: () => scrollToSection('contact') },
+    { title: 'Download Resume (PDF)', cat: 'Action', action: () => document.getElementById('resume-download-btn')?.click() },
+    { title: 'Toggle Light / Dark Theme', cat: 'Preference', action: () => applyTheme(state.currentTheme === 'dark' ? 'light' : 'dark') },
+    { title: 'Toggle Sound Effects', cat: 'Preference', action: () => soundToggleBtn?.click() }
   ];
 
-  let selectedCmdIdx = 0;
-
   function openCmdPalette() {
-    cmdModal?.classList.add('active');
-    cmdModal?.setAttribute('aria-hidden', 'false');
-    cmdInput.value = '';
-    renderCmdResults(PALETTE_ITEMS);
+    playSound('click');
+    cmdPaletteModal?.classList.add('active');
+    cmdPaletteModal?.setAttribute('aria-hidden', 'false');
     cmdInput?.focus();
+    renderCmdResults(cmdActions);
   }
 
   function closeCmdPalette() {
-    cmdModal?.classList.remove('active');
-    cmdModal?.setAttribute('aria-hidden', 'true');
+    cmdPaletteModal?.classList.remove('active');
+    cmdPaletteModal?.setAttribute('aria-hidden', 'true');
   }
 
-  cmdBtn?.addEventListener('click', openCmdPalette);
-  cmdBackdrop?.addEventListener('click', closeCmdPalette);
-
-  document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      cmdModal?.classList.contains('active') ? closeCmdPalette() : openCmdPalette();
-    } else if (e.key === 'Escape' && cmdModal?.classList.contains('active')) {
-      closeCmdPalette();
-    }
-  });
+  function scrollToSection(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    closeCmdPalette();
+  }
 
   function renderCmdResults(items) {
     if (!cmdResults) return;
     cmdResults.innerHTML = '';
-    selectedCmdIdx = 0;
 
     if (items.length === 0) {
-      cmdResults.innerHTML = `<div class="cmd-item" style="cursor:default;">No matching commands</div>`;
+      cmdResults.innerHTML = `<div class="cmd-item" style="cursor:default;">No matching actions found</div>`;
       return;
     }
 
-    items.forEach((item, idx) => {
-      const row = document.createElement('div');
-      row.className = `cmd-item ${idx === 0 ? 'selected' : ''}`;
-      row.innerHTML = `
+    items.forEach((item, index) => {
+      const el = document.createElement('div');
+      el.className = `cmd-item ${index === 0 ? 'selected' : ''}`;
+      el.innerHTML = `
         <span class="cmd-item-title">${item.title}</span>
         <span class="cmd-item-category">${item.cat}</span>
       `;
-
-      row.addEventListener('click', () => {
-        closeCmdPalette();
+      el.addEventListener('click', () => {
+        playSound('click');
         item.action();
+        closeCmdPalette();
       });
-
-      cmdResults.appendChild(row);
+      cmdResults.appendChild(el);
     });
   }
 
-  cmdInput?.addEventListener('input', () => {
-    const q = cmdInput.value.toLowerCase().trim();
-    const filtered = PALETTE_ITEMS.filter(i => 
-      i.title.toLowerCase().includes(q) || i.cat.toLowerCase().includes(q)
-    );
+  cmdPaletteBtn?.addEventListener('click', openCmdPalette);
+  cmdBackdrop?.addEventListener('click', closeCmdPalette);
+
+  cmdInput?.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    const filtered = cmdActions.filter(a => a.title.toLowerCase().includes(q) || a.cat.toLowerCase().includes(q));
     renderCmdResults(filtered);
   });
 
-  function scrollToSection(selector) {
-    const target = document.querySelector(selector);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+  window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (cmdPaletteModal?.classList.contains('active')) {
+        closeCmdPalette();
+      } else {
+        openCmdPalette();
+      }
     }
-  }
+    if (e.key === 'Escape' && cmdPaletteModal?.classList.contains('active')) {
+      closeCmdPalette();
+    }
+  });
 
-  /* --------------------------------------------------------------------------
-     7. 3D PARALLAX TILT EFFECT ON TILT CARDS
-     -------------------------------------------------------------------------- */
+  // --------------------------------------------------------------------------
+  // 9. 3D TILT EFFECT & SCROLL ENTRANCE OBSERVER
+  // --------------------------------------------------------------------------
   const tiltCards = document.querySelectorAll('.tilt-card');
-
   tiltCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
@@ -500,26 +889,20 @@ Institution: College of Engineering, Cherthala, Kerala, India`,
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = ((y - centerY) / centerY) * -6; // max 6deg tilt
-      const rotateY = ((x - centerX) / centerX) * 6;
+      const rotateX = (y - centerY) / 18;
+      const rotateY = (centerX - x) / 18;
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
     });
 
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
     });
   });
 
-  /* --------------------------------------------------------------------------
-     8. INTERSECTION OBSERVER FOR FADE-IN ENTRANCE & SCROLLSPY
-     -------------------------------------------------------------------------- */
-  const fadeElems = document.querySelectorAll('.fade-in-up');
-  const sections = document.querySelectorAll('.section');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const navbar = document.getElementById('navbar');
-
-  const fadeObserver = new IntersectionObserver((entries) => {
+  // Fade-In Entrance Scroll Observer
+  const fadeElements = document.querySelectorAll('.fade-in-up');
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
@@ -527,66 +910,21 @@ Institution: College of Engineering, Cherthala, Kerala, India`,
     });
   }, { threshold: 0.1 });
 
-  fadeElems.forEach(el => fadeObserver.observe(el));
+  fadeElements.forEach(el => observer.observe(el));
 
-  window.addEventListener('scroll', () => {
-    // Navbar glass blur background on scroll
-    if (window.scrollY > 50) {
-      navbar?.classList.add('scrolled');
-    } else {
-      navbar?.classList.remove('scrolled');
-    }
-
-    // Scrollspy active nav link tracking
-    let currentSec = '';
-    sections.forEach(sec => {
-      const secTop = sec.offsetTop - 120;
-      if (window.scrollY >= secTop) {
-        currentSec = sec.getAttribute('id') || '';
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${currentSec}`) {
-        link.classList.add('active');
-      }
-    });
-  });
-
-  /* --------------------------------------------------------------------------
-     9. MOBILE MENU DRAWER TOGGLE
-     -------------------------------------------------------------------------- */
-  const mobileToggle = document.getElementById('mobile-menu-toggle');
-  const navLinksContainer = document.getElementById('nav-links');
-
-  mobileToggle?.addEventListener('click', () => {
-    const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-    mobileToggle.setAttribute('aria-expanded', !isExpanded);
-    navLinksContainer?.classList.toggle('open');
-  });
-
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinksContainer?.classList.remove('open');
-      mobileToggle?.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  /* --------------------------------------------------------------------------
-     10. CONTACT FORM HANDLING
-     -------------------------------------------------------------------------- */
+  // --------------------------------------------------------------------------
+  // 10. CONTACT FORM SUBMISSION HANDLING
+  // --------------------------------------------------------------------------
   const contactForm = document.getElementById('contact-form');
   const formFeedback = document.getElementById('form-feedback');
 
   contactForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('form-name').value;
-    const email = document.getElementById('form-email').value;
+    playSound('score');
 
     if (formFeedback) {
       formFeedback.className = 'form-feedback success';
-      formFeedback.textContent = `Thank you, ${name}! Your message has been sent to Akash V G (${email}).`;
+      formFeedback.textContent = '🚀 Thank you! Your message has been sent successfully. Akash will respond shortly.';
       formFeedback.classList.remove('hidden');
     }
 
