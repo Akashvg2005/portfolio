@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-accent="indigo">
+<html lang="en" data-theme="dark" data-accent="gold">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +14,8 @@
   <meta property="og:title" content="Akash V G — Developer Portfolio" />
   <meta property="og:description" content="Building AI accessibility tools like SignBridge and real-time mobile/web applications." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://github.com/Akashvg2005" />
+  <meta property="og:url" content="https://akashvg2005.github.io/portfolio/" />
+  <link rel="canonical" href="https://akashvg2005.github.io/portfolio/" />
 
   <!-- Google Fonts: Inter & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,115 +37,103 @@
        CINEMATIC ENTRY INTRO ANIMATION WITH AKASH'S NAME & PHOTO
        ======================================================================== -->
   <!-- ========================================================================
-       AURA NEXUS // ULTRA-PREMIUM KINETIC PORTAL ENTRY EXPERIENCE
+       CINEMATIC GOLD PROLOGUE & HORIZON SHUTTER UNVEIL
+       Seamlessly blends into the home page with theatrical shutter curtain
        ======================================================================== -->
-  <div id="entry-overlay" class="nexus-entry-overlay" aria-label="Welcome and Portfolio Loading Experience">
-    <!-- Ambient Aurora Mesh & Deep Space Background -->
-    <div class="nexus-ambient-bg">
-      <div class="nexus-aurora-glow aura-1"></div>
-      <div class="nexus-aurora-glow aura-2"></div>
-      <div class="nexus-aurora-glow aura-3"></div>
+  <div id="entry-overlay" class="prologue-overlay" aria-label="Welcome and Portfolio Introduction">
+    <!-- Top Half Theatrical Curtain Shutter -->
+    <div class="prologue-shutter shutter-top" id="shutter-top">
+      <div class="shutter-ambient-glow glow-top"></div>
     </div>
 
-    <!-- Interactive Stardust & Cosmic Filament Particles Canvas -->
-    <canvas id="entry-particle-canvas" class="nexus-particle-canvas"></canvas>
+    <!-- Bottom Half Theatrical Curtain Shutter -->
+    <div class="prologue-shutter shutter-bottom" id="shutter-bottom">
+      <div class="shutter-ambient-glow glow-bottom"></div>
+    </div>
 
-    <!-- Expanding Portal Iris Flash & Dual Optical Shutter Plates -->
-    <div class="nexus-shutter-plate shutter-left"></div>
-    <div class="nexus-shutter-plate shutter-right"></div>
-    <div class="nexus-portal-burst" id="entry-warp-flash"></div>
+    <!-- Glowing Horizon Laser Seam -->
+    <div class="prologue-horizon-seam" id="prologue-horizon-seam"></div>
 
-    <!-- Top Floating Minimal Action Bar -->
-    <div class="nexus-top-bar">
-      <div class="nexus-sys-badge">
-        <span class="nexus-badge-dot"></span>
-        <span class="nexus-badge-text">PORTFOLIO EDITION // 2026</span>
+    <!-- Floating Golden Stardust Canvas -->
+    <canvas id="entry-particle-canvas" class="prologue-canvas"></canvas>
+
+    <!-- Top Minimal HUD Bar -->
+    <div class="prologue-top-bar">
+      <div class="prologue-brand">
+        <span class="prologue-badge">AVG</span>
+        <span class="prologue-brand-tag">CINEMATOGRAPHY &bull; PORTFOLIO</span>
       </div>
-
-      <div class="nexus-top-actions">
-        <button id="entry-sound-btn" class="nexus-ctrl-btn active" aria-label="Toggle Sound Effects" title="Sound (Enabled)">
-          <svg class="entry-sound-icon-off hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="prologue-controls">
+        <button id="entry-sound-btn" class="prologue-ctrl-btn active" aria-label="Toggle Sound" title="Sound (Enabled)">
+          <svg class="entry-sound-icon-off hidden" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <line x1="23" y1="9" x2="17" y2="15"></line>
             <line x1="17" y1="9" x2="23" y2="15"></line>
           </svg>
-          <svg class="entry-sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="entry-sound-icon-on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
           <span id="entry-sound-label">Audio: ON</span>
         </button>
 
-        <button id="skip-intro-btn" class="nexus-ctrl-btn skip-btn" aria-label="Skip Intro (Press ESC)">
+        <button id="skip-intro-btn" class="prologue-ctrl-btn skip-btn" aria-label="Skip directly to Portfolio">
           <span>Skip</span>
           <kbd>ESC</kbd>
         </button>
       </div>
     </div>
 
-    <!-- Central Kinetic Monolith Card -->
-    <div class="nexus-stage" id="entry-card">
-      <div class="nexus-halo-ring"></div>
-      <div class="nexus-glass-card">
-        <!-- Decorative Header Pill -->
-        <div class="nexus-pretitle-pill">
-          <span class="nexus-sparkle">✦</span>
-          <span class="nexus-pretitle-text">CREATIVE TECHNOLOGIST &amp; FILMMAKER</span>
-          <span class="nexus-sparkle">✦</span>
-        </div>
+    <!-- Central Cinematic Prologue Monolith -->
+    <div class="prologue-stage" id="entry-card">
+      <!-- Golden Optical Halo -->
+      <div class="prologue-halo-glow"></div>
 
-        <!-- Monumental Kinetic Masked Title -->
-        <div class="nexus-title-wrap">
-          <h1 class="nexus-title-name" id="entry-name" aria-label="Akash V G">
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:1">A</span></span>
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:2">K</span></span>
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:3">A</span></span>
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:4">S</span></span>
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:5">H</span></span>
-            <span class="nexus-title-space">&nbsp;</span>
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:6">V</span></span>
-            <span class="nexus-title-space">&nbsp;</span>
-            <span class="nexus-char-mask"><span class="nexus-char" style="--i:7">G</span></span>
-          </h1>
-          <div class="nexus-title-reflection"></div>
-        </div>
+      <!-- Pre-title Film Chapter Mark -->
+      <div class="prologue-chapter">
+        <span class="chapter-dash"></span>
+        <span class="chapter-text">THE CREATIVE REELS OF</span>
+        <span class="chapter-dash"></span>
+      </div>
 
-        <!-- Sleek Role Pills -->
-        <div class="nexus-roles-row">
-          <span class="nexus-role-pill">🎬 VIDEOGRAPHER // IEEE SB CECTL</span>
-          <span class="nexus-role-sep">•</span>
-          <span class="nexus-role-pill">📢 PR HEAD // TPC CEC</span>
-          <span class="nexus-role-sep">•</span>
-          <span class="nexus-role-pill">⚡ VIBE CODING</span>
-          <span class="nexus-role-sep">•</span>
-          <span class="nexus-role-pill">🤖 AI TOOLS &amp; AGENTS</span>
-          <span class="nexus-role-sep">•</span>
-          <span class="nexus-role-pill">📑 LATEX ARCHITECT</span>
-        </div>
+      <!-- Monumental Golden Title -->
+      <h1 class="prologue-monumental-name" id="entry-name" aria-label="Akash V G">
+        <span class="gold-char" style="--i:0">A</span>
+        <span class="gold-char" style="--i:1">K</span>
+        <span class="gold-char" style="--i:2">A</span>
+        <span class="gold-char" style="--i:3">S</span>
+        <span class="gold-char" style="--i:4">H</span>
+        <span class="gold-space">&nbsp;</span>
+        <span class="gold-char" style="--i:5">V</span>
+        <span class="gold-space">&nbsp;</span>
+        <span class="gold-char" style="--i:6">G</span>
+      </h1>
 
-        <!-- Futuristic Laser Progress & Numeric HUD -->
-        <div class="nexus-loader-engine">
-          <div class="nexus-loader-header">
-            <span class="nexus-status-indicator" id="entry-loader-status">Initializing neural interface &amp; visual reels...</span>
-            <span class="nexus-percent-counter" id="entry-loader-percent">00%</span>
-          </div>
+      <!-- Floating Dynamic Role Pills -->
+      <div class="prologue-role-strip" id="prologue-role-strip">
+        <span class="role-chip">🎬 VIDEOGRAPHER • IEEE SB CECTL</span>
+        <span class="role-chip-sep">•</span>
+        <span class="role-chip">🤖 AI RESEARCHER</span>
+        <span class="role-chip-sep">•</span>
+        <span class="role-chip">📢 PR HEAD • TPC CEC</span>
+      </div>
 
-          <div class="nexus-laser-track">
-            <div class="nexus-laser-fill" id="entry-progress-fill"></div>
-            <div class="nexus-laser-head"></div>
-          </div>
-        </div>
-
-        <!-- Immediate Access CTA -->
-        <button id="enter-site-btn" class="nexus-enter-btn" aria-label="Enter Portfolio">
-          <span class="nexus-enter-bg"></span>
-          <span class="nexus-enter-text">ENTER PORTFOLIO</span>
-          <svg class="nexus-enter-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
+      <!-- Interactive Enter Action -->
+      <div class="prologue-enter-group">
+        <button id="enter-site-btn" class="prologue-enter-button" aria-label="Enter Portfolio">
+          <span class="btn-gold-ambient"></span>
+          <span class="btn-gold-laser"></span>
+          <span class="btn-gold-text">EXPLORE PORTFOLIO</span>
+          <svg class="btn-gold-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
           </svg>
         </button>
+        <span class="prologue-hint">Press <kbd>SPACE</kbd>, <kbd>ENTER</kbd> or Scroll to Reveal</span>
       </div>
+
+      <!-- Hairline Golden Timeline Track -->
+      <div class="prologue-timeline-bar" id="entry-progress-fill"></div>
     </div>
   </div>
 
@@ -247,11 +236,12 @@
             <span class="accent-dot-preview"></span>
           </button>
           <div class="accent-menu hidden" id="accent-menu" role="menu">
-            <button class="accent-opt" data-accent="indigo" style="--opt-color:#6366F1;">Indigo</button>
-            <button class="accent-opt" data-accent="teal" style="--opt-color:#14B8A6;">Cyber Teal</button>
+            <button class="accent-opt" data-accent="gold" style="--opt-color:#D4AF37;">Royal Gold &amp; Lux</button>
+            <button class="accent-opt" data-accent="amber" style="--opt-color:#F59E0B;">Cinematic Amber</button>
             <button class="accent-opt" data-accent="emerald" style="--opt-color:#10B981;">Emerald</button>
             <button class="accent-opt" data-accent="rose" style="--opt-color:#F43F5E;">Sunset Rose</button>
-            <button class="accent-opt" data-accent="amber" style="--opt-color:#F59E0B;">Neon Amber</button>
+            <button class="accent-opt" data-accent="teal" style="--opt-color:#14B8A6;">Cyber Teal</button>
+            <button class="accent-opt" data-accent="blue" style="--opt-color:#0284C7;">Electric Blue</button>
           </div>
         </div>
 
@@ -1240,7 +1230,7 @@
           <!-- CERTIFICATE 3: DEVTOWN & GOOGLE DEVELOPER GROUPS NETFLIX CLONE -->
           <div class="cert-card-item glass-panel tilt-card fade-in-up delay-200">
             <div class="cert-card-badge-row">
-              <span class="cert-ribbon cert-purple">🌐 GDG ON CAMPUS</span>
+              <span class="cert-ribbon cert-blue">🌐 GDG ON CAMPUS</span>
               <span class="cert-badge-netflix">🎬 NETFLIX CLONE</span>
             </div>
 

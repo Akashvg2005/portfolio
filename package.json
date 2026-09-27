@@ -2,6 +2,7 @@
   "name": "akash-vg-portfolio",
   "version": "1.0.0",
   "description": "Personal Portfolio Website for Akash V G — AI Accessibility & Full-Stack Developer",
+  "homepage": "https://akashvg2005.github.io/portfolio/",
   "scripts": {
     "start": "npx serve .",
     "build": "echo 'Static site ready'"

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = {
     soundEnabled: localStorage.getItem('sound_enabled') !== 'false', // Enabled by default
     currentTheme: localStorage.getItem('theme') || 'dark',
-    currentAccent: localStorage.getItem('accent') || 'indigo',
+    currentAccent: (localStorage.getItem('accent') === 'indigo' || localStorage.getItem('accent') === 'blue' || localStorage.getItem('accent') === 'amber' || !localStorage.getItem('accent')) ? 'gold' : localStorage.getItem('accent'),
     whirlyHighScore: parseInt(localStorage.getItem('whirly_high') || '0', 10),
     stackerHighScore: parseInt(localStorage.getItem('stack_high') || '0', 10),
     bricksHighScore: parseInt(localStorage.getItem('bricks_high') || '0', 10),
@@ -170,6 +170,100 @@ document.addEventListener('DOMContentLoaded', () => {
         clickGain.connect(audioCtx.destination);
         clickOsc.start(now + 0.05);
         clickOsc.stop(now + 0.13);
+      } else if (type === 'cameraShutter') {
+        // Dual-action tactile camera shutter click
+        const click1 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        click1.type = 'triangle';
+        click1.frequency.setValueAtTime(1400, now);
+        click1.frequency.exponentialRampToValueAtTime(280, now + 0.035);
+        gain1.gain.setValueAtTime(0.2, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+        click1.connect(gain1);
+        gain1.connect(audioCtx.destination);
+        click1.start(now);
+        click1.stop(now + 0.035);
+
+        // Second slap (mirror return)
+        const click2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        click2.type = 'sine';
+        click2.frequency.setValueAtTime(800, now + 0.05);
+        click2.frequency.exponentialRampToValueAtTime(120, now + 0.1);
+        gain2.gain.setValueAtTime(0.25, now + 0.05);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        click2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+        click2.start(now + 0.05);
+        click2.stop(now + 0.1);
+      } else if (type === 'lensFocus') {
+        // Optic servo focus pulse
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.07);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      } else if (type === 'warpDrive') {
+        // Deep sub-bass sweep & riser
+        const subOsc = audioCtx.createOscillator();
+        const subGain = audioCtx.createGain();
+        subOsc.type = 'sawtooth';
+        subOsc.frequency.setValueAtTime(80, now);
+        subOsc.frequency.exponentialRampToValueAtTime(320, now + 0.35);
+        subGain.gain.setValueAtTime(0.001, now);
+        subGain.gain.linearRampToValueAtTime(0.18, now + 0.1);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        subOsc.connect(subGain);
+        subGain.connect(audioCtx.destination);
+        subOsc.start(now);
+        subOsc.stop(now + 0.4);
+      } else if (type === 'classicChime') {
+        // Warm cinematic Major 7th chord swell (C4, E4, G4, B4, D5)
+        [261.63, 329.63, 392.00, 493.88, 587.33].forEach((freq, idx) => {
+          const chordOsc = audioCtx.createOscillator();
+          const chordGain = audioCtx.createGain();
+          chordOsc.type = 'sine';
+          chordOsc.frequency.setValueAtTime(freq, now + idx * 0.04);
+          chordGain.gain.setValueAtTime(0.001, now);
+          chordGain.gain.linearRampToValueAtTime(0.08 / (idx + 1), now + 0.12 + idx * 0.04);
+          chordGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+          chordOsc.connect(chordGain);
+          chordGain.connect(audioCtx.destination);
+          chordOsc.start(now + idx * 0.04);
+          chordOsc.stop(now + 1.8);
+        });
+      } else if (type === 'velvetWhoosh') {
+        // Soft cinematic motion blur frequency sweep
+        const whooshOsc = audioCtx.createOscillator();
+        const whooshGain = audioCtx.createGain();
+        whooshOsc.type = 'sine';
+        whooshOsc.frequency.setValueAtTime(140, now);
+        whooshOsc.frequency.exponentialRampToValueAtTime(420, now + 0.25);
+        whooshOsc.frequency.exponentialRampToValueAtTime(100, now + 0.55);
+        whooshGain.gain.setValueAtTime(0.001, now);
+        whooshGain.gain.linearRampToValueAtTime(0.08, now + 0.2);
+        whooshGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+        whooshOsc.connect(whooshGain);
+        whooshGain.connect(audioCtx.destination);
+        whooshOsc.start(now);
+        whooshOsc.stop(now + 0.55);
+      } else if (type === 'crystalBell') {
+        // Pristine glass harmonic bell chime
+        [659.25, 987.77, 1318.51].forEach((freq, idx) => {
+          const bellOsc = audioCtx.createOscillator();
+          const bellGain = audioCtx.createGain();
+          bellOsc.type = 'sine';
+          bellOsc.frequency.setValueAtTime(freq, now + idx * 0.03);
+          bellGain.gain.setValueAtTime(0.001, now);
+          bellGain.gain.linearRampToValueAtTime(0.09 / (idx + 1), now + 0.06 + idx * 0.03);
+          bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+          bellOsc.connect(bellGain);
+          bellGain.connect(audioCtx.destination);
+          bellOsc.start(now + idx * 0.03);
+          bellOsc.stop(now + 1.2);
+        });
       } else if (type === 'matrixBeep') {
         // Subtle futuristic cyber decryption chirp
         osc.type = 'sine';
@@ -606,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
 • Agentic Flow  : Autonomous agent loops, tool-augmented pipelines, multi-modal vision synthesis
 • Implementations: Real-time sign language recognition (SignBridge), intelligent prompt workflows`,
 
-    latex: `📑 <strong style="color:#c084fc;">LaTeX Document Engineering &amp; Typesetting:</strong>
+    latex: `📑 <strong style="color:#38bdf8;">LaTeX Document Engineering &amp; Typesetting:</strong>
 • Expertise     : Academic research papers, IEEE/ACM conference templates, scientific publications
 • Mathematics   : Complex mathematical formulas, equations, matrix notations, theorem proofs
 • Graphics      : TikZ vector diagrams, algorithm pseudo-code formatting, tabular layouts
@@ -654,7 +748,7 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
 2. 📱 <strong>Fawstech Innovations (Kerala Startup Mission)</strong> — 3 Days App Development in Flutter
    <a href="assets/fawstech-flutter-certificate.pdf" target="_blank" style="color:#38bdf8;text-decoration:underline;">[View Fawstech PDF]</a>
 3. 🎬 <strong>DevTown &amp; Google Developer Groups (GDG) VIT-AP</strong> — Netflix Clone Using HTML (ID: ZNOH6B)
-   <a href="assets/devtown-netflix-certificate.pdf" target="_blank" style="color:#c084fc;text-decoration:underline;">[View DevTown PDF]</a> | <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" style="color:#38bdf8;text-decoration:underline;">[Verify Online]</a>
+   <a href="assets/devtown-netflix-certificate.pdf" target="_blank" style="color:#38bdf8;text-decoration:underline;">[View DevTown PDF]</a> | <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" style="color:#38bdf8;text-decoration:underline;">[Verify Online]</a>
 4. ⚡ <strong>Techmaghi (Kinfra Hi-Tech Park • STEM Accredited)</strong> — EV Design &amp; Testing in Virtual Reality
    <a href="assets/techmaghi-ev-vr-certificate.pdf" target="_blank" style="color:#2dd4bf;text-decoration:underline;">[View Techmaghi PDF]</a>`,
 
@@ -673,12 +767,12 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
 • Competencies : Cross-platform Dart &amp; Flutter mobile apps, state management, reactive layouts
 • PDF View     : <a href="assets/fawstech-flutter-certificate.pdf" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">Open Fawstech Certificate (PDF)</a>`,
 
-    devtown: `🎬 <strong style="color:#c084fc;">Netflix Clone Using HTML:</strong>
+    devtown: `🎬 <strong style="color:#38bdf8;">Netflix Clone Using HTML:</strong>
 • Issued by    : DevTown in collaboration with Google Developer Groups (GDG) - VIT-AP
 • Issue Date   : 09 Jun 2025
 • Verification : ID <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" style="color:#38bdf8;text-decoration:underline;">ZNOH6B</a>
 • Competencies : Frontend architecture, responsive layout grids, streaming service UI replication
-• PDF View     : <a href="assets/devtown-netflix-certificate.pdf" target="_blank" rel="noopener noreferrer" style="color:#c084fc;text-decoration:underline;">Open DevTown Certificate (PDF)</a>`,
+• PDF View     : <a href="assets/devtown-netflix-certificate.pdf" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">Open DevTown Certificate (PDF)</a>`,
 
     techmaghi: `⚡ <strong style="color:#2dd4bf;">EV Design &amp; Testing in Virtual Reality:</strong>
 • Certified by : Techmaghi (Kinfra Hi-Tech Park • Kerala Startup Mission)
@@ -892,7 +986,7 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
       });
 
       // Draw Landmark Nodes
-      canvasCtx.fillStyle = '#6366f1';
+      canvasCtx.fillStyle = '#0284c7';
       [wrist, palmCenter, ...fingertips].forEach(pt => {
         canvasCtx.beginPath();
         canvasCtx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
@@ -1043,16 +1137,16 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
         pipe.x -= 2.5;
 
         // Draw Top Pipe
-        whirlyCtx.fillStyle = '#6366f1';
+        whirlyCtx.fillStyle = '#0284c7';
         whirlyCtx.fillRect(pipe.x, 0, 48, pipe.top);
-        whirlyCtx.fillStyle = '#818cf8';
+        whirlyCtx.fillStyle = '#38bdf8';
         whirlyCtx.fillRect(pipe.x - 4, pipe.top - 12, 56, 12);
 
         // Draw Bottom Pipe
         const bottomY = whirlyCanvas.height - pipe.bottom;
-        whirlyCtx.fillStyle = '#6366f1';
+        whirlyCtx.fillStyle = '#0284c7';
         whirlyCtx.fillRect(pipe.x, bottomY, 48, pipe.bottom);
-        whirlyCtx.fillStyle = '#818cf8';
+        whirlyCtx.fillStyle = '#38bdf8';
         whirlyCtx.fillRect(pipe.x - 4, bottomY, 56, 12);
 
         // Check Score Passing
@@ -1545,7 +1639,7 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
 
   const BRICK_ROWS = 5;
   const BRICK_COLS = 8;
-  const BRICK_COLORS = ['#f43f5e', '#ec4899', '#a855f7', '#06b6d4', '#10b981'];
+  const BRICK_COLORS = ['#f43f5e', '#f59e0b', '#0ea5e9', '#06b6d4', '#10b981'];
 
   let bricksState = {
     running: false,
@@ -1763,8 +1857,8 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
       }
 
       // Draw Paddle
-      bricksCtx.fillStyle = '#6366f1';
-      bricksCtx.shadowColor = 'rgba(99, 102, 241, 0.5)';
+      bricksCtx.fillStyle = '#0284c7';
+      bricksCtx.shadowColor = 'rgba(2, 132, 199, 0.5)';
       bricksCtx.shadowBlur = 10;
       bricksCtx.beginPath();
       if (typeof bricksCtx.roundRect === 'function') {
@@ -2171,28 +2265,25 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
   });
 
   // --------------------------------------------------------------------------
-  // 11. AURA NEXUS // ULTRA-PREMIUM HIGH-FPS KINETIC PORTAL ENGINE
+  // --------------------------------------------------------------------------
+  // 11. THEATRICAL HORIZON SHUTTER PROLOGUE & SPATIAL HERO BLEND ENGINE
   // --------------------------------------------------------------------------
   const entryOverlay = document.getElementById('entry-overlay');
+  const shutterTop = document.getElementById('shutter-top');
+  const shutterBottom = document.getElementById('shutter-bottom');
   const entryCard = document.getElementById('entry-card');
   const skipIntroBtn = document.getElementById('skip-intro-btn');
   const enterSiteBtn = document.getElementById('enter-site-btn');
   const replayIntroBtn = document.getElementById('replay-intro-btn');
   const entryProgressFill = document.getElementById('entry-progress-fill');
-  const entryLoaderStatus = document.getElementById('entry-loader-status');
-  const entryLoaderPercent = document.getElementById('entry-loader-percent');
   const entrySoundBtn = document.getElementById('entry-sound-btn');
-  const warpFlashEl = document.getElementById('entry-warp-flash');
-  const laserHead = document.querySelector('.nexus-laser-head');
 
   let introCompleted = false;
-  let isWarping = false;
   let entryRafId = null;
   let entryStartTime = null;
-  const entryDuration = 2300; // 2.3 seconds buttery-smooth cinematic load
-  let cachedPercent = -1;
+  const entryDuration = 3200; // 3.2s golden cinematic pacing
 
-  // 11.1 RETINA-AWARE HIGH-FPS STARDUST & COSMIC FILAMENTS CANVAS
+  // 11.1 RETINA-AWARE WARM AMBER GOLD STARDUST PARTICLES CANVAS
   const pCanvas = document.getElementById('entry-particle-canvas');
   const pCtx = pCanvas?.getContext('2d', { alpha: true });
   let particles = [];
@@ -2221,152 +2312,82 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
     pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     particles = [];
-    const count = Math.min(65, Math.max(30, Math.floor(logicalW / 24)));
-    const colors = ['#6366f1', '#38bdf8', '#818cf8', '#ffffff', '#f43f5e', '#a5b4fc'];
+    const count = Math.min(55, Math.max(30, Math.floor(logicalW / 26)));
+    // Royal Champagne Gold & Diamond Shimmer colors
+    const colors = ['#d4af37', '#f3c64c', '#fef08a', '#ffffff', '#aa7c11'];
 
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * logicalW,
         y: Math.random() * logicalH,
-        vx: (Math.random() - 0.5) * 0.55,
-        vy: (Math.random() - 0.5) * 0.55,
-        radius: Math.random() * 1.8 + 1.1,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        radius: Math.random() * 1.8 + 0.8,
         color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: Math.random() * 0.55 + 0.3
+        alpha: Math.random() * 0.5 + 0.25
       });
     }
   }
 
-  // 11.2 UNIFIED HIGH-FPS V-SYNC RENDER & SIMULATION LOOP
+  // 11.2 UNIFIED V-SYNC RENDER & SIMULATION LOOP
   function renderEntryLoop(timestamp) {
-    if (introCompleted && !isWarping) {
+    if (introCompleted) {
       if (entryRafId) cancelAnimationFrame(entryRafId);
       return;
     }
 
-    // 1. High-FPS Progress Engine Interpolation (V-Sync Driven)
-    if (!introCompleted && entryStartTime !== null) {
+    if (entryStartTime !== null) {
       const elapsed = timestamp - entryStartTime;
-      const linear = Math.min(1, Math.max(0, elapsed / entryDuration));
-      const ease = 1 - Math.pow(1 - linear, 2.4);
-      const pct = Math.min(100, Math.floor(ease * 100));
+      const progress = Math.min(1, Math.max(0, elapsed / entryDuration));
 
-      if (pct !== cachedPercent) {
-        cachedPercent = pct;
-        const pctStr = pct < 10 ? '0' + pct : '' + pct;
-        if (entryLoaderPercent) entryLoaderPercent.textContent = pctStr + '%';
-
-        if (pct < 25) {
-          if (entryLoaderStatus) entryLoaderStatus.textContent = 'Calibrating neural core & sensory matrix...';
-        } else if (pct < 55) {
-          if (entryLoaderStatus) entryLoaderStatus.textContent = 'Loading 4K cinematography & visual reels...';
-        } else if (pct < 85) {
-          if (entryLoaderStatus) entryLoaderStatus.textContent = 'Synchronizing verified credentials & AI models...';
-        } else {
-          if (entryLoaderStatus) entryLoaderStatus.textContent = 'System Synchronized // Welcome.';
-        }
+      if (entryProgressFill) {
+        entryProgressFill.style.width = (progress * 100).toFixed(1) + '%';
       }
 
-      const cssProgress = (ease * 100).toFixed(2) + '%';
-      if (entryProgressFill) entryProgressFill.style.width = cssProgress;
-      if (laserHead) laserHead.style.left = cssProgress;
-
-      if (linear >= 1) {
+      // Auto-arrive at end of sequence
+      if (progress >= 1) {
         dismissIntro();
+        return;
       }
     }
 
-    // 2. High-FPS 3D Card Physics Lerp
+    // Smooth 3D Monolith Tilt Physics Lerp
     if (entryCard && !introCompleted) {
-      currentTiltX += (targetTiltX - currentTiltX) * 0.12;
-      currentTiltY += (targetTiltY - currentTiltY) * 0.12;
-      entryCard.style.transform = `perspective(1000px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg) translateZ(10px)`;
+      currentTiltX += (targetTiltX - currentTiltX) * 0.08;
+      currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+      entryCard.style.transform = `perspective(1000px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg)`;
     }
 
-    // 3. High-FPS Canvas Particle Field Rendering
+    // Warm Amber Stardust Particle Field Rendering
     if (pCtx && pCanvas) {
       pCtx.clearRect(0, 0, logicalW, logicalH);
-
-      const centerX = logicalW / 2;
-      const centerY = logicalH / 2;
       const pLen = particles.length;
 
-      if (!isWarping) {
-        // Fast batched filament lines (Single path, single stroke)
-        pCtx.beginPath();
-        pCtx.strokeStyle = 'rgba(99, 102, 241, 0.14)';
-        pCtx.lineWidth = 0.75;
-        const maxDistSq = 85 * 85;
-
-        for (let i = 0; i < pLen; i++) {
-          const p1 = particles[i];
-          for (let j = i + 1; j < pLen; j++) {
-            const p2 = particles[j];
-            const dx = p1.x - p2.x;
-            const dy = p1.y - p2.y;
-            if (dx * dx + dy * dy < maxDistSq) {
-              pCtx.moveTo(p1.x, p1.y);
-              pCtx.lineTo(p2.x, p2.y);
-            }
-          }
-        }
-        pCtx.stroke();
-      }
-
-      // Render Particles
       for (let i = 0; i < pLen; i++) {
         const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
 
-        if (isWarping) {
-          // Hyperspace warp burst outward from center
-          const dx = p.x - centerX;
-          const dy = p.y - centerY;
-          const dist = Math.hypot(dx, dy) || 1;
-          const angle = Math.atan2(dy, dx);
-          const speed = 24 + dist * 0.06;
+        if (p.x < 0) p.x = logicalW;
+        else if (p.x > logicalW) p.x = 0;
+        if (p.y < 0) p.y = logicalH;
+        else if (p.y > logicalH) p.y = 0;
 
-          pCtx.strokeStyle = p.color;
-          pCtx.lineWidth = p.radius * 2;
-          pCtx.globalAlpha = 0.85;
-          pCtx.beginPath();
-          pCtx.moveTo(p.x, p.y);
-          pCtx.lineTo(p.x - Math.cos(angle) * speed * 2.6, p.y - Math.sin(angle) * speed * 2.6);
-          pCtx.stroke();
-
-          p.x += Math.cos(angle) * speed;
-          p.y += Math.sin(angle) * speed;
-        } else {
-          // Smooth cosmic drift
-          p.x += p.vx;
-          p.y += p.vy;
-
-          if (p.x < 0) p.x = logicalW;
-          else if (p.x > logicalW) p.x = 0;
-          if (p.y < 0) p.y = logicalH;
-          else if (p.y > logicalH) p.y = 0;
-
-          // Gravitational reaction to mouse cursor
-          const cdx = p.x - mousePos.x;
-          const cdy = p.y - mousePos.y;
-          const cdistSq = cdx * cdx + cdy * cdy;
-          if (cdistSq < 14400 && cdistSq > 0) { // 120^2
-            const cdist = Math.sqrt(cdistSq);
-            p.x += (cdx / cdist) * 1.4;
-            p.y += (cdy / cdist) * 1.4;
-          }
-
-          // Crisp node with soft ambient glow
-          pCtx.globalAlpha = p.alpha * 0.45;
-          pCtx.fillStyle = p.color;
-          pCtx.beginPath();
-          pCtx.arc(p.x, p.y, p.radius * 2.2, 0, Math.PI * 2);
-          pCtx.fill();
-
-          pCtx.globalAlpha = p.alpha;
-          pCtx.beginPath();
-          pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          pCtx.fill();
+        // Subtle organic drift to mouse
+        const cdx = p.x - mousePos.x;
+        const cdy = p.y - mousePos.y;
+        const cdistSq = cdx * cdx + cdy * cdy;
+        if (cdistSq < 16000 && cdistSq > 0) {
+          const cdist = Math.sqrt(cdistSq);
+          p.x += (cdx / cdist) * 0.9;
+          p.y += (cdy / cdist) * 0.9;
         }
+
+        pCtx.globalAlpha = p.alpha;
+        pCtx.fillStyle = p.color;
+        pCtx.beginPath();
+        pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        pCtx.fill();
       }
       pCtx.globalAlpha = 1.0;
     }
@@ -2374,7 +2395,7 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
     entryRafId = requestAnimationFrame(renderEntryLoop);
   }
 
-  // 11.3 HIGH-FPS MOUSE TILT LISTENER
+  // 11.3 MOUSE TILT LISTENER
   entryOverlay?.addEventListener('mousemove', (e) => {
     mousePos.x = e.clientX;
     mousePos.y = e.clientY;
@@ -2387,8 +2408,8 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
     const deltaX = (e.clientX - cardCenterX) / (rect.width / 2);
     const deltaY = (e.clientY - cardCenterY) / (rect.height / 2);
 
-    targetTiltX = -deltaY * 7.5;
-    targetTiltY = deltaX * 7.5;
+    targetTiltX = -deltaY * 5;
+    targetTiltY = deltaX * 5;
   }, { passive: true });
 
   entryOverlay?.addEventListener('mouseleave', () => {
@@ -2400,65 +2421,57 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
     if (!introCompleted) initParticleField();
   }, { passive: true });
 
-  // 11.4 TYPOGRAPHIC KINETIC STAGGER REVEAL
-  function runKineticTitleAnimation() {
-    playSound('nexusTone');
-    const chars = document.querySelectorAll('.nexus-char');
-    chars.forEach((c, idx) => {
-      c.classList.remove('revealed');
-      setTimeout(() => {
-        c.classList.add('revealed');
-      }, idx * 65 + 100);
-    });
-  }
-
-  // 11.5 SOUND TOGGLE ON ENTRY
-  entrySoundBtn?.addEventListener('click', () => {
+  // 11.4 SOUND TOGGLE ON ENTRY
+  entrySoundBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
     toggleSoundState();
   });
 
-  // 11.6 PORTAL DISMISS & HERO ARRIVAL UNFOLD
+  // 11.5 DISMISS INTRO & SEAMLESS THEATRICAL BLEND INTO HOMEPAGE
   function dismissIntro() {
     if (introCompleted) return;
     introCompleted = true;
 
     if (entryProgressFill) entryProgressFill.style.width = '100%';
-    if (entryLoaderPercent) entryLoaderPercent.textContent = '100%';
-    if (entryLoaderStatus) entryLoaderStatus.textContent = 'Access Granted // Welcome.';
 
-    // High-end crystal portal chime + shutter lock
-    isWarping = true;
-    playSound('nexusPortal');
+    // Play elegant cinematic arrival chimes
+    playSound('crystalBell');
+    playSound('velvetWhoosh');
 
-    // Trigger Optical Portal Burst Bloom
-    if (warpFlashEl) warpFlashEl.classList.add('bursting');
+    // Trigger theatrical shutter curtain split
+    if (entryOverlay) {
+      entryOverlay.classList.add('unveiling');
+      entryOverlay.classList.add('exit');
+    }
 
-    // Split Dual Optical Shutter Plates
-    entryOverlay?.classList.add('exit');
+    // Hero Section smoothly blooms from blur & scale into tack-sharp focus
+    const hero = document.getElementById('hero');
+    const navbar = document.getElementById('navbar');
 
-    // Smooth Hero & Navbar Unfold
-    setTimeout(() => {
-      const hero = document.getElementById('hero');
-      const navbar = document.getElementById('navbar');
+    if (hero) {
+      hero.classList.remove('hero-blending');
+      hero.classList.add('hero-blended');
+      hero.classList.add('hero-unfold-active');
+    }
 
-      hero?.classList.add('hero-unfold-active');
-      navbar?.classList.add('nav-slide-down');
+    if (navbar) {
+      navbar.classList.add('nav-slide-down');
+    }
 
-      document.querySelectorAll('#hero .fade-in-up').forEach((el, idx) => {
-        setTimeout(() => el.classList.add('visible'), idx * 80);
-      });
-    }, 380);
+    // Stagger reveal of hero elements
+    document.querySelectorAll('#hero .fade-in-up').forEach((el, idx) => {
+      setTimeout(() => el.classList.add('visible'), 120 + idx * 80);
+    });
 
+    // Remove overlay from pointer and visual tree after shutters finish opening
     setTimeout(() => {
       if (entryRafId) cancelAnimationFrame(entryRafId);
       if (entryOverlay) entryOverlay.style.display = 'none';
-    }, 1050);
+    }, 1000);
   }
 
   function runEntryAnimation() {
     introCompleted = false;
-    isWarping = false;
-    cachedPercent = -1;
     targetTiltX = 0;
     targetTiltY = 0;
     currentTiltX = 0;
@@ -2466,35 +2479,39 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
 
     if (entryRafId) cancelAnimationFrame(entryRafId);
 
+    const hero = document.getElementById('hero');
+    if (hero) {
+      hero.classList.remove('hero-blended', 'hero-unfold-active');
+      hero.classList.add('hero-blending');
+    }
+
     if (entryOverlay) {
       entryOverlay.style.display = 'flex';
-      entryOverlay.classList.remove('exit');
+      entryOverlay.classList.remove('unveiling', 'exit');
     }
-    if (warpFlashEl) {
-      warpFlashEl.classList.remove('bursting');
-    }
+
     if (entryCard) {
-      entryCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+      entryCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
     }
 
     if (entryProgressFill) entryProgressFill.style.width = '0%';
-    if (entryLoaderPercent) entryLoaderPercent.textContent = '00%';
-    if (entryLoaderStatus) entryLoaderStatus.textContent = 'Initializing neural interface & sensory matrix...';
-
-    if (laserHead) {
-      laserHead.style.left = '0%';
-      laserHead.style.opacity = '1';
-    }
 
     syncSoundUI();
 
-    // Start High-FPS Retina Particle Canvas
+    // Start Amber Stardust Field
     initParticleField();
 
-    // Trigger Kinetic Typography Reveal
-    runKineticTitleAnimation();
+    // Play opening chime
+    playSound('classicChime');
 
-    // Synchronize Entry Loop with display refresh rate (V-Sync)
+    // Replay gold letter animations
+    document.querySelectorAll('.gold-char').forEach(char => {
+      char.style.animation = 'none';
+      void char.offsetHeight; // reflow
+      char.style.animation = '';
+    });
+
+    // Synchronize Entry Loop with display refresh rate
     entryStartTime = performance.now();
     entryRafId = requestAnimationFrame(renderEntryLoop);
   }
@@ -2502,26 +2519,44 @@ AI-powered interview platform for Deaf and Hard-of-Hearing candidates using Indi
   // Initialize entry experience on page load
   runEntryAnimation();
 
-  skipIntroBtn?.addEventListener('click', () => {
+  skipIntroBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
     playSound('click');
     dismissIntro();
   });
 
-  enterSiteBtn?.addEventListener('click', () => {
-    playSound('click');
+  enterSiteBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
     dismissIntro();
   });
 
   replayIntroBtn?.addEventListener('click', () => {
     playSound('click');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    runEntryAnimation();
+    setTimeout(() => {
+      runEntryAnimation();
+    }, 200);
   });
 
+  // Global hotkeys during entry: Space / Enter to enter, Esc to skip
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !entryOverlay?.classList.contains('exit')) {
-      dismissIntro();
+    if (entryOverlay && entryOverlay.style.display !== 'none' && !entryOverlay.classList.contains('exit')) {
+      if (e.key === 'Escape') {
+        dismissIntro();
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        if (e.target !== skipIntroBtn && e.target !== entrySoundBtn) {
+          e.preventDefault();
+          dismissIntro();
+        }
+      }
     }
   });
+
+  // Mouse wheel scroll to smoothly unveil
+  window.addEventListener('wheel', (e) => {
+    if (entryOverlay && entryOverlay.style.display !== 'none' && !introCompleted && e.deltaY > 15) {
+      dismissIntro();
+    }
+  }, { passive: true });
 });
 
