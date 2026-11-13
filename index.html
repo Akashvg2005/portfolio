@@ -316,36 +316,47 @@
           <span class="viewfinder-bracket-bl"></span>
           <span class="viewfinder-bracket-br"></span>
 
-          <div class="curtain-reveal-box">
+          <div class="curtain-reveal-box" id="viewfinder-curtain-box">
             <div class="silver-curtain"></div>
-            <img id="viewfinder-main-img" src="assets/images/akash-portrait-monument.jpg" alt="Akash V G Portrait" class="portrait-image" loading="lazy" />
+            
+            <!-- Automated & Interactive Camera Shutter Slideshow -->
+            <div class="viewfinder-slideshow" id="viewfinder-slideshow">
+              <div class="slideshow-slide active" data-slide-index="0">
+                <img src="assets/images/akash-portrait-monument.jpg" alt="Akash V G" class="portrait-image" loading="lazy" />
+              </div>
+              <div class="slideshow-slide" data-slide-index="1">
+                <img src="assets/images/akash-mountains.jpg" alt="Akash V G" class="portrait-image" loading="lazy" />
+              </div>
+              <div class="slideshow-slide" data-slide-index="2">
+                <img src="assets/images/akash-cinematographer.jpg" alt="Akash V G" class="portrait-image" loading="lazy" />
+              </div>
+
+              <!-- Optical Shutter Flash Overlay -->
+              <div class="viewfinder-shutter-flash" id="viewfinder-shutter-flash"></div>
+            </div>
+
+            <!-- Viewfinder HUD Overlays: Camera Telemetry Only (No Image Names in Bottom) -->
+            <div class="viewfinder-overlay-hud">
+              <div class="hud-top-row">
+                <span>REC &bull; 24FPS</span>
+                <span>ISO 400 &bull; f/2.0</span>
+              </div>
+              <div class="hud-bottom-row">
+                <span>SHUTTER: 1/50s</span>
+                <span>35mm FILM &bull; KERALA, IN</span>
+              </div>
+            </div>
           </div>
 
-          <div class="viewfinder-overlay-hud">
-            <div class="hud-top-row">
-              <span>REC &bull; 24FPS</span>
-              <span>ISO 400 &bull; f/2.0</span>
+          <!-- Minimalist Shutter Frame Progress Controls (No Names) -->
+          <div class="slideshow-progress-bar" aria-label="Slideshow Controls">
+            <button type="button" class="slideshow-arrow-btn prev" id="slideshow-prev-btn" aria-label="Previous Frame">&lsaquo;</button>
+            <div class="slideshow-dashes">
+              <button type="button" class="slide-dash-btn active" data-dash-index="0" aria-label="Slide 1"></button>
+              <button type="button" class="slide-dash-btn" data-dash-index="1" aria-label="Slide 2"></button>
+              <button type="button" class="slide-dash-btn" data-dash-index="2" aria-label="Slide 3"></button>
             </div>
-            <div class="hud-bottom-row">
-              <span id="viewfinder-hud-frame-label">FRAME: AKASH V G // MONUMENT</span>
-              <span>1/50s &bull; KERALA, IN</span>
-            </div>
-          </div>
-
-          <!-- Interactive Location Portrait Camera Roll -->
-          <div class="viewfinder-roll-selector" aria-label="Location Portrait Selector">
-            <button type="button" class="roll-thumb-btn active" data-photo-src="assets/images/akash-portrait-monument.jpg" data-photo-label="FRAME: AKASH V G // MONUMENT">
-              <img src="assets/images/akash-portrait-monument.jpg" alt="Monument Portrait" class="roll-thumb-preview" />
-              <span class="roll-thumb-caption">01 // MONUMENT</span>
-            </button>
-            <button type="button" class="roll-thumb-btn" data-photo-src="assets/images/akash-mountains.jpg" data-photo-label="FRAME: AKASH V G // MOUNTAIN EXP">
-              <img src="assets/images/akash-mountains.jpg" alt="Mountain Field" class="roll-thumb-preview" />
-              <span class="roll-thumb-caption">02 // MOUNTAIN</span>
-            </button>
-            <button type="button" class="roll-thumb-btn" data-photo-src="assets/images/akash-cinematographer.jpg" data-photo-label="FRAME: AKASH V G // ON SET SHOOT">
-              <img src="assets/images/akash-cinematographer.jpg" alt="Cinematographer on Set" class="roll-thumb-preview" />
-              <span class="roll-thumb-caption">03 // ON SET</span>
-            </button>
+            <button type="button" class="slideshow-arrow-btn next" id="slideshow-next-btn" aria-label="Next Frame">&rsaquo;</button>
           </div>
         </div>
 

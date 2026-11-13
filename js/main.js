@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSliders();
   initThreeScene();
   initScrollSystem();
-  initViewfinderRoll();
+  initViewfinderSlideshow();
   initGameCentre();
   initModals();
   initNavApertures();
@@ -87,37 +87,103 @@ function initFilmGrain() {
 }
 
 /**
- * Interactive Viewfinder Photo Roll in About Section
- * Allows visitors to toggle between Akash's real location portraits
+ * Camera Shutter Slideshow in About Section
+ * Automatic & Interactive transitions between real portraits with optical exposure flash
+ * (No text names displayed in bottom)
  */
-function initViewfinderRoll() {
-  const mainImg = document.getElementById('viewfinder-main-img');
-  const hudFrameLabel = document.getElementById('viewfinder-hud-frame-label');
-  const thumbBtns = document.querySelectorAll('.roll-thumb-btn');
+function initViewfinderSlideshow() {
+  const slideshow = document.getElementById('viewfinder-slideshow');
+  const slides = document.querySelectorAll('.slideshow-slide');
+  const dashes = document.querySelectorAll('.slide-dash-btn');
+  const prevBtn = document.getElementById('slideshow-prev-btn');
+  const nextBtn = document.getElementById('slideshow-next-btn');
+  const flash = document.getElementById('viewfinder-shutter-flash');
 
-  if (!mainImg || thumbBtns.length === 0) return;
+  if (!slideshow || slides.length === 0) return;
 
-  thumbBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const newSrc = btn.getAttribute('data-photo-src');
-      const newLabel = btn.getAttribute('data-photo-label') || 'AKASH V G';
+  let currentIndex = 0;
+  let timer = null;
+  let isTransitioning = false;
 
-      if (!newSrc || mainImg.getAttribute('src') === newSrc) return;
+  function goToSlide(index) {
+    if (isTransitioning || index === currentIndex) return;
+    isTransitioning = true;
 
-      thumbBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    // Optical Shutter Flash / Curtain Wipe
+    if (flash) {
+      flash.classList.add('flashing');
+    }
 
-      // Quick shutter fade transition
-      mainImg.style.opacity = '0.3';
-      mainImg.style.transform = 'scale(1.04)';
+    // Outgoing slide
+    slides[currentIndex].classList.remove('active');
+    if (dashes[currentIndex]) dashes[currentIndex].classList.remove('active');
+
+    currentIndex = (index + slides.length) % slides.length;
+
+    // Incoming slide with scale and exposure reveal
+    setTimeout(() => {
+      slides[currentIndex].classList.add('active');
+      if (dashes[currentIndex]) dashes[currentIndex].classList.add('active');
+      if (flash) flash.classList.remove('flashing');
       setTimeout(() => {
-        mainImg.src = newSrc;
-        if (hudFrameLabel) hudFrameLabel.textContent = newLabel;
-        mainImg.style.opacity = '1';
-        mainImg.style.transform = 'scale(1.0)';
-      }, 160);
+        isTransitioning = false;
+      }, 300);
+    }, 110);
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+
+  function startTimer() {
+    stopTimer();
+    timer = setInterval(nextSlide, 4500);
+  }
+
+  function stopTimer() {
+    if (timer) clearInterval(timer);
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextSlide();
+      startTimer();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevSlide();
+      startTimer();
+    });
+  }
+
+  dashes.forEach((dash) => {
+    dash.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetIdx = parseInt(dash.getAttribute('data-dash-index'), 10);
+      goToSlide(targetIdx);
+      startTimer();
     });
   });
+
+  // Clicking on the viewfinder image advances to next frame
+  slideshow.addEventListener('click', () => {
+    nextSlide();
+    startTimer();
+  });
+
+  // Pause on hover
+  slideshow.addEventListener('mouseenter', stopTimer);
+  slideshow.addEventListener('mouseleave', startTimer);
+
+  startTimer();
 }
 
 /**
