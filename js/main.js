@@ -217,6 +217,12 @@ function initGameCentre() {
 
   // GAME 2: HALIDE RUNNER
   initRunnerGame();
+
+  // GAME 3: FOCUS PULLER
+  initFocusPullerGame();
+
+  // GAME 4: RANGEFINDER SNIPE
+  initRangefinderSnipeGame();
 }
 
 function initShutterGame() {
@@ -535,6 +541,562 @@ function initRunnerGame() {
 }
 
 /**
+ * GAME 3: FOCUS PULLER (Rack Focus & Focus Peaking)
+ */
+function initFocusPullerGame() {
+  const slider = document.getElementById('focus-ring-slider');
+  const distReadout = document.getElementById('focus-current-dist-readout');
+  const directorCall = document.getElementById('focus-director-call');
+  const peakingIndicator = document.getElementById('focus-peaking-indicator');
+  const timerVal = document.getElementById('focus-timer-val');
+  const toast = document.getElementById('focus-result-toast');
+  const lockBtn = document.getElementById('btn-lock-focus');
+  const scoreVal = document.getElementById('focus-score-val');
+  const takesVal = document.getElementById('focus-takes-val');
+  const streakVal = document.getElementById('focus-streak-val');
+  const ratingVal = document.getElementById('focus-rating-val');
+  const cards = document.querySelectorAll('.focus-subject-card');
+  const viewport = document.getElementById('focus-optical-viewport');
+  const scaleMarks = document.querySelectorAll('.focus-barrel-scale .scale-mark');
+
+  if (!slider || !lockBtn) return;
+
+  const targets = [
+    { label: 'ACTOR FOREGROUND (0.8m)', depth: 0.8, id: 'focus-plane-fore' },
+    { label: 'ACTOR MIDGROUND (2.0m)', depth: 2.0, id: 'focus-plane-mid' },
+    { label: 'ACTOR BACKGROUND (4.5m)', depth: 4.5, id: 'focus-plane-back' },
+    { label: 'RACK TO FOREGROUND (0.8m)', depth: 0.8, id: 'focus-plane-fore' },
+    { label: 'RACK TO BACKGROUND (4.5m)', depth: 4.5, id: 'focus-plane-back' },
+    { label: 'RACK TO MIDGROUND (2.0m)', depth: 2.0, id: 'focus-plane-mid' },
+    { label: 'CLOSE-UP FOREGROUND (0.8m)', depth: 0.8, id: 'focus-plane-fore' },
+    { label: 'MASTER SHOT MIDGROUND (2.0m)', depth: 2.0, id: 'focus-plane-mid' }
+  ];
+
+  let currentTake = 0;
+  let score = 0;
+  let streak = 0;
+  let isLocked = false;
+  let timerInterval = null;
+  let remainingTime = 5.0;
+
+  function updateVisuals(dist) {
+    if (distReadout) distReadout.textContent = `${dist.toFixed(2)}m`;
+
+    scaleMarks.forEach(mark => {
+      const markText = mark.textContent.trim();
+      const markVal = parseFloat(markText);
+      if (!isNaN(markVal) && Math.abs(dist - markVal) < 0.35) {
+        mark.classList.add('active');
+      } else {
+        mark.classList.remove('active');
+      }
+    });
+
+    const activeTarget = targets[currentTake % targets.length];
+    let isPeaking = false;
+
+    cards.forEach(card => {
+      const cardDepth = parseFloat(card.getAttribute('data-depth') || '1.0');
+      const delta = Math.abs(dist - cardDepth);
+      const blurPx = Math.min(14, delta * 7.5);
+      card.style.filter = `blur(${blurPx.toFixed(1)}px)`;
+
+      if (card.id === activeTarget.id) {
+        card.classList.add('target-cue');
+        if (delta <= 0.22) {
+          card.classList.add('peaking-lock');
+          isPeaking = true;
+        } else {
+          card.classList.remove('peaking-lock');
+        }
+      } else {
+        card.classList.remove('target-cue');
+        card.classList.remove('peaking-lock');
+      }
+    });
+
+    if (peakingIndicator) {
+      if (isPeaking) {
+        peakingIndicator.textContent = 'CRITICAL LOCK';
+        peakingIndicator.classList.add('active');
+      } else {
+        peakingIndicator.textContent = 'SEARCHING';
+        peakingIndicator.classList.remove('active');
+      }
+    }
+  }
+
+  function startTakeTimer() {
+    clearInterval(timerInterval);
+    remainingTime = 5.0;
+    if (timerVal) timerVal.textContent = `${remainingTime.toFixed(1)}s`;
+
+    timerInterval = setInterval(() => {
+      remainingTime -= 0.1;
+      if (remainingTime <= 0) {
+        remainingTime = 0;
+        clearInterval(timerInterval);
+        triggerExposure(true);
+      }
+      if (timerVal) timerVal.textContent = `${Math.max(0, remainingTime).toFixed(1)}s`;
+    }, 100);
+  }
+
+  function setupTake() {
+    isLocked = false;
+    const activeTarget = targets[currentTake % targets.length];
+    if (directorCall) directorCall.textContent = `TARGET: ${activeTarget.label}`;
+    if (takesVal) takesVal.textContent = `${(currentTake % targets.length) + 1}/${targets.length}`;
+    updateVisuals(parseFloat(slider.value));
+    startTakeTimer();
+  }
+
+  function triggerExposure(isTimeout = false) {
+    if (isLocked) return;
+    isLocked = true;
+    clearInterval(timerInterval);
+
+    window.__playShutterSound?.();
+
+    const currentDist = parseFloat(slider.value);
+    const target = targets[currentTake % targets.length];
+    const delta = isTimeout ? 999 : Math.abs(currentDist - target.depth);
+
+    let earnedPts = 0;
+    let toastMsg = '';
+    let rating = '';
+
+    if (delta <= 0.20) {
+      streak++;
+      earnedPts = 500 * streak;
+      toastMsg = `CRITICAL 4K FOCUS! +${earnedPts}`;
+      rating = `PIN SHARP &bull; COMBO ${streak}x`;
+    } else if (delta <= 0.45) {
+      earnedPts = 250;
+      streak = 0;
+      toastMsg = `SHARP CAPTURE +${earnedPts}`;
+      rating = `ACCEPTABLE DOFF &bull; ${delta.toFixed(2)}m OFF`;
+    } else {
+      streak = 0;
+      earnedPts = 0;
+      toastMsg = isTimeout ? 'TIME EXPIRED / CUT!' : 'SOFT FOCUS / RE-TAKE';
+      rating = `OUT OF FOCUS &bull; RESET`;
+    }
+
+    score += earnedPts;
+    if (scoreVal) scoreVal.textContent = String(score);
+    if (streakVal) streakVal.textContent = `${streak}x`;
+    if (ratingVal) ratingVal.innerHTML = rating;
+
+    if (toast) {
+      toast.textContent = toastMsg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 700);
+    }
+
+    currentTake++;
+    setTimeout(() => {
+      setupTake();
+    }, 900);
+  }
+
+  slider.addEventListener('input', () => {
+    updateVisuals(parseFloat(slider.value));
+  });
+
+  if (viewport) {
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const step = 0.08;
+      const current = parseFloat(slider.value);
+      const next = Math.max(0.5, Math.min(5.5, current + (e.deltaY < 0 ? -step : step)));
+      slider.value = String(next);
+      updateVisuals(next);
+    }, { passive: false });
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const targetDepth = parseFloat(card.getAttribute('data-depth') || '0.8');
+      slider.value = String(targetDepth);
+      updateVisuals(targetDepth);
+    });
+  });
+
+  lockBtn.addEventListener('click', () => triggerExposure(false));
+
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !e.repeat) {
+      const focusView = document.getElementById('game-focus-puller');
+      if (focusView && focusView.classList.contains('active')) {
+        const rect = focusView.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          e.preventDefault();
+          triggerExposure(false);
+        }
+      }
+    }
+  });
+
+  setupTake();
+}
+
+/**
+ * GAME 4: RANGEFINDER SNIPE (Rule-of-Thirds Target Shooting)
+ */
+function initRangefinderSnipeGame() {
+  const canvas = document.getElementById('rangefinder-snipe-canvas');
+  const timerVal = document.getElementById('snipe-timer-val');
+  const scoreVal = document.getElementById('snipe-score-val');
+  const hitsVal = document.getElementById('snipe-hits-val');
+  const accVal = document.getElementById('snipe-acc-val');
+  const highVal = document.getElementById('snipe-high-val');
+  const modal = document.getElementById('snipe-modal');
+  const modalTitle = document.getElementById('snipe-modal-title');
+  const modalDesc = document.getElementById('snipe-modal-desc');
+  const startBtn = document.getElementById('snipe-start-btn');
+
+  if (!canvas || !startBtn) return;
+
+  const ctx = canvas.getContext('2d');
+  let width, height;
+
+  function resize() {
+    width = canvas.width = canvas.parentElement.clientWidth || 680;
+    height = canvas.height = canvas.parentElement.clientHeight || 320;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  let isPlaying = false;
+  let score = 0;
+  let hits = 0;
+  let totalShots = 0;
+  let timeLeft = 30.0;
+  let timerId = null;
+  let highScore = parseInt(localStorage.getItem('silver_snipe_high') || '0', 10);
+  if (highVal) highVal.textContent = String(highScore);
+
+  let mouseX = width / 2;
+  let mouseY = height / 2;
+  let flashAlpha = 0;
+  let targets = [];
+  let particles = [];
+  let floatingTexts = [];
+
+  function spawnTarget() {
+    const types = ['pedestrian', 'car', 'bird', 'flare'];
+    const type = types[Math.floor(Math.random() * types.length)];
+    const speed = 1.2 + Math.random() * 1.8;
+    const direction = Math.random() > 0.5 ? 1 : -1;
+    const startX = direction === 1 ? -30 : width + 30;
+    const startY = 40 + Math.random() * (height - 90);
+
+    return {
+      x: startX,
+      y: startY,
+      vx: speed * direction,
+      vy: (Math.random() - 0.5) * 0.4,
+      radius: type === 'bird' ? 14 : (type === 'car' ? 24 : 18),
+      type: type
+    };
+  }
+
+  function initTargets() {
+    targets = [];
+    for (let i = 0; i < 4; i++) {
+      const t = spawnTarget();
+      t.x = Math.random() * width;
+      targets.push(t);
+    }
+  }
+
+  function startGame() {
+    score = 0;
+    hits = 0;
+    totalShots = 0;
+    timeLeft = 30.0;
+    isPlaying = true;
+    particles = [];
+    floatingTexts = [];
+    initTargets();
+
+    if (scoreVal) scoreVal.textContent = '0';
+    if (hitsVal) hitsVal.textContent = '0';
+    if (accVal) accVal.textContent = '100%';
+    if (modal) modal.classList.remove('is-active');
+
+    clearInterval(timerId);
+    timerId = setInterval(() => {
+      timeLeft -= 0.1;
+      if (timeLeft <= 0) {
+        timeLeft = 0;
+        endGame();
+      }
+      if (timerVal) timerVal.textContent = `${timeLeft.toFixed(1)}s`;
+    }, 100);
+  }
+
+  function endGame() {
+    isPlaying = false;
+    clearInterval(timerId);
+
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem('silver_snipe_high', String(highScore));
+      if (highVal) highVal.textContent = String(highScore);
+    }
+
+    if (modalTitle) modalTitle.textContent = 'Film Roll Exposed';
+    if (modalDesc) {
+      const accuracy = totalShots > 0 ? Math.round((hits / totalShots) * 100) : 100;
+      modalDesc.innerHTML = `FINAL SCORE: <strong>${score} PTS</strong> &bull; HITS: ${hits}/${totalShots} (${accuracy}%)`;
+    }
+    if (modal) modal.classList.add('is-active');
+  }
+
+  startBtn.addEventListener('click', startGame);
+
+  canvas.addEventListener('pointermove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  });
+
+  function shoot() {
+    if (!isPlaying) return;
+
+    totalShots++;
+    flashAlpha = 0.85;
+    window.__playShutterSound?.();
+
+    const thirdX1 = width / 3;
+    const thirdX2 = (width * 2) / 3;
+    const thirdY1 = height / 3;
+    const thirdY2 = (height * 2) / 3;
+    const powerNodes = [
+      { x: thirdX1, y: thirdY1 },
+      { x: thirdX2, y: thirdY1 },
+      { x: thirdX1, y: thirdY2 },
+      { x: thirdX2, y: thirdY2 }
+    ];
+
+    let hitIndex = -1;
+    for (let i = 0; i < targets.length; i++) {
+      const t = targets[i];
+      const dist = Math.hypot(mouseX - t.x, mouseY - t.y);
+      if (dist <= t.radius + 18) {
+        hitIndex = i;
+        break;
+      }
+    }
+
+    if (hitIndex !== -1) {
+      hits++;
+      const hitTarget = targets[hitIndex];
+
+      let isGolden = false;
+      for (const node of powerNodes) {
+        if (Math.hypot(hitTarget.x - node.x, hitTarget.y - node.y) < 46) {
+          isGolden = true;
+          break;
+        }
+      }
+
+      const pts = isGolden ? 600 : 250;
+      score += pts;
+
+      for (let p = 0; p < 12; p++) {
+        particles.push({
+          x: hitTarget.x,
+          y: hitTarget.y,
+          vx: (Math.random() - 0.5) * 5,
+          vy: (Math.random() - 0.5) * 5,
+          life: 25,
+          color: isGolden ? '#ffffff' : '#C7CAD0'
+        });
+      }
+
+      floatingTexts.push({
+        x: hitTarget.x,
+        y: hitTarget.y - 10,
+        text: isGolden ? 'GOLDEN RATIO COMBO! +600' : 'SHARP CAPTURE +250',
+        color: isGolden ? '#ffffff' : '#D0D4DC',
+        life: 30
+      });
+
+      targets[hitIndex] = spawnTarget();
+    } else {
+      score = Math.max(0, score - 50);
+      floatingTexts.push({
+        x: mouseX,
+        y: mouseY - 10,
+        text: 'MISSED -50',
+        color: '#8A939E',
+        life: 20
+      });
+    }
+
+    const accuracy = Math.round((hits / totalShots) * 100);
+    if (scoreVal) scoreVal.textContent = String(score);
+    if (hitsVal) hitsVal.textContent = String(hits);
+    if (accVal) accVal.textContent = `${accuracy}%`;
+  }
+
+  canvas.addEventListener('click', shoot);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !e.repeat) {
+      const snipeView = document.getElementById('game-rangefinder-snipe');
+      if (snipeView && snipeView.classList.contains('active')) {
+        const rect = snipeView.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          e.preventDefault();
+          shoot();
+        }
+      }
+    }
+  });
+
+  function draw() {
+    ctx.fillStyle = '#08090a';
+    ctx.fillRect(0, 0, width, height);
+
+    const thirdX1 = width / 3;
+    const thirdX2 = (width * 2) / 3;
+    const thirdY1 = height / 3;
+    const thirdY2 = (height * 2) / 3;
+
+    ctx.strokeStyle = 'rgba(138, 147, 158, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+
+    ctx.beginPath();
+    ctx.moveTo(thirdX1, 0); ctx.lineTo(thirdX1, height);
+    ctx.moveTo(thirdX2, 0); ctx.lineTo(thirdX2, height);
+    ctx.moveTo(0, thirdY1); ctx.lineTo(width, thirdY1);
+    ctx.moveTo(0, thirdY2); ctx.lineTo(width, thirdY2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    const powerNodes = [
+      { x: thirdX1, y: thirdY1 },
+      { x: thirdX2, y: thirdY1 },
+      { x: thirdX1, y: thirdY2 },
+      { x: thirdX2, y: thirdY2 }
+    ];
+
+    powerNodes.forEach(node => {
+      ctx.strokeStyle = 'rgba(246, 247, 248, 0.5)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 6, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+
+    if (isPlaying) {
+      targets.forEach(t => {
+        t.x += t.vx;
+        t.y += t.vy;
+
+        if (t.x < -40) t.x = width + 40;
+        if (t.x > width + 40) t.x = -40;
+        if (t.y < 30 || t.y > height - 40) t.vy *= -1;
+
+        ctx.save();
+        ctx.translate(t.x, t.y);
+
+        if (t.type === 'bird') {
+          ctx.strokeStyle = '#D0D4DC';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(-10, 4);
+          ctx.quadraticCurveTo(-4, -6, 0, 0);
+          ctx.quadraticCurveTo(4, -6, 10, 4);
+          ctx.stroke();
+        } else if (t.type === 'car') {
+          ctx.fillStyle = '#8A939E';
+          ctx.fillRect(-18, -6, 36, 12);
+          ctx.fillStyle = '#C7CAD0';
+          ctx.fillRect(-8, -12, 18, 7);
+          ctx.fillStyle = '#08090a';
+          ctx.beginPath();
+          ctx.arc(-10, 6, 4, 0, Math.PI * 2);
+          ctx.arc(10, 6, 4, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (t.type === 'flare') {
+          const grad = ctx.createRadialGradient(0, 0, 2, 0, 0, 16);
+          grad.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(0, 0, 16, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillStyle = '#C7CAD0';
+          ctx.beginPath();
+          ctx.arc(0, -10, 4.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillRect(-3, -5, 6, 14);
+        }
+
+        ctx.restore();
+      });
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, 2, 2);
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+
+      for (let i = floatingTexts.length - 1; i >= 0; i--) {
+        const ft = floatingTexts[i];
+        ft.y -= 0.8;
+        ft.life--;
+        ctx.fillStyle = ft.color;
+        ctx.font = '10px "IBM Plex Mono", monospace';
+        ctx.fillText(ft.text, ft.x - 40, ft.y);
+        if (ft.life <= 0) floatingTexts.splice(i, 1);
+      }
+
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(mouseX - 14, mouseY - 10, 28, 20);
+      ctx.setLineDash([2, 2]);
+      ctx.strokeRect(mouseX - 11, mouseY - 8, 22, 16);
+      ctx.setLineDash([]);
+
+      const bLen = 8;
+      const bRad = 24;
+      ctx.strokeStyle = 'rgba(246, 247, 248, 0.65)';
+      ctx.beginPath();
+      ctx.moveTo(mouseX - bRad, mouseY - bRad + bLen); ctx.lineTo(mouseX - bRad, mouseY - bRad); ctx.lineTo(mouseX - bRad + bLen, mouseY - bRad);
+      ctx.moveTo(mouseX + bRad - bLen, mouseY - bRad); ctx.lineTo(mouseX + bRad, mouseY - bRad); ctx.lineTo(mouseX + bRad, mouseY - bRad + bLen);
+      ctx.moveTo(mouseX - bRad, mouseY + bRad - bLen); ctx.lineTo(mouseX - bRad, mouseY + bRad); ctx.lineTo(mouseX - bRad + bLen, mouseY + bRad);
+      ctx.moveTo(mouseX + bRad - bLen, mouseY + bRad); ctx.lineTo(mouseX + bRad, mouseY + bRad); ctx.lineTo(mouseX + bRad, mouseY + bRad - bLen);
+      ctx.stroke();
+    }
+
+    if (flashAlpha > 0.01) {
+      ctx.fillStyle = `rgba(255, 255, 255, ${flashAlpha})`;
+      ctx.fillRect(0, 0, width, height);
+      flashAlpha *= 0.68;
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  initTargets();
+  requestAnimationFrame(draw);
+}
+
+/**
  * Nav Links Aperture Icon Hover Rotation
  */
 function initNavApertures() {
@@ -680,6 +1242,8 @@ function initMechanicalAudio() {
       // Audio autoplay policy or unsupported: fail silently
     }
   }
+
+  window.__playShutterSound = playShutterClick;
 
   const shutterButtons = document.querySelectorAll('.trigger-shutter-sound, .btn-shutter, .btn-arcade-shutter');
   shutterButtons.forEach((btn) => {
