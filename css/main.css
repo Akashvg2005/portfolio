@@ -944,7 +944,7 @@ body.has-custom-cursor textarea {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%) contrast(110%);
+  filter: contrast(105%) saturate(106%); /* Full, vivid color */
   display: block;
 }
 
@@ -1109,11 +1109,22 @@ body.has-custom-cursor textarea {
   border-radius: 2px;
 }
 
+.frame-media-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grainNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grainNoise)' opacity='0.20'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.8;
+  z-index: 2;
+}
+
 .frame-media-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%) contrast(108%);
+  filter: contrast(106%) saturate(104%);
   transition: transform 0.5s ease;
 }
 
@@ -1789,6 +1800,18 @@ body.has-custom-cursor textarea {
   filter: blur(0px);
   pointer-events: auto;
   z-index: 1;
+}
+
+/* 35mm Analog Film Grain Texture Overlay on All Slides */
+.slideshow-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grainNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grainNoise)' opacity='0.22'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.85;
+  z-index: 2;
 }
 
 /* Optical Shutter Flash Overlay */
