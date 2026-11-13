@@ -166,12 +166,12 @@
             </a>
           </li>
           <li>
-            <a href="#arcade" class="nav-link-item">
+            <a href="#showreel" class="nav-link-item">
               <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="9"></circle>
                 <path d="M12 3v6l5 3"></path>
               </svg>
-              <span>Arcade</span>
+              <span>Reel</span>
             </a>
           </li>
           <li>
@@ -318,7 +318,7 @@
 
           <div class="curtain-reveal-box">
             <div class="silver-curtain"></div>
-            <img src="assets/images/profile.jpg" alt="Akash V G Portrait" class="portrait-image" loading="lazy" />
+            <img id="viewfinder-main-img" src="assets/images/akash-portrait-monument.jpg" alt="Akash V G Portrait" class="portrait-image" loading="lazy" />
           </div>
 
           <div class="viewfinder-overlay-hud">
@@ -327,9 +327,25 @@
               <span>ISO 400 &bull; f/2.0</span>
             </div>
             <div class="hud-bottom-row">
-              <span>FRAME: AKASH V G</span>
+              <span id="viewfinder-hud-frame-label">FRAME: AKASH V G // MONUMENT</span>
               <span>1/50s &bull; KERALA, IN</span>
             </div>
+          </div>
+
+          <!-- Interactive Location Portrait Camera Roll -->
+          <div class="viewfinder-roll-selector" aria-label="Location Portrait Selector">
+            <button type="button" class="roll-thumb-btn active" data-photo-src="assets/images/akash-portrait-monument.jpg" data-photo-label="FRAME: AKASH V G // MONUMENT">
+              <img src="assets/images/akash-portrait-monument.jpg" alt="Monument Portrait" class="roll-thumb-preview" />
+              <span class="roll-thumb-caption">01 // MONUMENT</span>
+            </button>
+            <button type="button" class="roll-thumb-btn" data-photo-src="assets/images/akash-mountains.jpg" data-photo-label="FRAME: AKASH V G // MOUNTAIN EXP">
+              <img src="assets/images/akash-mountains.jpg" alt="Mountain Field" class="roll-thumb-preview" />
+              <span class="roll-thumb-caption">02 // MOUNTAIN</span>
+            </button>
+            <button type="button" class="roll-thumb-btn" data-photo-src="assets/images/akash-cinematographer.jpg" data-photo-label="FRAME: AKASH V G // ON SET SHOOT">
+              <img src="assets/images/akash-cinematographer.jpg" alt="Cinematographer on Set" class="roll-thumb-preview" />
+              <span class="roll-thumb-caption">03 // ON SET</span>
+            </button>
           </div>
         </div>
 
@@ -757,61 +773,125 @@
     </section>
 
     <!-- ======================================================================
-         SECTION 5: SHOWREEL ("05 / REEL 24FPS")
+         SECTION 5: GAME CENTRE ("05 / ARCADE")
          ====================================================================== -->
-    <section id="showreel" class="section-camera-frame" data-section-id="showreel">
+    <section id="arcade" class="section-camera-frame" data-section-id="arcade">
       <div class="parallax-number" aria-hidden="true">05</div>
 
       <div class="section-meta-header">
         <div class="section-eyebrow">
           <span>FRAME 05</span>
           <span class="eyebrow-line"></span>
-          <span>ANAMORPHIC SHOWREEL 2.39:1</span>
+          <span>MACHINED GAME CENTRE</span>
         </div>
         <h2 class="section-title reveal-masked-heading">
           <span class="mask-line-wrapper">
-            <span class="mask-line text-brushed-metal">Motion Picture</span>
+            <span class="mask-line text-brushed-metal">Silver Halide Arcade</span>
           </span>
         </h2>
       </div>
 
-      <!-- Anamorphic Viewport Cinema Frame -->
-      <div class="showreel-frame">
-        <img src="assets/images/mountain-mist.jpg" alt="Cinematic Mountain Landscape" class="showreel-backdrop-img" />
-
-        <!-- Video Element (Placeholder with interactive simulated timeline) -->
-        <video id="showreel-video" class="showreel-video-element" playsinline loop muted>
-          <source src="" type="video/mp4" />
-        </video>
-
-        <!-- Top HUD Readout -->
-        <div class="showreel-hud-top">
-          <span>TIME: <span id="showreel-timecode">00:01:24:18</span></span>
-          <span>2.39:1 SCOPE &bull; 24 FPS &bull; 180&deg; SHUTTER</span>
-        </div>
-
-        <!-- Center Aperture Play Button -->
-        <div class="showreel-center-play">
-          <button type="button" id="showreel-play-btn" class="btn-play-aperture trigger-shutter-sound"
-            aria-label="Play Showreel">
-            <span class="play-triangle"></span>
-          </button>
-        </div>
-
-        <!-- Bottom Scrub Timeline & Controls -->
-        <div class="showreel-hud-bottom">
-          <div id="showreel-timeline-bar" class="showreel-timeline-bar" title="Click or Drag to Scrub Timeline">
-            <div id="showreel-progress" class="showreel-progress"></div>
+      <!-- Machined Arcade Console Cabinet -->
+      <div class="arcade-cabinet">
+        
+        <!-- Console Header Plate & Game Switcher -->
+        <div class="arcade-header-plate">
+          <div class="arcade-title-box">
+            <h3 class="arcade-title">Mechanical Optic Arcade</h3>
+            <span class="arcade-subline">Select Game &bull; Real-Time Precision Hardware</span>
           </div>
 
-          <div class="showreel-controls-row">
-            <span>SHOWREEL: CINEMATOGRAPHY &amp; TECHNICAL DIRECTION</span>
-            <button type="button" id="showreel-mute-btn" class="btn-machined-silver"
-              style="padding: 4px 10px; font-size: 0.65rem;">
-              AUDIO // MUTE
+          <div class="arcade-tabs">
+            <button type="button" class="arcade-tab-btn active" data-game-tab="game-decisive-shutter">
+              [01] Decisive Shutter
+            </button>
+            <button type="button" class="arcade-tab-btn" data-game-tab="game-halide-runner">
+              [02] Halide Runner
             </button>
           </div>
         </div>
+
+        <!-- Arcade Viewport Container -->
+        <div class="arcade-viewport">
+          
+          <!-- GAME 1: THE DECISIVE SHUTTER -->
+          <div id="game-decisive-shutter" class="arcade-game-view active">
+            <div class="shutter-game-wrap">
+              
+              <div class="shutter-hud-readout">
+                <span>MODE: FOCAL-PLANE TIMING</span>
+                <span>TARGET: f/1.4 CENTER RETICLE</span>
+                <span>HIGH SCORE: <span id="shutter-high-val" class="arcade-stat-highlight">0</span></span>
+              </div>
+
+              <!-- Focal Calibration Sweeping Track -->
+              <div id="shutter-track" class="shutter-focal-track">
+                <div class="shutter-target-zone">
+                  <span class="shutter-center-reticle"></span>
+                  <span class="shutter-target-label">CRITICAL SWEETSPOT</span>
+                </div>
+                <div id="shutter-needle" class="shutter-needle"></div>
+              </div>
+
+              <!-- Real-time Feedback & Combo -->
+              <div class="shutter-result-box">
+                <div id="shutter-feedback-text" class="shutter-feedback-text">READY FOR EXPOSURE</div>
+                <div id="shutter-delta-text" class="shutter-delta-text">ALIGN NEEDLE WITH CENTER &bull; TRIGGER SHUTTER</div>
+              </div>
+
+              <!-- Controls -->
+              <div class="shutter-trigger-controls">
+                <button type="button" id="btn-arcade-shutter" class="btn-arcade-shutter btn-magnetic">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <span>Trigger Shutter</span>
+                </button>
+                <span class="shutter-key-cue">PRESS [SPACEBAR] OR CLICK TO EXPOSE</span>
+              </div>
+
+              <div class="arcade-telemetry-stats">
+                <span>SCORE: <span id="shutter-score-val" class="arcade-stat-highlight">0</span></span>
+                <span>COMBO: <span id="shutter-streak-val" class="arcade-stat-highlight">0x</span></span>
+                <span>DIFFICULTY: DYNAMIC ACCEL</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- GAME 2: HALIDE RUNNER -->
+          <div id="game-halide-runner" class="arcade-game-view">
+            <div class="runner-stage-wrap">
+              
+              <div class="runner-canvas-container">
+                <canvas id="halide-runner-canvas"></canvas>
+                
+                <div class="runner-overlay-hud">
+                  <span>SCORE: <span id="runner-score-val" class="arcade-stat-highlight">0</span></span>
+                  <span>INTEGRITY: <span id="runner-integrity-val" class="arcade-stat-highlight">100%</span></span>
+                  <span>TARGET: CATCH AgX CRYSTALS</span>
+                </div>
+
+                <div id="runner-over-modal" class="runner-game-over-modal">
+                  <h4 class="runner-over-title">Optical Flareout</h4>
+                  <p id="runner-final-score" class="runner-over-score">SCORE: 0 PTS</p>
+                  <button type="button" id="runner-restart-btn" class="btn-machined-silver">
+                    <span>Re-Expose Sensor &rarr;</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="runner-instructions-row">
+                <span>STEER: [A / D] OR [LEFT / RIGHT] ARROW KEYS &bull; DRAG MOUSE / TOUCH</span>
+                <span>DODGE: SHUTTER BARS &bull; COLLECT: SILVER AgX</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
