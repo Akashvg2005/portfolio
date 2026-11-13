@@ -1,1625 +1,1247 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-accent="gold">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akash V G — AI Accessibility & Full-Stack Developer</title>
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Personal Portfolio of Akash V G — CSE Student at College of Engineering Cherthala, Creator of SignBridge ISL AI platform, Flutter & Full-Stack Developer." />
-  <meta name="keywords" content="Akash V G, Portfolio, SignBridge, Flutter, AI Accessibility, Cherthala, College of Engineering, Indian Sign Language, Dart, Web Developer" />
+  <title>Akash V G — Silver Halide // AI Engineer &amp; Cinematographer</title>
+
+  <meta name="description"
+    content="Portfolio of Akash V G: AI Engineer and Cinematographer. High-end camera-inspired portfolio blending machine intelligence with cinematic optical craft." />
   <meta name="author" content="Akash V G" />
-  
-  <!-- OpenGraph / Social Media -->
-  <meta property="og:title" content="Akash V G — Developer Portfolio" />
-  <meta property="og:description" content="Building AI accessibility tools like SignBridge and real-time mobile/web applications." />
+  <meta name="theme-color" content="#141517" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Akash V G — Silver Halide" />
+  <meta property="og:description"
+    content="AI Engineer &amp; Cinematographer Portfolio. 35mm film aesthetics meets machined camera hardware." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://akashvg2005.github.io/portfolio/" />
-  <link rel="canonical" href="https://akashvg2005.github.io/portfolio/" />
 
-  <!-- Google Fonts: Inter & Outfit -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%23141517' stroke='%23B8BCC2' stroke-width='6'/><circle cx='50' cy='50' r='18' fill='%23E4E6E9'/></svg>" />
+
+  <!-- Google Fonts: Instrument Serif, Inter Tight, IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet" />
+
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
+
 <body>
 
-  <!-- Custom High-Tech Cyber Cursor UI -->
-  <div id="custom-cursor-dot" class="cursor-dot" aria-hidden="true"></div>
-  <div id="custom-cursor-ring" class="cursor-ring" aria-hidden="true">
-    <div class="cursor-ring-reticle"></div>
+  <!-- Procedural 35mm Analog Film Grain Overlay -->
+  <canvas id="film-grain-canvas" aria-hidden="true"></canvas>
+
+  <!-- ========================================================================
+       1. APERTURE OPEN LOADER (2.2s Mechanical Camera Iris)
+       ======================================================================== -->
+  <div id="aperture-loader" role="dialog" aria-label="Calibrating Camera Optic">
+    <div class="loader-telemetry-top">
+      <span class="loader-brand">SILVER HALIDE // 35mm</span>
+      <span>CALIBRATING OPTICS · ISO 100</span>
+    </div>
+
+    <div class="loader-center-iris">
+      <div class="aperture-outer-ring"></div>
+
+      <div class="aperture-fstops">
+        <span class="fstop-mark" style="top: 0; left: 50%; transform: translate(-50%, -100%);">f/1.4</span>
+        <span class="fstop-mark" style="top: 50%; right: 0; transform: translate(100%, -50%);">f/2.8</span>
+        <span class="fstop-mark" style="bottom: 0; left: 50%; transform: translate(-50%, 100%);">f/5.6</span>
+        <span class="fstop-mark" style="top: 50%; left: 0; transform: translate(-100%, -50%);">f/11</span>
+      </div>
+
+      <!-- Six Machined Silver Aperture Blades -->
+      <svg id="aperture-iris" class="iris-svg" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="blade-silver-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8E9298" />
+            <stop offset="50%" stop-color="#E4E6E9" />
+            <stop offset="100%" stop-color="#4B4E54" />
+          </linearGradient>
+        </defs>
+        <!-- 6 Blades positioned hexagonally -->
+        <g id="blades-group" transform="translate(100, 100)">
+          <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#222529" stroke-width="0.8"
+            d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
+          <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#222529" stroke-width="0.8"
+            d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
+          <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#222529" stroke-width="0.8"
+            d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
+          <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#222529" stroke-width="0.8"
+            d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
+          <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#222529" stroke-width="0.8"
+            d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
+          <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#222529" stroke-width="0.8"
+            d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="loader-telemetry-bottom">
+      <div class="loader-mono-tag">
+        <span class="rec-pulse-dot"></span>
+        <span>SHUTTER [1/250s] · EXPOSURE</span>
+      </div>
+      <div class="loader-counter-wrap">
+        <span id="loader-counter" class="loader-counter-digits">000</span>
+        <span class="loader-counter-unit">%</span>
+      </div>
+    </div>
   </div>
 
   <!-- ========================================================================
-       CINEMATIC ENTRY INTRO ANIMATION WITH AKASH'S NAME & PHOTO
+       2. VIEWFINDER CUSTOM CURSOR (Desktop Only)
        ======================================================================== -->
-  <!-- ========================================================================
-       CINEMATIC GOLD PROLOGUE & HORIZON SHUTTER UNVEIL
-       Seamlessly blends into the home page with theatrical shutter curtain
-       ======================================================================== -->
-  <div id="entry-overlay" class="prologue-overlay" aria-label="Welcome and Portfolio Introduction">
-    <!-- Top Half Theatrical Curtain Shutter -->
-    <div class="prologue-shutter shutter-top" id="shutter-top">
-      <div class="shutter-ambient-glow glow-top"></div>
-    </div>
-
-    <!-- Bottom Half Theatrical Curtain Shutter -->
-    <div class="prologue-shutter shutter-bottom" id="shutter-bottom">
-      <div class="shutter-ambient-glow glow-bottom"></div>
-    </div>
-
-    <!-- Glowing Horizon Laser Seam -->
-    <div class="prologue-horizon-seam" id="prologue-horizon-seam"></div>
-
-    <!-- Floating Golden Stardust Canvas -->
-    <canvas id="entry-particle-canvas" class="prologue-canvas"></canvas>
-
-    <!-- Top Minimal HUD Bar -->
-    <div class="prologue-top-bar">
-      <div class="prologue-brand">
-        <span class="prologue-badge">AVG</span>
-        <span class="prologue-brand-tag">CINEMATOGRAPHY &bull; PORTFOLIO</span>
-      </div>
-      <div class="prologue-controls">
-        <button id="entry-sound-btn" class="prologue-ctrl-btn active" aria-label="Toggle Sound" title="Sound (Enabled)">
-          <svg class="entry-sound-icon-off hidden" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-          <svg class="entry-sound-icon-on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-          <span id="entry-sound-label">Audio: ON</span>
-        </button>
-
-        <button id="skip-intro-btn" class="prologue-ctrl-btn skip-btn" aria-label="Skip directly to Portfolio">
-          <span>Skip</span>
-          <kbd>ESC</kbd>
-        </button>
-      </div>
-    </div>
-
-    <!-- Central Cinematic Prologue Monolith -->
-    <div class="prologue-stage" id="entry-card">
-      <!-- Golden Optical Halo -->
-      <div class="prologue-halo-glow"></div>
-
-      <!-- Pre-title Film Chapter Mark -->
-      <div class="prologue-chapter">
-        <span class="chapter-dash"></span>
-        <span class="chapter-text">THE CREATIVE REELS OF</span>
-        <span class="chapter-dash"></span>
-      </div>
-
-      <!-- Monumental Golden Title -->
-      <h1 class="prologue-monumental-name" id="entry-name" aria-label="Akash V G">
-        <span class="gold-char" style="--i:0">A</span>
-        <span class="gold-char" style="--i:1">K</span>
-        <span class="gold-char" style="--i:2">A</span>
-        <span class="gold-char" style="--i:3">S</span>
-        <span class="gold-char" style="--i:4">H</span>
-        <span class="gold-space">&nbsp;</span>
-        <span class="gold-char" style="--i:5">V</span>
-        <span class="gold-space">&nbsp;</span>
-        <span class="gold-char" style="--i:6">G</span>
-      </h1>
-
-      <!-- Floating Dynamic Role Pills -->
-      <div class="prologue-role-strip" id="prologue-role-strip">
-        <span class="role-chip">🎬 VIDEOGRAPHER • IEEE SB CECTL</span>
-        <span class="role-chip-sep">•</span>
-        <span class="role-chip">🤖 AI RESEARCHER</span>
-        <span class="role-chip-sep">•</span>
-        <span class="role-chip">📢 PR HEAD • TPC CEC</span>
-      </div>
-
-      <!-- Interactive Enter Action -->
-      <div class="prologue-enter-group">
-        <button id="enter-site-btn" class="prologue-enter-button" aria-label="Enter Portfolio">
-          <span class="btn-gold-ambient"></span>
-          <span class="btn-gold-laser"></span>
-          <span class="btn-gold-text">EXPLORE PORTFOLIO</span>
-          <svg class="btn-gold-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <polyline points="19 12 12 19 5 12"></polyline>
-          </svg>
-        </button>
-        <span class="prologue-hint">Press <kbd>SPACE</kbd>, <kbd>ENTER</kbd> or Scroll to Reveal</span>
-      </div>
-
-      <!-- Hairline Golden Timeline Track -->
-      <div class="prologue-timeline-bar" id="entry-progress-fill"></div>
+  <div id="viewfinder-cursor" aria-hidden="true">
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-ring" class="cursor-ring">
+      <span class="cursor-corner cursor-bracket-tl"></span>
+      <span class="cursor-corner cursor-bracket-tr"></span>
+      <span class="cursor-corner cursor-bracket-bl"></span>
+      <span class="cursor-corner cursor-bracket-br"></span>
+      <div class="cursor-ticks-overlay"></div>
+      <div class="cursor-crosshair"></div>
+      <span id="cursor-label" class="cursor-label"></span>
     </div>
   </div>
 
-  <!-- Accessibility Skip Link -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- ========================================================================
+       3. MACHINED CAMERA TOP BAR (Navigation)
+       ======================================================================== -->
+  <header class="camera-top-bar">
+    <div class="top-bar-inner">
 
-  <!-- Command Palette Modal (Cmd+K / Ctrl+K) -->
-  <div id="cmd-palette" class="cmd-modal" aria-hidden="true" role="dialog" aria-label="Command Palette">
-    <div class="cmd-modal-backdrop" id="cmd-backdrop"></div>
-    <div class="cmd-modal-content glass-panel">
-      <div class="cmd-header">
-        <svg class="cmd-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      <!-- Brand Camera Plate -->
+      <a href="#hero" class="brand-camera-plate" aria-label="Akash V G Home">
+        <svg class="brand-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+          <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+          <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+          <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+          <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+          <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
         </svg>
-        <input type="text" id="cmd-input" placeholder="Type a command or section name (e.g. 'arcade', 'whirly', 'projects')..." aria-label="Command input" />
-        <span class="cmd-badge">ESC</span>
-      </div>
-      <div class="cmd-results" id="cmd-results">
-        <!-- Dynamically populated -->
-      </div>
-      <div class="cmd-footer">
-        <span><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
-        <span><kbd>↵</kbd> to select</span>
-        <span><kbd>ESC</kbd> to close</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Top Neon Laser Scroll Progress Bar -->
-  <div id="scroll-progress-bar" class="scroll-progress-bar">
-    <div class="scroll-progress-glow"></div>
-  </div>
-
-  <!-- Floating Quantum Scroll Telemetry HUD (Right Rail) -->
-  <aside id="scroll-telemetry-hud" class="scroll-telemetry-hud" aria-label="Scroll Progress and Section Telemetry">
-    <div class="scroll-hud-pill" id="scroll-hud-pill" title="Scroll Telemetry">
-      <span class="scroll-hud-beacon"></span>
-      <span id="scroll-hud-section" class="scroll-hud-section">HERO</span>
-      <span class="scroll-hud-divider">//</span>
-      <span id="scroll-hud-percent" class="scroll-hud-percent">0%</span>
-    </div>
-  </aside>
-
-  <!-- Header Navigation (Floating Liquid Glass Island) -->
-  <header class="navbar" id="navbar">
-    <div class="nav-container" id="nav-container">
-      <div class="navbar-liquid-sheen" id="navbar-liquid-sheen"></div>
-      <div class="navbar-liquid-caustics"></div>
-      <a href="#hero" class="nav-logo" aria-label="Akash V G Home">
-        <span class="logo-badge">&lt;/&gt;</span>
-        <span class="logo-text">Akash<span>.vg</span></span>
+        <div class="brand-text-wrap">
+          <span class="brand-name">Akash V G</span>
+          <span class="brand-subline">50mm f/1.4 // Silver Halide</span>
+        </div>
       </a>
 
-      <!-- Desktop Nav Links with Magnetic Liquid Indicator Pill -->
-      <nav class="nav-links" id="nav-links" aria-label="Primary Navigation">
-        <div class="nav-liquid-pill" id="nav-liquid-pill"></div>
-        <a href="#about" class="nav-link" data-section="about">About</a>
-        <a href="#skills" class="nav-link" data-section="skills">Skills</a>
-        <a href="#projects" class="nav-link" data-section="projects">Projects</a>
-        <a href="#education" class="nav-link" data-section="education">Leadership &amp; Certs</a>
-        <a href="#arcade" class="nav-link arcade-link" data-section="arcade">🎮 Arcade</a>
-        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+      <!-- Center Nav Links with Rotating Aperture Icons -->
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-link-list">
+          <li>
+            <a href="#about" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>About</span>
+            </a>
+          </li>
+          <li>
+            <a href="#work" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>Work</span>
+            </a>
+          </li>
+          <li>
+            <a href="#skills" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>Optics</span>
+            </a>
+          </li>
+          <li>
+            <a href="#arcade" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>Arcade</span>
+            </a>
+          </li>
+          <li>
+            <a href="#leadership" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>Roles</span>
+            </a>
+          </li>
+          <li>
+            <a href="#certifications" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>Archive</span>
+            </a>
+          </li>
+          <li>
+            <a href="#contact" class="nav-link-item">
+              <svg class="nav-aperture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 3v6l5 3"></path>
+              </svg>
+              <span>Contact</span>
+            </a>
+          </li>
+        </ul>
       </nav>
 
-      <!-- Nav Actions -->
-      <div class="nav-actions">
-        <!-- Replay Entry Animation Trigger -->
-        <button id="replay-intro-btn" class="btn-icon" aria-label="Replay Entry Intro Animation" title="Replay Intro Animation">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+      <!-- Right Top Bar Telemetry & CV Shutter -->
+      <div class="top-bar-telemetry">
+        <span class="telemetry-readout">ISO 100 · 1/250s · f/1.4</span>
+        <button type="button" class="btn-machined-silver trigger-resume-modal trigger-shutter-sound"
+          aria-label="Open Resume CV Modal">
+          <span>CV // 35mm</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-        </button>
-
-        <!-- Command Palette Trigger -->
-        <button id="cmd-palette-btn" class="btn-icon" aria-label="Open Command Palette (Ctrl+K)" title="Quick Actions (Ctrl+K)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <span class="cmd-key-hint">⌘K</span>
-        </button>
-
-        <!-- Sound FX Toggle -->
-        <button id="sound-toggle" class="btn-icon active" aria-label="Toggle Sound Effects & Scroll Audio" title="Sound FX (ON)">
-          <svg class="sound-icon-off hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-          <svg class="sound-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-        </button>
-
-        <!-- Accent Color Selector Dropdown -->
-        <div class="accent-dropdown-container">
-          <button id="accent-picker-btn" class="btn-icon" aria-label="Change Accent Color" title="Change Theme Accent">
-            <span class="accent-dot-preview"></span>
-          </button>
-          <div class="accent-menu hidden" id="accent-menu" role="menu">
-            <button class="accent-opt" data-accent="gold" style="--opt-color:#D4AF37;">Royal Gold &amp; Lux</button>
-            <button class="accent-opt" data-accent="amber" style="--opt-color:#F59E0B;">Cinematic Amber</button>
-            <button class="accent-opt" data-accent="emerald" style="--opt-color:#10B981;">Emerald</button>
-            <button class="accent-opt" data-accent="rose" style="--opt-color:#F43F5E;">Sunset Rose</button>
-            <button class="accent-opt" data-accent="teal" style="--opt-color:#14B8A6;">Cyber Teal</button>
-            <button class="accent-opt" data-accent="blue" style="--opt-color:#0284C7;">Electric Blue</button>
-          </div>
-        </div>
-
-        <!-- Theme Toggle -->
-        <button id="theme-toggle" class="btn-icon" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
-          <svg class="sun-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-
-        <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-toggle" class="btn-icon mobile-only" aria-label="Toggle Mobile Menu" aria-expanded="false">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
         </button>
       </div>
+
     </div>
   </header>
 
-  <!-- Main Content Area -->
+  <!-- ========================================================================
+       4. FIXED SIDE TELEMETRY HUD (Section Indicator)
+       ======================================================================== -->
+  <aside class="fixed-side-telemetry" aria-hidden="true">
+    <span id="side-telemetry-index" class="side-index">01</span>
+    <span class="side-divider"></span>
+    <span id="side-telemetry-label" class="side-label">EXPOSURE</span>
+  </aside>
+
+  <!-- MAIN SCROLL CONTAINER -->
   <main id="main-content">
 
-    <!-- HERO SECTION -->
-    <section id="hero" class="hero-section section">
-      <div class="background-grid"></div>
-      <div class="hero-glow"></div>
+    <!-- ======================================================================
+         SECTION 1: HERO ("01 / EXPOSURE")
+         ====================================================================== -->
+    <section id="hero" class="section-camera-frame" data-section-id="hero">
+      <div class="parallax-number" aria-hidden="true">01</div>
 
-      <div class="container hero-grid">
-        <!-- Hero Left / Bio Intro -->
-        <div class="hero-text-col fade-in-up">
-          <div class="hero-author-row">
-            <div class="hero-status-pill">
-              <span class="pulse-dot"></span>
-              <span class="hero-status-tag">🎬 VIDEOGRAPHER • IEEE SB CECTL</span>
-              <span class="badge-divider">•</span>
-              <span class="hero-status-tag">📢 PR HEAD • TPC CEC</span>
-              <span class="badge-divider">•</span>
-              <span class="status-tag">Open for Collaboration</span>
-            </div>
+      <div class="hero-grid">
+        <!-- Hero Left Content -->
+        <div class="hero-content-box">
+          <div class="hero-exposure-badge">
+            <span class="rec-pulse-dot"></span>
+            <span>EXPOSURE 01 // 35mm CHROMATIC SENSOR</span>
           </div>
 
-          <h1 class="hero-title">
-            Hi, I'm <span class="gradient-text">Akash V G</span>
+          <h1 class="hero-name">
+            <span class="mask-line-wrapper">
+              <span class="mask-line text-brushed-metal">Akash V G</span>
+            </span>
           </h1>
 
-          <!-- Active Campus Leadership Roles Row -->
-          <div class="hero-leadership-row">
-            <div class="hero-role-badge">
-              <span class="role-badge-icon">🎬</span>
-              <div class="role-badge-content">
-                <span class="role-badge-title">Videographer</span>
-                <span class="role-badge-sub">IEEE SB CECTL</span>
-              </div>
-            </div>
-            <div class="hero-role-badge">
-              <span class="role-badge-icon">📢</span>
-              <div class="role-badge-content">
-                <span class="role-badge-title">PR Team Head</span>
-                <span class="role-badge-sub">Training &amp; Placement Cell, CEC</span>
-              </div>
-            </div>
+          <div class="hero-role-readout">
+            <span>AI ENGINEER</span> &bull; <span>CINEMATOGRAPHER</span>
           </div>
 
-          <p class="hero-subtitle">
-            <strong>Videographer at IEEE SB CECTL</strong> and <strong>Public Relations Team Head at Training and Placement Cell, CEC</strong>. 
-            Computer Science &amp; Engineering student skilled in <strong>mobile cinematography &amp; videography</strong>, expert in 
-            <strong>LaTeX document engineering</strong>, <strong>AI tools orchestration</strong>, and <strong>vibe coding</strong>.
+          <p class="hero-synopsis">
+            Blending deep learning intelligence with cinematic visual precision. Final-year Computer Science
+            undergraduate developing computer vision models, spatial interfaces, and narrative motion pictures.
           </p>
 
-          <!-- Action CTA Buttons -->
           <div class="hero-cta-group">
-            <a href="#projects" class="btn btn-primary">
-              <span>Explore Projects</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
+            <a href="#work" class="btn-shutter btn-magnetic trigger-shutter-sound">
+              <svg class="shutter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
               </svg>
+              <span>Inspect Portfolio</span>
             </a>
-            <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-hero">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-              </svg>
-              <span>Chat on WhatsApp</span>
-            </a>
-            <a href="assets/resume.pdf" download class="btn btn-secondary" id="resume-download-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              <span>Resume</span>
-            </a>
-          </div>
 
-          <!-- Social Quick Links -->
-          <div class="hero-socials">
-            <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub Profile">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              <span>GitHub</span>
-            </a>
-            <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn Profile">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-              <span>LinkedIn</span>
-            </a>
-            <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer" class="social-link social-link-insta" aria-label="Instagram Profile (@a.k_a.s_h__)">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-              <span>Instagram</span>
-            </a>
-            <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="social-link social-link-wa" aria-label="WhatsApp (+91 88489 48105)">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-              </svg>
-              <span>WhatsApp</span>
-            </a>
-            <a href="#contact" class="social-link" aria-label="Email Contact">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <span>Email</span>
-            </a>
+            <button type="button" class="btn-label-swap btn-magnetic trigger-resume-modal trigger-shutter-sound"
+              aria-label="Open Resume">
+              <span class="label-text">View Resume (CV)</span>
+              <span class="label-text-duplicate">Read Specs &rarr;</span>
+            </button>
           </div>
         </div>
 
-        <!-- Hero Right / Gamified Interactive CLI Terminal Widget -->
-        <div class="hero-terminal-col fade-in-up delay-200">
-          <div class="terminal-card glass-panel tilt-card">
-            <div class="terminal-header">
-              <div class="terminal-dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <span class="terminal-title">akash-v-g@dev-box:~</span>
-              <button class="terminal-copy-btn" id="terminal-clear-btn" title="Clear screen">Clear</button>
-            </div>
-            
-            <div class="terminal-body" id="terminal-body">
-              <div class="terminal-line text-dim">Welcome to Akash's interactive terminal v2.0!</div>
-              <div class="terminal-line text-accent">Type <span class="highlight-code">'help'</span> or click a command below to explore.</div>
-              <div class="terminal-output-area" id="terminal-output"></div>
+        <!-- Hero Right 3D Chrome Camera Lens -->
+        <div class="hero-lens-stage">
+          <canvas id="hero-lens-canvas" aria-label="3D Interactive Camera Lens"></canvas>
+          <div class="hero-lens-telemetry-hud">
+            OPTIC: 50mm f/1.4 ASPH &bull; DRAG TO ROTATE
+          </div>
+        </div>
+      </div>
+    </section>
 
-              <form id="terminal-form" class="terminal-input-row" autocomplete="off">
-                <span class="terminal-prompt">akash@portfolio:~$</span>
-                <input type="text" id="terminal-input" placeholder="try 'whatsapp', 'signbridge', or 'skills'..." aria-label="Terminal input prompt" />
-              </form>
-            </div>
+    <!-- ======================================================================
+         SECTION 2: ABOUT ("02 / VIEWFINDER")
+         ====================================================================== -->
+    <section id="about" class="section-camera-frame" data-section-id="about">
+      <div class="parallax-number" aria-hidden="true">02</div>
 
-            <!-- Command Quick Buttons -->
-            <div class="terminal-quick-cmds">
-              <button class="cmd-pill" data-cmd="help">help</button>
-              <button class="cmd-pill" data-cmd="vibecoding">vibecoding</button>
-              <button class="cmd-pill" data-cmd="aitools">aitools</button>
-              <button class="cmd-pill" data-cmd="latex">latex</button>
-              <button class="cmd-pill" data-cmd="roles">roles</button>
-              <button class="cmd-pill" data-cmd="ieee">ieee</button>
-              <button class="cmd-pill" data-cmd="placement">placement</button>
-              <button class="cmd-pill" data-cmd="cinematography">cinematography</button>
-              <button class="cmd-pill" data-cmd="security">security</button>
-              <button class="cmd-pill" data-cmd="signbridge">signbridge</button>
-              <button class="cmd-pill" data-cmd="skills">skills</button>
-              <button class="cmd-pill" data-cmd="projects">projects</button>
+      <div class="section-meta-header">
+        <div class="section-eyebrow">
+          <span>FRAME 02</span>
+          <span class="eyebrow-line"></span>
+          <span>CALIBRATED VIEWFINDER</span>
+        </div>
+        <h2 class="section-title reveal-masked-heading">
+          <span class="mask-line-wrapper">
+            <span class="mask-line text-brushed-metal">The Viewfinder</span>
+          </span>
+        </h2>
+      </div>
+
+      <div class="about-grid">
+        <!-- Viewfinder Framed Portrait -->
+        <div class="viewfinder-portrait-frame">
+          <span class="viewfinder-bracket-tl"></span>
+          <span class="viewfinder-bracket-tr"></span>
+          <span class="viewfinder-bracket-bl"></span>
+          <span class="viewfinder-bracket-br"></span>
+
+          <div class="curtain-reveal-box">
+            <div class="silver-curtain"></div>
+            <img src="assets/images/profile.jpg" alt="Akash V G Portrait" class="portrait-image" loading="lazy" />
+          </div>
+
+          <div class="viewfinder-overlay-hud">
+            <div class="hud-top-row">
+              <span>REC &bull; 24FPS</span>
+              <span>ISO 400 &bull; f/2.0</span>
+            </div>
+            <div class="hud-bottom-row">
+              <span>FRAME: AKASH V G</span>
+              <span>1/50s &bull; KERALA, IN</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Narrative & Specifications -->
+        <div class="about-narrative">
+          <h3 class="about-bio-lead">
+            Engineering software that reasons, framing images that resonate.
+          </h3>
+          <p class="about-bio-text">
+            I am a final-year Computer Science and Engineering student at the <strong>College of Engineering
+              Cherthala</strong>. Driven by the convergence of computer vision, neural systems, and cinematic
+            storytelling, I design software with the discipline of an engineer and the eye of a cinematographer.
+          </p>
+          <p class="about-bio-text">
+            On campus, I serve as the <strong>Lead Videographer of IEEE Student Branch</strong>, documenting flagship
+            technical symposia, and head the <strong>Public Relations Team of the Training and Placement Cell
+              (TPC)</strong>, steering institutional partnerships and outreach campaigns.
+          </p>
+
+          <!-- Machined Camera Metric Tiles -->
+          <div class="camera-specs-grid">
+            <div class="spec-tile">
+              <span class="spec-key">INSTITUTION</span>
+              <span class="spec-val">College of Engineering Cherthala</span>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-key">PRIMARY FOCUS</span>
+              <span class="spec-val">AI Systems &amp; Cinematography</span>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-key">LEADERSHIP</span>
+              <span class="spec-val">IEEE Videographer &bull; TPC PR Head</span>
+            </div>
+            <div class="spec-tile">
+              <span class="spec-key">COORDINATES</span>
+              <span class="spec-val">Vaikom / Cherthala, Kerala, India</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="about-section section">
-      <div class="container">
-        <div class="section-header center fade-in-up">
-          <span class="section-tag">01. ABOUT ME</span>
-          <h2 class="section-title">Bridging Code &amp; Accessibility</h2>
-          <p class="section-subtitle">Passionate engineer developing inclusive AI platforms and modern web ecosystems.</p>
+    <!-- ======================================================================
+         SECTION 3: WORK ("03 / PORTFOLIO" - FILM STRIP SLIDER)
+         ====================================================================== -->
+    <section id="work" class="section-camera-frame" data-section-id="work">
+      <div class="parallax-number" aria-hidden="true">03</div>
+
+      <div class="section-meta-header">
+        <div class="section-eyebrow">
+          <span>FRAME 03</span>
+          <span class="eyebrow-line"></span>
+          <span>35mm NEGATIVE ARCHIVE</span>
         </div>
-
-        <div class="about-layout fade-in-up">
-          <!-- Featured Cybernetic Developer Holographic Badge (Engineering Artifact) -->
-          <div class="about-profile-card glass-panel tilt-card">
-            <div class="cyber-id-display">
-              <div class="cyber-id-scanline"></div>
-              <div class="cyber-id-glow"></div>
-              
-              <div class="cyber-id-header">
-                <div class="cyber-id-chip">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                    <rect x="9" y="9" width="6" height="6"></rect>
-                    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path>
-                  </svg>
-                  <span>SPEC://DEV-CORE</span>
-                </div>
-                <span class="cyber-id-status">
-                  <span class="pulse-dot"></span> VERIFIED
-                </span>
-              </div>
-
-              <div class="cyber-id-core">
-                <div class="cyber-core-rings">
-                  <div class="core-ring core-ring-1"></div>
-                  <div class="core-ring core-ring-2"></div>
-                  <div class="core-ring core-ring-3"></div>
-                  <div class="cyber-core-icon">
-                    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                      <polyline points="9 12 11 14 15 10"></polyline>
-                    </svg>
-                  </div>
-                </div>
-                <div class="cyber-core-label">ETHICAL HACKING // GRADE 'S'</div>
-              </div>
-
-              <div class="cyber-id-telemetry">
-                <div class="cyber-telemetry-row">
-                  <span class="telemetry-label">LOCATION HUB</span>
-                  <span class="telemetry-val text-cyan">Vaikom, Kerala</span>
-                </div>
-                <div class="cyber-telemetry-bar"><div class="cyber-bar-fill" style="width: 100%;"></div></div>
-
-                <div class="cyber-telemetry-row">
-                  <span class="telemetry-label">ISL RECOGNITION</span>
-                  <span class="telemetry-val text-cyan">98.4% ACC</span>
-                </div>
-                <div class="cyber-telemetry-bar"><div class="cyber-bar-fill" style="width: 98%;"></div></div>
-
-                <div class="cyber-telemetry-row">
-                  <span class="telemetry-label">SECURITY CLEARANCE</span>
-                  <span class="telemetry-val text-emerald">NIELIT S-TIER</span>
-                </div>
-                <div class="cyber-telemetry-bar"><div class="cyber-bar-fill emerald" style="width: 100%;"></div></div>
-              </div>
-
-              <div class="cyber-id-footer">
-                <span class="cyber-hash">ID: #VG-2005-VKM</span>
-                <span class="cyber-protocol">SEC: AES-256</span>
-              </div>
-            </div>
-            <div class="profile-meta">
-              <h3 class="profile-name">Akash V G</h3>
-              <p class="profile-role">Videographer @ IEEE SB CECTL • PR Team Head @ Placement Cell CEC • Cinematographer</p>
-              
-              <div class="profile-chips">
-                <span class="profile-chip chip-highlight">🎬 Videographer — IEEE SB CECTL</span>
-                <span class="profile-chip chip-highlight">📢 PR Team Head — TPC CEC</span>
-                <span class="profile-chip">⚡ Vibe Coding</span>
-                <span class="profile-chip">🤖 AI Tools &amp; Agents</span>
-                <span class="profile-chip">📑 LaTeX Typesetting</span>
-                <span class="profile-chip">🎥 Mobile Cinematography</span>
-                <span class="profile-chip">📸 Mobile Photography</span>
-                <span class="profile-chip">🎨 Color Grading &amp; LUTs</span>
-                <span class="profile-chip">🛡️ Cyber Security (Grade 'S')</span>
-                <span class="profile-chip">🚀 SignBridge AI Lead</span>
-              </div>
-
-              <div class="profile-social-actions">
-                <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp" aria-label="Message on WhatsApp (+91 88489 48105)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                  </svg>
-                  <span>WhatsApp</span>
-                </a>
-                <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-instagram" aria-label="Visit Instagram Profile (@a.k_a.s_h__)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                  <span>Instagram</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- About Pillars Grid (4 Key Dimensions) -->
-          <div class="about-pillars">
-            <div class="about-card glass-panel fade-in-up">
-              <div class="about-icon-box">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                </svg>
-              </div>
-              <h3>Cinematographer &amp; Mobile Filmmaker</h3>
-              <p>
-                Skilled in <strong>mobile cinematography, creative framing, and videography</strong>. 
-                Shooting 4K mobile films, choreographing fluid camera moves, and color grading scenes to evoke raw visual emotion.
-              </p>
-            </div>
-
-            <div class="about-card glass-panel fade-in-up delay-100">
-              <div class="about-icon-box">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                </svg>
-              </div>
-              <h3>Computer Science Student</h3>
-              <p>
-                Pursuing <strong>B.Tech in CSE (2023–2027)</strong> 
-                at <strong>College of Engineering, Cherthala</strong>. Driven by real-world problems and hands-on engineering.
-              </p>
-            </div>
-
-            <div class="about-card glass-panel fade-in-up delay-200">
-              <div class="about-icon-box">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                  <line x1="15" y1="15.01" x2="15.01" y2="15"></line>
-                </svg>
-              </div>
-              <h3>AI Accessibility Innovator</h3>
-              <p>
-                Creator of <strong>SignBridge</strong>, an AI-driven interview platform empowering Deaf and 
-                Hard-of-Hearing candidates using real-time Indian Sign Language (ISL) recognition.
-              </p>
-            </div>
-
-            <div class="about-card glass-panel fade-in-up delay-300">
-              <div class="about-icon-box">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <h3>Cyber Security Specialist</h3>
-              <p>
-                <strong>NIELIT Certified (Grade 'S')</strong> in Cyber Security &amp; Ethical Hacking. 
-                Proficient in network penetration testing, system hardening, and secure protocols.
-              </p>
-            </div>
-          </div>
-        </div>
+        <h2 class="section-title reveal-masked-heading">
+          <span class="mask-line-wrapper">
+            <span class="mask-line text-brushed-metal">Selected Works</span>
+          </span>
+        </h2>
       </div>
-    </section>
 
-    <!-- SKILLS SECTION -->
-    <section id="skills" class="skills-section section">
-      <div class="container">
-        <div class="section-header fade-in-up">
-          <span class="section-tag">02. TECHNICAL SKILLS</span>
-          <h2 class="section-title">My Tech Stack & Level Stats</h2>
-          <p class="section-subtitle">Click filter categories or hover cards to inspect proficiency metrics.</p>
-        </div>
+      <!-- Film Strip Slider Component -->
+      <div class="film-strip-slider" aria-label="Selected Works Film Strip Slider">
+        <div class="film-strip-viewport">
+          <div class="film-strip-track">
 
-        <!-- Filter Pills -->
-        <div class="skills-filter-row fade-in-up">
-          <button class="filter-btn active" data-filter="all">All Skills</button>
-          <button class="filter-btn" data-filter="ai-vibe">⚡ AI &amp; Vibe Coding</button>
-          <button class="filter-btn" data-filter="cinema">🎬 Cinematography</button>
-          <button class="filter-btn" data-filter="security">🛡️ Cyber Security</button>
-          <button class="filter-btn" data-filter="lang">Languages</button>
-          <button class="filter-btn" data-filter="framework">Frameworks</button>
-          <button class="filter-btn" data-filter="tools">Tools &amp; LaTeX</button>
-        </div>
-
-        <!-- Skills Grid -->
-        <div class="skills-grid" id="skills-grid">
-
-          <!-- Vibe Coding & Rapid Prototyping (Flagship Modern Engineering Skill) -->
-          <div class="skill-card glass-panel tilt-card" data-cat="ai-vibe">
-            <div class="skill-header">
-              <span class="skill-name">⚡ Vibe Coding &amp; Rapid Prototyping</span>
-              <span class="skill-xp skill-badge-highlight">Level 98%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 98%;"></div></div>
-            <p class="skill-desc">High-velocity AI-assisted software synthesis. Translating ideas and conceptual architecture into production-ready full-stack systems at lightspeed with fluid, iterative design.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">High Velocity Dev</span>
-              <span class="micro-badge">AI Pair Programming</span>
-              <span class="micro-badge">Zero-to-One Prototyping</span>
-              <span class="micro-badge">Prompt Architecture</span>
-            </div>
-          </div>
-
-          <!-- AI Tools Handling & Agentic Orchestration -->
-          <div class="skill-card glass-panel tilt-card" data-cat="ai-vibe">
-            <div class="skill-header">
-              <span class="skill-name">🤖 AI Tools Handling &amp; Multi-Agent Systems</span>
-              <span class="skill-xp skill-badge-highlight">Level 97%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 97%;"></div></div>
-            <p class="skill-desc">Expert orchestration of generative LLMs, autonomous agentic loops, MediaPipe computer vision pipelines, custom tool synthesis, and multimodal AI integrations.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">Autonomous Agents</span>
-              <span class="micro-badge">MediaPipe ML</span>
-              <span class="micro-badge">LLM Pipelines</span>
-              <span class="micro-badge">Antigravity AI</span>
-            </div>
-          </div>
-
-          <!-- LaTeX Document Engineering & Scientific Typesetting -->
-          <div class="skill-card glass-panel tilt-card" data-cat="tools">
-            <div class="skill-header">
-              <span class="skill-name">📑 LaTeX Document Engineering &amp; Typesetting</span>
-              <span class="skill-xp skill-badge-highlight">Level 95%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
-            <p class="skill-desc">Expert preparation of academic research publications, IEEE/ACM conference papers, mathematical proofs, thesis manuscripts, TikZ vector diagrams, and automated BibTeX bibliographies.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">Scientific Papers</span>
-              <span class="micro-badge">IEEE/ACM Layout</span>
-              <span class="micro-badge">TikZ Diagrams</span>
-              <span class="micro-badge">BibTeX Citations</span>
-            </div>
-          </div>
-
-          <!-- Cinematography & Mobile Filmmaking (Featured Creative Skill) -->
-          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
-            <div class="skill-header">
-              <span class="skill-name">🎬 Mobile Cinematography &amp; Filmmaking</span>
-              <span class="skill-xp skill-badge-highlight">Level 96%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 96%;"></div></div>
-            <p class="skill-desc">4K 60fps ProRes/Log mobile capture, dynamic camera choreography, lighting staging, gimbal stabilization, 180° shutter rule, and visual rhythm.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">4K Log Capture</span>
-              <span class="micro-badge">Camera Choreography</span>
-              <span class="micro-badge">Lighting Staging</span>
-              <span class="micro-badge">Gimbal Rigging</span>
-            </div>
-          </div>
-
-          <!-- Mobile Photography & Visual Composition -->
-          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
-            <div class="skill-header">
-              <span class="skill-name">📸 Mobile Photography &amp; Framing</span>
-              <span class="skill-xp skill-badge-highlight">Level 94%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 94%;"></div></div>
-            <p class="skill-desc">Visual balance, golden ratio, leading lines, low-light street photography, macro perspectives, and creative portrait focal depth.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">Rule of Thirds</span>
-              <span class="micro-badge">Golden Hour</span>
-              <span class="micro-badge">Depth of Field</span>
-              <span class="micro-badge">Street Photography</span>
-            </div>
-          </div>
-
-          <!-- Cinematic Color Grading & Post-Production -->
-          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
-            <div class="skill-header">
-              <span class="skill-name">🎨 Color Grading &amp; Post-Production</span>
-              <span class="skill-xp">Level 90%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 90%;"></div></div>
-            <p class="skill-desc">Color timing, custom cinematic LUTs, tone curves, DaVinci Resolve &amp; Premiere Pro mobile grading, sound design, and pacing.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">DaVinci Resolve</span>
-              <span class="micro-badge">Cinematic LUTs</span>
-              <span class="micro-badge">Sound Design</span>
-              <span class="micro-badge">Premiere Pro</span>
-            </div>
-          </div>
-
-          <!-- Visual Storyboarding & Creative Direction -->
-          <div class="skill-card glass-panel tilt-card" data-cat="cinema">
-            <div class="skill-header">
-              <span class="skill-name">🎥 Storyboarding &amp; Creative Direction</span>
-              <span class="skill-xp">Level 88%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
-            <p class="skill-desc">Scene staging, visual narrative scripting, camera shot list planning, montage pacing, and transforming concepts into cinematic stories.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">Shot Lists</span>
-              <span class="micro-badge">Scene Staging</span>
-              <span class="micro-badge">Montage Pacing</span>
-            </div>
-          </div>
-
-          <!-- Cyber Security & Ethical Hacking (NIELIT Certified) -->
-          <div class="skill-card glass-panel tilt-card" data-cat="security">
-            <div class="skill-header">
-              <span class="skill-name">Cyber Security &amp; Ethical Hacking</span>
-              <span class="skill-xp skill-badge-highlight">Grade 'S' (Distinction)</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
-            <p class="skill-desc">NIELIT Calicut Certified (Govt. of India, ISEA Project). Network penetration testing, vulnerability assessment, cryptographic analysis &amp; ethical exploitation.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">NIELIT Certified</span>
-              <span class="micro-badge">Grade 'S' (≥80%)</span>
-              <span class="micro-badge">Penetration Testing</span>
-              <span class="micro-badge">Network Security</span>
-            </div>
-          </div>
-
-          <!-- Defensive Security & Hardening -->
-          <div class="skill-card glass-panel tilt-card" data-cat="security">
-            <div class="skill-header">
-              <span class="skill-name">Defensive Security &amp; Vulnerability Assessment</span>
-              <span class="skill-xp">Level 88%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
-            <p class="skill-desc">OWASP Top 10 mitigation, secure API communication, system hardening, access control policies, and packet analysis with Wireshark.</p>
-            <div class="skill-tags-row">
-              <span class="micro-badge">OWASP Top 10</span>
-              <span class="micro-badge">System Hardening</span>
-              <span class="micro-badge">Wireshark</span>
-            </div>
-          </div>
-
-          <div class="skill-card glass-panel tilt-card" data-cat="lang">
-            <div class="skill-header">
-              <span class="skill-name">Dart &amp; Flutter</span>
-              <span class="skill-xp">Level 90%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 90%;"></div></div>
-            <p class="skill-desc">Cross-platform mobile apps, Flame 2.5D game engine, Forge2D physics, Firebase.</p>
-          </div>
-
-          <div class="skill-card glass-panel tilt-card" data-cat="lang">
-            <div class="skill-header">
-              <span class="skill-name">JavaScript &amp; HTML5/CSS3</span>
-              <span class="skill-xp">Level 92%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 92%;"></div></div>
-            <p class="skill-desc">Modern ES6+, DOM manipulation, responsive CSS Grid/Flexbox, dynamic animations.</p>
-          </div>
-
-          <div class="skill-card glass-panel tilt-card" data-cat="lang">
-            <div class="skill-header">
-              <span class="skill-name">Python &amp; Computer Vision</span>
-              <span class="skill-xp">Level 85%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 85%;"></div></div>
-            <p class="skill-desc">MediaPipe hand landmark detection, TensorFlow, OpenCV model pipelines.</p>
-          </div>
-
-          <div class="skill-card glass-panel tilt-card" data-cat="framework">
-            <div class="skill-header">
-              <span class="skill-name">React Native &amp; Node.js</span>
-              <span class="skill-xp">Level 80%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 80%;"></div></div>
-            <p class="skill-desc">Expo full-stack music players, RESTful APIs, Express servers, AI API integration.</p>
-          </div>
-
-          <div class="skill-card glass-panel tilt-card" data-cat="tools">
-            <div class="skill-header">
-              <span class="skill-name">Firebase &amp; Firestore</span>
-              <span class="skill-xp">Level 88%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 88%;"></div></div>
-            <p class="skill-desc">Real-time database sync, Auth, Security Rules, Cloud Functions, Hosting.</p>
-          </div>
-
-          <div class="skill-card glass-panel tilt-card" data-cat="tools">
-            <div class="skill-header">
-              <span class="skill-name">Git, GitHub &amp; Antigravity AI</span>
-              <span class="skill-xp">Level 95%</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: 95%;"></div></div>
-            <p class="skill-desc">Version control, agentic AI workflows, pair programming, CI/CD static deployments.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURED & OTHER PROJECTS SECTION -->
-    <section id="projects" class="projects-section section">
-      <div class="container">
-        <div class="section-header fade-in-up">
-          <span class="section-tag">03. CURATED PROJECTS</span>
-          <h2 class="section-title">Featured Showcase</h2>
-          <p class="section-subtitle">Flagship accessibility applications and web/mobile projects.</p>
-        </div>
-
-        <!-- HERO FEATURED PROJECT CARD: SIGNBRIDGE -->
-        <div class="hero-project-card glass-panel fade-in-up">
-          <div class="featured-badge-ribbon">
-            <span class="star-icon">✦</span> FLAGSHIP AI ACCESSIBILITY PROJECT
-          </div>
-
-          <div class="hero-project-grid">
-            <div class="hero-project-content">
-              <div class="project-status-row">
-                <span class="status-pill active-build">
-                  <span class="pulse-dot"></span> Current Build: Phase 2 (Active Development)
-                </span>
-                <span class="status-pill platform-pill">Web & Mobile AI</span>
+            <!-- Frame 01: SignBridge -->
+            <article class="film-frame" data-index="0">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">ILFORD HP5 PLUS 400 &bull; EXP 01</span>
+                <span class="sprocket-hole"></span>
               </div>
 
-              <h3 class="hero-project-title">SignBridge</h3>
-              <p class="hero-project-lead">
-                An AI-powered interview platform designed specifically for Deaf and Hard-of-Hearing candidates. 
-                Using Indian Sign Language (ISL) recognition, candidates can participate in live technical interviews without needing a human sign language interpreter.
+              <div class="frame-media-box">
+                <img src="assets/images/project-signbridge.jpg" alt="SignBridge AI Platform" loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>FRAME 01 // INTERVIEW AI</span>
+                <span>ISO 400 &bull; 35mm</span>
+              </div>
+
+              <h3 class="frame-title">SignBridge</h3>
+              <p class="frame-description">
+                AI-driven interview and communications platform empowering Deaf and Hard-of-Hearing candidates using
+                real-time Indian Sign Language (ISL) recognition, bidirectional transcription, and WebRTC streaming.
               </p>
 
-              <div class="hero-project-highlights">
-                <div class="highlight-item">
-                  <span class="highlight-icon">⚡</span>
-                  <div>
-                    <strong>Real-Time ISL Translation:</strong> Captures hand landmarks via webcam and translates gestures into text/audio instantly.
-                  </div>
-                </div>
-                <div class="highlight-item">
-                  <span class="highlight-icon">🚀</span>
-                  <div>
-                    <strong>Antigravity Powered:</strong> Built phase by phase leveraging Antigravity AI agentic workflows and computer vision models.
-                  </div>
-                </div>
+              <div class="frame-tags-row">
+                <span class="frame-tag">Python</span>
+                <span class="frame-tag">MediaPipe</span>
+                <span class="frame-tag">OpenCV</span>
+                <span class="frame-tag">Deep Learning</span>
+                <span class="frame-tag">WebRTC</span>
               </div>
 
-              <div class="tech-tags">
-                <span class="tag">Python</span>
-                <span class="tag">MediaPipe</span>
-                <span class="tag">Flutter</span>
-                <span class="tag">TensorFlow</span>
-                <span class="tag">OpenCV</span>
-                <span class="tag">Antigravity</span>
-              </div>
-
-              <!-- Interactive Demo Toggle Button for SignBridge -->
-              <div class="hero-project-actions">
-                <button class="btn btn-primary" id="open-isl-sim-btn">
-                  <span>Try Live ISL Gesture Simulator</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                  </svg>
-                </button>
-                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                  </svg>
-                  <span>GitHub Repository</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- SignBridge Interactive Visual Card / Simulator Frame -->
-            <div class="hero-project-visual">
-              <div class="project-img-wrapper glass-panel">
-                <img src="assets/images/signbridge.png" alt="SignBridge AI Indian Sign Language Recognition Interface Showcase" loading="lazy" />
-                <div class="overlay-caption">
-                  <span>SignBridge ISL Real-Time Neural Detection</span>
-                </div>
-              </div>
-
-              <!-- Interactive ISL Gesture Simulator Drawer Widget -->
-              <div id="isl-sim-widget" class="isl-sim-card glass-panel hidden">
-                <div class="sim-header">
-                  <span class="sim-title">🤟 Interactive ISL Recognition Simulator</span>
-                  <button id="close-isl-sim" class="btn-icon-sm" title="Close simulator">✕</button>
-                </div>
-                
-                <div class="sim-screen">
-                  <canvas id="landmark-canvas" width="300" height="180"></canvas>
-                  <div class="sim-camera-overlay">
-                    <span id="sim-gesture-output">Target: "Hello / Namaste"</span>
-                    <span id="sim-confidence-output">Confidence: 99.4%</span>
-                  </div>
-                </div>
-
-                <div class="sim-controls">
-                  <span class="sim-label">Test Gesture Signal:</span>
-                  <div class="sim-btn-group">
-                    <button class="sim-btn active" data-gesture="Hello" data-conf="99.4%">✌️ Hello</button>
-                    <button class="sim-btn" data-gesture="I Love Coding" data-conf="98.7%">🤟 Love Code</button>
-                    <button class="sim-btn" data-gesture="Thank You" data-conf="99.1%">🖐️ Thank You</button>
-                    <button class="sim-btn" data-gesture="Ready for Interview" data-conf="97.9%">✊ Ready</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-        <!-- OTHER PROJECTS GRID -->
-        <div class="projects-grid">
-
-          <!-- Project 2: Smart Bus Tracking -->
-          <div class="project-card glass-panel tilt-card fade-in-up">
-            <div class="card-img-container">
-              <img src="assets/images/smartbus.png" alt="Smart Bus Tracking & Monitoring System UI" loading="lazy" />
-              <div class="card-badge">Collaborator</div>
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title">Smart Bus Tracking & Monitoring</h3>
-              <p class="card-text">
-                A college bus tracking system utilizing driver-phone facial recognition camera capture to automate student boarding/departure attendance, live GPS updates, and Firestore sync.
-              </p>
-
-              <div class="tech-tags">
-                <span class="tag">Dart</span>
-                <span class="tag">Flutter</span>
-                <span class="tag">Firebase Firestore</span>
-                <span class="tag">TFLite</span>
-                <span class="tag">GPS API</span>
-              </div>
-
-              <div class="card-footer">
-                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="card-link">
-                  <span>View Project Details</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 3: Layam Music Player -->
-          <div class="project-card glass-panel tilt-card fade-in-up delay-100">
-            <div class="card-img-container">
-              <img src="assets/images/layammusic.png" alt="Layam Music Player App Interface" loading="lazy" />
-              <div class="card-badge">Full Stack</div>
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title">Layam – The Music Mate</h3>
-              <p class="card-text">
-                A production-grade music streaming application with futuristic dark mode UI, mood-based playlist AI generator, YouTube Music playback integration, and voice DJ mode.
-              </p>
-
-              <div class="tech-tags">
-                <span class="tag">React Native</span>
-                <span class="tag">Expo</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">Claude AI</span>
-                <span class="tag">Express</span>
-              </div>
-
-              <div class="card-footer">
-                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="card-link">
+              <div class="frame-actions-row">
+                <span class="spec-key">STATUS: PRODUCTION PILOT</span>
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="frame-link">
                   <span>View Repository</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
                   </svg>
                 </a>
               </div>
-            </div>
-          </div>
 
-          <!-- Project 4: Netflix UI Clone -->
-          <div class="project-card glass-panel tilt-card fade-in-up delay-200">
-            <div class="card-img-container">
-              <div class="placeholder-banner netflix-banner">
-                <span class="netflix-logo-text">NETFLIX</span>
-                <span class="banner-sub">Responsive Web Clone</span>
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE 400 &bull; 36A</span>
+                <span class="sprocket-hole"></span>
               </div>
-            </div>
+            </article>
 
-            <div class="card-body">
-              <h3 class="card-title">Netflix UI Clone</h3>
-              <p class="card-text">
-                A high-fidelity replica of the Netflix streaming interface built with modern vanilla HTML5, custom CSS layout grids, responsive media queries, and dynamic JS carousels.
+            <!-- Frame 02: Smart Bus Tracking -->
+            <article class="film-frame" data-index="1">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">ILFORD HP5 PLUS 400 &bull; EXP 02</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/project-smartbus.jpg" alt="Smart Bus Tracking System" loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>FRAME 02 // COMPUTER VISION</span>
+                <span>ISO 400 &bull; 50mm</span>
+              </div>
+
+              <h3 class="frame-title">Smart Bus Tracking</h3>
+              <p class="frame-description">
+                Automated fleet tracking and security infrastructure integrating face-based biometric attendance,
+                real-time GPS telemetry, and safety anomaly alerts for college transportation networks.
               </p>
 
-              <div class="tech-tags">
-                <span class="tag">HTML5</span>
-                <span class="tag">CSS3</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">Responsive UI</span>
+              <div class="frame-tags-row">
+                <span class="frame-tag">Flutter</span>
+                <span class="frame-tag">Firebase</span>
+                <span class="frame-tag">Python</span>
+                <span class="frame-tag">Face Recognition</span>
+                <span class="frame-tag">IoT Telemetry</span>
               </div>
 
-              <div class="card-footer">
-                <a href="https://github.com/Akashvg2005/netflix-clone" target="_blank" rel="noopener noreferrer" class="card-link">
-                  <span>Explore Source Code</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="frame-actions-row">
+                <span class="spec-key">STATUS: DEPLOYED</span>
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="frame-link">
+                  <span>View Repository</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
                   </svg>
                 </a>
-                <a href="assets/devtown-netflix-certificate.pdf" target="_blank" rel="noopener noreferrer" class="card-link cert-pill-link" style="color: var(--accent-text);">
-                  <span>🏆 DevTown &amp; GDG Certificate</span>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE 400 &bull; 36B</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+            <!-- Frame 03: AI Study Buddy (To-Do Project) -->
+            <article class="film-frame" data-index="2">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">ILFORD HP5 PLUS 400 &bull; EXP 03</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/project-studybuddy.jpg" alt="AI Study Buddy 3D Graph" loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>FRAME 03 // UPCOMING (TO DO)</span>
+                <span>ISO 400 &bull; 85mm</span>
+              </div>
+
+              <h3 class="frame-title">AI Study Buddy</h3>
+              <p class="frame-description">
+                Planned cognitive learning system featuring interactive 3D concept maps. Analyzes technical syllabi and
+                structures interconnected knowledge clusters with adaptive spaced-repetition memory retention.
+              </p>
+
+              <div class="frame-tags-row">
+                <span class="frame-tag"
+                  style="border-color: var(--text-slate); color: var(--text-light-silver);">PLANNED ROADMAP</span>
+                <span class="frame-tag">React</span>
+                <span class="frame-tag">Three.js</span>
+                <span class="frame-tag">LLM Orchestration</span>
+                <span class="frame-tag">Graph Theory</span>
+              </div>
+
+              <div class="frame-actions-row">
+                <span class="spec-key" style="color: var(--text-light-silver);">STATUS: TO DO &bull; CONCEPT</span>
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="frame-link">
+                  <span>Track Roadmap</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
                 </a>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE 400 &bull; 36C</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+            <!-- Frame 04: Gesture / AR Interface (To-Do Project) -->
+            <article class="film-frame" data-index="3">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">ILFORD HP5 PLUS 400 &bull; EXP 04</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/project-gesture-ar.jpg" alt="Gesture AR Interface" loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>FRAME 04 // UPCOMING (TO DO)</span>
+                <span>ISO 400 &bull; 24mm</span>
+              </div>
+
+              <h3 class="frame-title">Gesture / AR Interface</h3>
+              <p class="frame-description">
+                Planned zero-contact spatial interaction interface using landmark finger tracking and 3D geometric
+                transformations, enabling touchless control of media, CAD viewports, and augmented canvas environments.
+              </p>
+
+              <div class="frame-tags-row">
+                <span class="frame-tag"
+                  style="border-color: var(--text-slate); color: var(--text-light-silver);">PLANNED ROADMAP</span>
+                <span class="frame-tag">JavaScript</span>
+                <span class="frame-tag">WebGL</span>
+                <span class="frame-tag">MediaPipe Hands</span>
+                <span class="frame-tag">Kinematics</span>
+              </div>
+
+              <div class="frame-actions-row">
+                <span class="spec-key" style="color: var(--text-light-silver);">STATUS: TO DO &bull; LAB DESIGN</span>
+                <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer" class="frame-link">
+                  <span>Track Roadmap</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE 400 &bull; 36D</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Slider Controls & Lens-Barrel Focus Scale -->
+        <div class="slider-bottom-controls">
+          <div class="slider-controls-row">
+            <span class="slider-frame-counter">FRAME 01 / 04</span>
+            <div class="slider-arrows">
+              <button type="button" class="slider-arrow-btn slider-prev-btn" aria-label="Previous Frame">&larr;</button>
+              <button type="button" class="slider-arrow-btn slider-next-btn" aria-label="Next Frame">&rarr;</button>
+            </div>
+          </div>
+
+          <!-- Lens-Barrel Focus Scale (Ruler + Draggable Knob) -->
+          <div class="focus-scale-wrapper">
+            <div class="focus-scale-header">
+              <span>0.3m</span>
+              <span>0.5m</span>
+              <span>0.7m</span>
+              <span>1.0m</span>
+              <span>1.5m</span>
+              <span>2.5m</span>
+              <span>5.0m</span>
+              <span>&infin;</span>
+            </div>
+            <div class="focus-scale">
+              <div class="focus-scale-ticks"></div>
+              <div class="focus-scale-knob" title="Drag to Rack Focus">
+                <span class="knob-witness-mark"></span>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: SKILLS ("04 / OPTICS" - MACHINED LENS KIT)
+         ====================================================================== -->
+    <section id="skills" class="section-camera-frame" data-section-id="skills">
+      <div class="parallax-number" aria-hidden="true">04</div>
+
+      <div class="section-meta-header">
+        <div class="section-eyebrow">
+          <span>FRAME 04</span>
+          <span class="eyebrow-line"></span>
+          <span>MACHINED LENS KIT</span>
+        </div>
+        <h2 class="section-title reveal-masked-heading">
+          <span class="mask-line-wrapper">
+            <span class="mask-line text-brushed-metal">Technical Optics</span>
+          </span>
+        </h2>
+      </div>
+
+      <div class="skills-grid">
+
+        <!-- Lens 1: Flutter & Mobile Architecture -->
+        <div class="tilt-metal-card">
+          <div class="lens-spec-header">
+            <span class="lens-focal-mm">24mm f/1.4</span>
+            <span>MOBILE ARCHITECTURE</span>
+          </div>
+          <h3 class="lens-name">Flutter &amp; Dart</h3>
+          <p class="lens-desc">
+            Cross-platform production app architecture, BLoC and Provider state machines, custom canvas rendering,
+            offline caching, and responsive spatial navigation.
+          </p>
+          <div class="lens-specs-row">
+            <span>ELEMENTS: 12 GRPS</span>
+            <span>APERTURE: 9 BLADES</span>
+          </div>
+        </div>
+
+        <!-- Lens 2: Web Engineering -->
+        <div class="tilt-metal-card">
+          <div class="lens-spec-header">
+            <span class="lens-focal-mm">35mm f/1.4</span>
+            <span>FRONTEND CRAFT</span>
+          </div>
+          <h3 class="lens-name">HTML5 &amp; WebGL</h3>
+          <p class="lens-desc">
+            Semantic architecture, CSS Grid/Flexbox mechanics, responsive viewports, ES module pipelines, Canvas 2D /
+            Three.js 3D shaders, and high-DPI rendering.
+          </p>
+          <div class="lens-specs-row">
+            <span>ELEMENTS: 10 GRPS</span>
+            <span>COATING: MULTI-COAT</span>
+          </div>
+        </div>
+
+        <!-- Lens 3: Cybersecurity -->
+        <div class="tilt-metal-card">
+          <div class="lens-spec-header">
+            <span class="lens-focal-mm">50mm f/1.2</span>
+            <span>ISEA PHASE III ACCREDITED</span>
+          </div>
+          <h3 class="lens-name">Cybersecurity &amp; Ethical Hacking</h3>
+          <p class="lens-desc">
+            Vulnerability assessment, network penetration testing, web application security (OWASP Top 10), and threat
+            modeling. Certified by NIELIT Calicut with Grade S.
+          </p>
+          <div class="lens-specs-row">
+            <span>GRADE: S (NIELIT)</span>
+            <span>CALIBRE: HIGH PRECISION</span>
+          </div>
+        </div>
+
+        <!-- Lens 4: AI & Deep Learning -->
+        <div class="tilt-metal-card">
+          <div class="lens-spec-header">
+            <span class="lens-focal-mm">85mm f/1.4</span>
+            <span>INTELLIGENCE PIPELINES</span>
+          </div>
+          <h3 class="lens-name">AI &amp; Neural Workflows</h3>
+          <p class="lens-desc">
+            Computer vision pipelines using OpenCV and MediaPipe, custom neural classification models, prompt
+            orchestration, and autonomous agent systems.
+          </p>
+          <div class="lens-specs-row">
+            <span>LATENCY: ZERO-LAG</span>
+            <span>ACCURACY: METRIC-TUNED</span>
+          </div>
+        </div>
+
+        <!-- Lens 5: UI/UX & Spatial Systems -->
+        <div class="tilt-metal-card">
+          <div class="lens-spec-header">
+            <span class="lens-focal-mm">105mm f/2.0</span>
+            <span>SYSTEMS &amp; KINEMATICS</span>
+          </div>
+          <h3 class="lens-name">UI/UX Spatial Systems</h3>
+          <p class="lens-desc">
+            Hardware-inspired interaction models, mechanical micro-interactions, typographic rhythm, design tokens, and
+            accessibility standards (WCAG 2.1 AA).
+          </p>
+          <div class="lens-specs-row">
+            <span>ERGONOMICS: TACTILE</span>
+            <span>ALIGNMENT: 100% SPEC</span>
+          </div>
+        </div>
+
+        <!-- Lens 6: Cinematography -->
+        <div class="tilt-metal-card">
+          <div class="lens-spec-header">
+            <span class="lens-focal-mm">135mm f/2.0</span>
+            <span>OPTICAL DIRECTION</span>
+          </div>
+          <h3 class="lens-name">Cinematography &amp; Visuals</h3>
+          <p class="lens-desc">
+            Lighting composition, 35mm optical framing, DaVinci Resolve color timing, camera movement kinematics, and
+            sound design for visual storytelling.
+          </p>
+          <div class="lens-specs-row">
+            <span>COLOR: MONO / ACES</span>
+            <span>SHUTTER: 180 DEGREE</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: SHOWREEL ("05 / REEL 24FPS")
+         ====================================================================== -->
+    <section id="showreel" class="section-camera-frame" data-section-id="showreel">
+      <div class="parallax-number" aria-hidden="true">05</div>
+
+      <div class="section-meta-header">
+        <div class="section-eyebrow">
+          <span>FRAME 05</span>
+          <span class="eyebrow-line"></span>
+          <span>ANAMORPHIC SHOWREEL 2.39:1</span>
+        </div>
+        <h2 class="section-title reveal-masked-heading">
+          <span class="mask-line-wrapper">
+            <span class="mask-line text-brushed-metal">Motion Picture</span>
+          </span>
+        </h2>
+      </div>
+
+      <!-- Anamorphic Viewport Cinema Frame -->
+      <div class="showreel-frame">
+        <img src="assets/images/mountain-mist.jpg" alt="Cinematic Mountain Landscape" class="showreel-backdrop-img" />
+
+        <!-- Video Element (Placeholder with interactive simulated timeline) -->
+        <video id="showreel-video" class="showreel-video-element" playsinline loop muted>
+          <source src="" type="video/mp4" />
+        </video>
+
+        <!-- Top HUD Readout -->
+        <div class="showreel-hud-top">
+          <span>TIME: <span id="showreel-timecode">00:01:24:18</span></span>
+          <span>2.39:1 SCOPE &bull; 24 FPS &bull; 180&deg; SHUTTER</span>
+        </div>
+
+        <!-- Center Aperture Play Button -->
+        <div class="showreel-center-play">
+          <button type="button" id="showreel-play-btn" class="btn-play-aperture trigger-shutter-sound"
+            aria-label="Play Showreel">
+            <span class="play-triangle"></span>
+          </button>
+        </div>
+
+        <!-- Bottom Scrub Timeline & Controls -->
+        <div class="showreel-hud-bottom">
+          <div id="showreel-timeline-bar" class="showreel-timeline-bar" title="Click or Drag to Scrub Timeline">
+            <div id="showreel-progress" class="showreel-progress"></div>
+          </div>
+
+          <div class="showreel-controls-row">
+            <span>SHOWREEL: CINEMATOGRAPHY &amp; TECHNICAL DIRECTION</span>
+            <button type="button" id="showreel-mute-btn" class="btn-machined-silver"
+              style="padding: 4px 10px; font-size: 0.65rem;">
+              AUDIO // MUTE
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: LEADERSHIP ("06 / LEADERSHIP")
+         ====================================================================== -->
+    <section id="leadership" class="section-camera-frame" data-section-id="leadership">
+      <div class="parallax-number" aria-hidden="true">06</div>
+
+      <div class="section-meta-header">
+        <div class="section-eyebrow">
+          <span>FRAME 06</span>
+          <span class="eyebrow-line"></span>
+          <span>CAMPUS RESPONSIBILITIES</span>
+        </div>
+        <h2 class="section-title reveal-masked-heading">
+          <span class="mask-line-wrapper">
+            <span class="mask-line text-brushed-metal">Leadership &amp; Roles</span>
+          </span>
+        </h2>
+      </div>
+
+      <!-- Vertical Drawing Silver Timeline -->
+      <div class="leadership-timeline-wrapper">
+        <div class="timeline-track">
+
+          <div class="timeline-silver-line-bg"></div>
+          <div class="timeline-silver-line-fill"></div>
+
+          <!-- Role 1: TPC Head of PR -->
+          <article class="timeline-node">
+            <span class="timeline-node-pin"></span>
+            <div class="timeline-meta-row">
+              <span class="spec-key">TENURE: 2024 &ndash; PRESENT</span>
+              <span>PLACEMENT CELL // EXECUTIVE</span>
+            </div>
+            <h3 class="timeline-role-title">Head of Public Relations</h3>
+            <div class="timeline-org">Training and Placement Cell (TPC) &bull; College of Engineering Cherthala</div>
+            <p class="timeline-body-text">
+              Directing institutional PR outreach, company liaison communication strategies, corporate presentations,
+              and campus placement drives. Orchestrating recruitment branding and candidate briefing initiatives.
+            </p>
+          </article>
+
+          <!-- Role 2: IEEE Videographer -->
+          <article class="timeline-node">
+            <span class="timeline-node-pin"></span>
+            <div class="timeline-meta-row">
+              <span class="spec-key">TENURE: 2023 &ndash; PRESENT</span>
+              <span>MEDIA &amp; BROADCAST</span>
+            </div>
+            <h3 class="timeline-role-title">Lead Videographer</h3>
+            <div class="timeline-org">IEEE Student Branch &bull; College of Engineering Cherthala</div>
+            <p class="timeline-body-text">
+              Heading media documentation, cinematic aftermovies, technical symposium recordings, and creative trailers
+              for IEEE events. Managing multi-camera setups, audio mastering, and color-graded releases.
+            </p>
+          </article>
 
         </div>
       </div>
     </section>
 
-    <!-- EDUCATION & CERTIFICATIONS SECTION -->
-    <section id="education" class="education-section section">
-      <div class="container">
-        <div class="section-header center fade-in-up">
-          <span class="section-tag">04. LEADERSHIP &amp; EDUCATION</span>
-          <h2 class="section-title">Leadership Roles &amp; Academic Milestones</h2>
-          <p class="section-subtitle">Active campus leadership positions, technical societies, and formal engineering education.</p>
+    <!-- ======================================================================
+         SECTION 7: CERTIFICATIONS ("07 / ARCHIVE")
+         ====================================================================== -->
+    <section id="certifications" class="section-camera-frame" data-section-id="certifications">
+      <div class="parallax-number" aria-hidden="true">07</div>
+
+      <div class="section-meta-header">
+        <div class="section-eyebrow">
+          <span>FRAME 07</span>
+          <span class="eyebrow-line"></span>
+          <span>VERIFIED ACCREDITATIONS</span>
+        </div>
+        <h2 class="section-title reveal-masked-heading">
+          <span class="mask-line-wrapper">
+            <span class="mask-line text-brushed-metal">Certifications Archive</span>
+          </span>
+        </h2>
+      </div>
+
+      <!-- Compact Film Strip Slider for Certifications -->
+      <div class="film-strip-slider cert-slider-wrap" aria-label="Certifications Film Strip Slider">
+        <div class="film-strip-viewport">
+          <div class="film-strip-track">
+
+            <!-- Cert 01: NIELIT Cyber Security -->
+            <article class="film-frame cert-frame" data-index="0">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">KODAK TRI-X 400 &bull; VERIFIED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/nielit_certificate.png" alt="NIELIT Cyber Security Certificate"
+                  loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>GRADE: S (EXCELLENT)</span>
+                <span>SEP 2026</span>
+              </div>
+
+              <h3 class="frame-title" style="font-size: 1.45rem;">Cyber Security &amp; Ethical Hacking</h3>
+              <p class="frame-description">
+                NIELIT Calicut (ISEA Phase III). Specialized bootcamp in network vulnerability auditing, penetration
+                testing, and counter-threat engineering.
+              </p>
+
+              <div class="frame-actions-row">
+                <button type="button" class="btn-machined-silver trigger-cert-modal"
+                  data-cert-title="Cyber Security &amp; Ethical Hacking Bootcamp"
+                  data-cert-issuer="NIELIT Calicut (ISEA Phase III)" data-cert-date="Sep 2026" data-cert-grade="Grade S"
+                  data-cert-doc="assets/nielit-cyber-security-certificate.pdf"
+                  data-cert-img="assets/images/nielit_certificate.png">
+                  <span>Inspect Document &rarr;</span>
+                </button>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE &bull; ACCREDITED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+            <!-- Cert 02: DevTown Netflix Clone -->
+            <article class="film-frame cert-frame" data-index="1">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">KODAK TRI-X 400 &bull; VERIFIED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/devtown_certificate.png" alt="DevTown Netflix Clone Certificate"
+                  loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>GDG ON CAMPUS</span>
+                <span>JUN 2025</span>
+              </div>
+
+              <h3 class="frame-title" style="font-size: 1.45rem;">Netflix Clone Using HTML</h3>
+              <p class="frame-description">
+                DevTown in partnership with Google Developer Student Clubs (GDG VIT-AP). Web architecture and responsive
+                UI streaming design.
+              </p>
+
+              <div class="frame-actions-row">
+                <button type="button" class="btn-machined-silver trigger-cert-modal"
+                  data-cert-title="Netflix Clone Using HTML Bootcamp"
+                  data-cert-issuer="DevTown with GDG on Campus (VIT-AP)" data-cert-date="Jun 2025"
+                  data-cert-doc="assets/devtown-netflix-certificate.pdf"
+                  data-cert-img="assets/images/devtown_certificate.png">
+                  <span>Inspect Document &rarr;</span>
+                </button>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE &bull; ACCREDITED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+            <!-- Cert 03: Fawstech Flutter -->
+            <article class="film-frame cert-frame" data-index="2">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">KODAK TRI-X 400 &bull; VERIFIED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/fawstech_certificate.png" alt="Flutter Development Certificate"
+                  loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>FAWSTECH INNOVATIONS</span>
+                <span>JUN 2024</span>
+              </div>
+
+              <h3 class="frame-title" style="font-size: 1.45rem;">Flutter App Development</h3>
+              <p class="frame-description">
+                Comprehensive training in Dart, Flutter widgets, asynchronous state architectures, and Android/iOS
+                deployment pipelines.
+              </p>
+
+              <div class="frame-actions-row">
+                <button type="button" class="btn-machined-silver trigger-cert-modal"
+                  data-cert-title="Flutter App Development Certification" data-cert-issuer="Fawstech Innovations"
+                  data-cert-date="Jun 2024" data-cert-doc="assets/fawstech-flutter-certificate.pdf"
+                  data-cert-img="assets/images/fawstech_certificate.png">
+                  <span>Inspect Document &rarr;</span>
+                </button>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE &bull; ACCREDITED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+            <!-- Cert 04: Techmaghi EV VR -->
+            <article class="film-frame cert-frame" data-index="3">
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">KODAK TRI-X 400 &bull; VERIFIED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+
+              <div class="frame-media-box">
+                <img src="assets/images/techmaghi_certificate.png" alt="Techmaghi EV VR Certificate" loading="lazy" />
+              </div>
+
+              <div class="frame-meta-bar">
+                <span>TECHMAGHI &bull; VR</span>
+                <span>JUN 2025</span>
+              </div>
+
+              <h3 class="frame-title" style="font-size: 1.45rem;">EV Design &amp; Testing in VR</h3>
+              <p class="frame-description">
+                Electric Vehicle powertrain testing and aerodynamic analysis within virtual reality simulation
+                environments.
+              </p>
+
+              <div class="frame-actions-row">
+                <button type="button" class="btn-machined-silver trigger-cert-modal"
+                  data-cert-title="EV Design and Testing in Virtual Reality" data-cert-issuer="Techmaghi"
+                  data-cert-date="Jun 2025" data-cert-doc="assets/techmaghi-ev-vr-certificate.pdf"
+                  data-cert-img="assets/images/techmaghi_certificate.png">
+                  <span>Inspect Document &rarr;</span>
+                </button>
+              </div>
+
+              <div class="sprocket-bar">
+                <span class="sprocket-hole"></span>
+                <span class="sprocket-film-name">DX CODE &bull; ACCREDITED</span>
+                <span class="sprocket-hole"></span>
+              </div>
+            </article>
+
+          </div>
         </div>
 
-        <div class="timeline">
-
-          <!-- Timeline Item 1: Videographer @ IEEE SB CECTL -->
-          <div class="timeline-item fade-in-up">
-            <div class="timeline-dot active-dot"></div>
-            <div class="timeline-content glass-panel">
-              <div class="timeline-badge-row">
-                <span class="timeline-role-pill live">ACTIVE ROLE</span>
-                <span class="timeline-date">2024 — PRESENT</span>
-              </div>
-              <h3 class="timeline-title">Videographer</h3>
-              <h4 class="timeline-subtitle">IEEE Student Branch CECTL (College of Engineering Cherthala)</h4>
-              <p class="timeline-text">
-                Directing official event videography, promotional teasers, dynamic camera choreography, and cinematic aftermovies for IEEE SB CECTL technical summits, workshops, and hackathons. Managing end-to-end mobile filmmaking and post-production color grading.
-              </p>
-              <div class="timeline-tags">
-                <span class="timeline-tag">🎬 Mobile Cinematography</span>
-                <span class="timeline-tag">🎥 Event Aftermovies</span>
-                <span class="timeline-tag">🎨 Color Grading</span>
-                <span class="timeline-tag">⚡ IEEE Student Branch</span>
+        <!-- Focus Scale & Controls for Certifications -->
+        <div class="slider-bottom-controls">
+          <div class="slider-controls-row">
+            <span class="slider-frame-counter">FRAME 01 / 04</span>
+            <div class="slider-arrows">
+              <button type="button" class="slider-arrow-btn slider-prev-btn"
+                aria-label="Previous Certificate">&larr;</button>
+              <button type="button" class="slider-arrow-btn slider-next-btn"
+                aria-label="Next Certificate">&rarr;</button>
+            </div>
+          </div>
+          <div class="focus-scale-wrapper">
+            <div class="focus-scale">
+              <div class="focus-scale-ticks"></div>
+              <div class="focus-scale-knob" title="Drag to Rack Focus">
+                <span class="knob-witness-mark"></span>
               </div>
             </div>
           </div>
-
-          <!-- Timeline Item 2: PR Team Head @ Placement Cell CEC -->
-          <div class="timeline-item fade-in-up delay-100">
-            <div class="timeline-dot active-dot"></div>
-            <div class="timeline-content glass-panel">
-              <div class="timeline-badge-row">
-                <span class="timeline-role-pill live">ACTIVE LEADERSHIP</span>
-                <span class="timeline-date">2024 — PRESENT</span>
-              </div>
-              <h3 class="timeline-title">Public Relations (PR) Team Head</h3>
-              <h4 class="timeline-subtitle">Training and Placement Cell (TPC), College of Engineering Cherthala (CEC)</h4>
-              <p class="timeline-text">
-                Leading the Public Relations team for the Training and Placement Cell of CEC. Driving campus placement drive announcements, corporate outreach, recruitment campaign publicity, digital media strategy, and student-industry relations.
-              </p>
-              <div class="timeline-tags">
-                <span class="timeline-tag">📢 Public Relations</span>
-                <span class="timeline-tag">💼 Corporate Outreach</span>
-                <span class="timeline-tag">🤝 Placement Drives</span>
-                <span class="timeline-tag">👥 Team Leadership</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Timeline Item 3: B.Tech CSE -->
-          <div class="timeline-item fade-in-up delay-200">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass-panel">
-              <span class="timeline-date">2023 — 2027 (EXPECTED)</span>
-              <h3 class="timeline-title">B.Tech in Computer Science and Engineering</h3>
-              <h4 class="timeline-subtitle">College of Engineering, Cherthala</h4>
-              <p class="timeline-text">
-                Focusing on Data Structures, Algorithms, Artificial Intelligence, Mobile Application Engineering, 
-                Computer Vision, and Software Engineering. Active participant in technical events and coding circles.
-              </p>
-              <div class="timeline-tags">
-                <span class="timeline-tag">💻 Computer Science</span>
-                <span class="timeline-tag">🤖 AI &amp; Accessibility</span>
-                <span class="timeline-tag">🛡️ Cyber Security</span>
-                <span class="timeline-tag">📱 Flutter</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- VERIFIED INDUSTRY CREDENTIALS & CERTIFICATES SHOWCASE -->
-        <div class="certs-section-header fade-in-up">
-          <div class="certs-header-row">
-            <div>
-              <span class="section-tag">VERIFIED CREDENTIALS</span>
-              <h3 class="certs-main-title">Professional Bootcamps &amp; Industry Certifications</h3>
-              <p class="certs-subtitle">Government-accredited programs, Google Developer Groups collaborations, and technical internships.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="certs-grid">
-
-          <!-- CERTIFICATE 1: NIELIT CYBER SECURITY & ETHICAL HACKING (GRADE 'S') -->
-          <div class="cert-card-item glass-panel tilt-card fade-in-up">
-            <div class="cert-card-badge-row">
-              <span class="cert-ribbon">🛡️ GOVT. OF INDIA</span>
-              <span class="cert-grade">🏆 GRADE 'S' (TOP DISTINCTION • ≥80%)</span>
-            </div>
-            
-            <div class="cert-card-img-box">
-              <img src="assets/images/nielit_certificate.png" alt="NIELIT Cyber Security &amp; Ethical Hacking Certificate — Akash V G" class="cert-card-img" />
-              <a href="assets/nielit-cyber-security-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open NIELIT Certificate PDF">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                </svg>
-                <span>View Full PDF Certificate</span>
-              </a>
-            </div>
-
-            <div class="cert-card-body">
-              <span class="cert-date-text">07-09-2026 to 11-09-2026 • Offline Intensive Bootcamp</span>
-              <h4 class="cert-card-title">Cyber Security &amp; Ethical Hacking</h4>
-              <p class="cert-card-org">
-                <strong>National Institute of Electronics &amp; Information Technology (NIELIT)</strong>, Calicut
-              </p>
-              <p class="cert-meta-sub">
-                ISEA Phase III Project • Sponsored by <strong>Ministry of Electronics &amp; IT (MeitY)</strong>
-              </p>
-              <div class="cert-id-tag">
-                <span>Cert No:</span>
-                <code>NIELIT/ISEAPHASEIII/BC/26-27/OO9</code>
-              </div>
-              <p class="cert-card-desc">
-                Network penetration testing, vulnerability assessment, cryptographic integrity, Wireshark packet capture, and defensive security. Awarded highest Grade 'S'.
-              </p>
-              <div class="cert-card-actions">
-                <a href="assets/nielit-cyber-security-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                  </svg>
-                  <span>View PDF</span>
-                </a>
-                <a href="assets/nielit-cyber-security-certificate.pdf" download class="btn btn-secondary btn-sm">
-                  <span>Download</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- CERTIFICATE 2: FAWSTECH APP DEVELOPMENT (FLUTTER) -->
-          <div class="cert-card-item glass-panel tilt-card fade-in-up delay-100">
-            <div class="cert-card-badge-row">
-              <span class="cert-ribbon cert-blue">📱 FLUTTER &amp; DART</span>
-              <span class="cert-badge-ksum">🚀 KERALA STARTUP MISSION</span>
-            </div>
-
-            <div class="cert-card-img-box">
-              <img src="assets/images/fawstech_certificate.png" alt="Fawstech Innovations App Development Flutter Certificate — Akash V G" class="cert-card-img" />
-              <a href="assets/fawstech-flutter-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open Fawstech Certificate PDF">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                </svg>
-                <span>View Full PDF Certificate</span>
-              </a>
-            </div>
-
-            <div class="cert-card-body">
-              <span class="cert-date-text">June 27 — June 29 • 3 Days Intensive Program</span>
-              <h4 class="cert-card-title">App Development (Flutter)</h4>
-              <p class="cert-card-org">
-                <strong>Fawstech Innovations Pvt. Ltd.</strong> (Kochi)
-              </p>
-              <p class="cert-meta-sub">
-                ISO 9001:2015 Certified • #startupindia • MSME Govt. of India
-              </p>
-              <div class="cert-id-tag">
-                <span>Honors:</span>
-                <code>Outstanding Completion</code>
-              </div>
-              <p class="cert-card-desc">
-                Cross-platform mobile application development with Flutter &amp; Dart, reactive widget hierarchy, state management, and real-time backend integrations.
-              </p>
-              <div class="cert-card-actions">
-                <a href="assets/fawstech-flutter-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                  </svg>
-                  <span>View PDF</span>
-                </a>
-                <a href="assets/fawstech-flutter-certificate.pdf" download class="btn btn-secondary btn-sm">
-                  <span>Download</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- CERTIFICATE 3: DEVTOWN & GOOGLE DEVELOPER GROUPS NETFLIX CLONE -->
-          <div class="cert-card-item glass-panel tilt-card fade-in-up delay-200">
-            <div class="cert-card-badge-row">
-              <span class="cert-ribbon cert-blue">🌐 GDG ON CAMPUS</span>
-              <span class="cert-badge-netflix">🎬 NETFLIX CLONE</span>
-            </div>
-
-            <div class="cert-card-img-box">
-              <img src="assets/images/devtown_certificate.png" alt="DevTown GDG Netflix Clone Bootcamp Certificate — Akash V G" class="cert-card-img" />
-              <a href="assets/devtown-netflix-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open DevTown Certificate PDF">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                </svg>
-                <span>View Full PDF Certificate</span>
-              </a>
-            </div>
-
-            <div class="cert-card-body">
-              <span class="cert-date-text">Issued 09 June 2025 • Verified Web Bootcamp</span>
-              <h4 class="cert-card-title">Netflix Clone Using HTML</h4>
-              <p class="cert-card-org">
-                <strong>DevTown</strong> in collaboration with <strong>Google Developer Groups (GDG) - VIT-AP</strong>
-              </p>
-              <p class="cert-meta-sub">
-                Signed by Ashish Modi, Co-Founder DevTown
-              </p>
-              <div class="cert-id-tag">
-                <span>Verification ID:</span>
-                <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" rel="noopener noreferrer" class="highlight-link"><code>ZNOH6B</code></a>
-              </div>
-              <p class="cert-card-desc">
-                Constructed a responsive clone of Netflix streaming UI with semantic HTML5, CSS Grid/Flexbox layouts, responsive design tokens, and clean frontend assets.
-              </p>
-              <div class="cert-card-actions">
-                <a href="assets/devtown-netflix-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                  </svg>
-                  <span>View PDF</span>
-                </a>
-                <a href="https://cert.devtown.in/verify/ZNOH6B" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                  <span>Verify Online</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- CERTIFICATE 4: TECHMAGHI EV DESIGN & VIRTUAL REALITY (VR) -->
-          <div class="cert-card-item glass-panel tilt-card fade-in-up delay-300">
-            <div class="cert-card-badge-row">
-              <span class="cert-ribbon cert-teal">⚡ EV &amp; SIMULINK</span>
-              <span class="cert-badge-vr">🥽 VIRTUAL REALITY</span>
-            </div>
-
-            <div class="cert-card-img-box">
-              <img src="assets/images/techmaghi_certificate.png" alt="Techmaghi EV Design &amp; Virtual Reality Internship Certificate — Akash V G" class="cert-card-img" />
-              <a href="assets/techmaghi-ev-vr-certificate.pdf" target="_blank" class="cert-zoom-overlay" aria-label="Open Techmaghi Certificate PDF">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                </svg>
-                <span>View Full PDF Certificate</span>
-              </a>
-            </div>
-
-            <div class="cert-card-body">
-              <span class="cert-date-text">15 June 2025 to 21 June 2025 • 7-Day Technical Internship</span>
-              <h4 class="cert-card-title">EV Design &amp; Testing in Virtual Reality</h4>
-              <p class="cert-card-org">
-                <strong>Techmaghi</strong> (Kinfra Hi-Tech Park • Kerala Startup Mission)
-              </p>
-              <p class="cert-meta-sub">
-                STEM Accredited • ISO Certified • #startupindia
-              </p>
-              <div class="cert-id-tag">
-                <span>Core Tools:</span>
-                <code>MATLAB Simulink &amp; VR</code>
-              </div>
-              <p class="cert-card-desc">
-                Powertrain mathematical modeling using MATLAB Simulink, electric vehicle chassis ergonomics, motor controller algorithms, and simulated virtual reality testing.
-              </p>
-              <div class="cert-card-actions">
-                <a href="assets/techmaghi-ev-vr-certificate.pdf" target="_blank" class="btn btn-primary btn-sm">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                  </svg>
-                  <span>View PDF</span>
-                </a>
-                <a href="assets/techmaghi-ev-vr-certificate.pdf" download class="btn btn-secondary btn-sm">
-                  <span>Download</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
-    <!-- NEW: ARCADE ZONE (MINI-GAMES HUB: BLOCK STACKER, CYBER BRICKS, WHIRLY BIRD & TIC-TAC-TOE) -->
-    <section id="arcade" class="arcade-section section">
-      <div class="container">
-        <div class="section-header center fade-in-up">
-          <span class="section-tag">05. DEV ARCADE ZONE</span>
-          <h2 class="section-title">Interactive Mini-Games Hub</h2>
-          <p class="section-subtitle">Take a coding break! Play Cyber Stacker block building, Neon Bricks, Whirly Bird, or challenge the Minimax AI.</p>
+    <!-- ======================================================================
+         SECTION 8: CONTACT ("08 / SHUTTER")
+         ====================================================================== -->
+    <section id="contact" class="section-camera-frame" data-section-id="contact">
+      <div class="parallax-number" aria-hidden="true">08</div>
+
+      <div class="contact-wrap">
+        <div class="section-eyebrow">
+          <span>FRAME 08</span>
+          <span class="eyebrow-line"></span>
+          <span>EXPOSURE COMPLETE</span>
         </div>
 
-        <div class="arcade-tabs fade-in-up">
-          <button class="arcade-tab-btn active" data-game="stacker">
-            <span>🏗️ Cyber Stacker</span>
+        <h2 class="contact-hero-heading text-brushed-metal">
+          Let&rsquo;s Cook something.
+        </h2>
+
+        <p class="contact-subtext">
+          Available for engineering roles, technical collaboration, and cinematography projects. Let&rsquo;s craft
+          intelligence and images that leave an indelible mark.
+        </p>
+
+        <!-- Magnetic Direct Email Shutter Trigger -->
+        <a href="mailto:akashvgvaikom@gmail.com" class="contact-shutter-cta btn-magnetic trigger-shutter-sound"
+          aria-label="Send Email to Akash V G">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>akashvgvaikom@gmail.com</span>
+        </a>
+
+        <!-- Social Telemetry Links -->
+        <div class="contact-social-row">
+          <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer"
+            class="contact-link-pill btn-magnetic">
+            <span>GitHub // @Akashvg2005</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+
+          <a href="https://linkedin.com/in/akash-v-g-76b46a291" target="_blank" rel="noopener noreferrer"
+            class="contact-link-pill btn-magnetic">
+            <span>LinkedIn // Akash V G</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+
+          <button type="button" class="contact-link-pill btn-magnetic trigger-resume-modal trigger-shutter-sound">
+            <span>Resume (CV) // Download</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
           </button>
-          <button class="arcade-tab-btn" data-game="bricks">
-            <span>🧱 Cyber Bricks</span>
-          </button>
-          <button class="arcade-tab-btn" data-game="whirly">
-            <span>🐦 Whirly Bird</span>
-          </button>
-          <button class="arcade-tab-btn" data-game="tictactoe">
-            <span>❌ Tic-Tac-Toe AI</span>
-          </button>
-        </div>
-
-        <div class="arcade-viewport glass-panel fade-in-up">
-          
-          <!-- GAME 1: CYBER STACKER (BLOCK BUILDING TOWER) -->
-          <div id="game-stacker" class="game-container">
-            <div class="arcade-hud">
-              <div class="hud-item">Height: <span id="stacker-height" class="hud-val">0</span></div>
-              <div class="hud-item hud-combo" id="stacker-combo-box">Streak: <span id="stacker-combo">0</span>x</div>
-              <div class="hud-item">Best: <span id="stacker-high" class="hud-val">0</span></div>
-            </div>
-
-            <div class="canvas-wrapper">
-              <canvas id="stacker-canvas" width="600" height="380"></canvas>
-
-              <div id="stacker-start-overlay" class="game-overlay">
-                <h3>🏗️ Cyber Stacker — Block Tower Builder</h3>
-                <p>Stack moving blocks to construct the ultimate cyber skyscraper! Tap screen or press <kbd>SPACE</kbd> to drop!</p>
-                <button class="btn btn-primary" id="start-stacker-btn">Start Building</button>
-              </div>
-
-              <div id="stacker-over-overlay" class="game-overlay hidden">
-                <h3 class="over-text">💥 Tower Collapsed!</h3>
-                <p>Height reached: <strong id="stacker-final-height">0</strong> floors! Perfect Placements: <span id="stacker-final-perfects">0</span></p>
-                <button class="btn btn-primary" id="restart-stacker-btn">Rebuild Tower</button>
-              </div>
-            </div>
-
-            <div class="game-action-row">
-              <button class="btn btn-primary btn-game-action" id="drop-block-btn">
-                <span>👇 Place Block (<kbd>SPACE</kbd>)</span>
-              </button>
-            </div>
-
-            <div class="game-controls-hint">
-              <span>💡 Controls: Click canvas, press button, or press <kbd>SPACE</kbd> • Perfect alignment gives bonus streak!</span>
-            </div>
-          </div>
-
-          <!-- GAME 2: CYBER BRICKS (NEON BLOCK BREAKER) -->
-          <div id="game-bricks" class="game-container hidden">
-            <div class="arcade-hud">
-              <div class="hud-item">Score: <span id="bricks-score" class="hud-val">0</span></div>
-              <div class="hud-item">Lives: <span id="bricks-lives" class="hud-val">❤️❤️❤️</span></div>
-              <div class="hud-item">High: <span id="bricks-high" class="hud-val">0</span></div>
-            </div>
-
-            <div class="canvas-wrapper">
-              <canvas id="bricks-canvas" width="600" height="380"></canvas>
-
-              <div id="bricks-start-overlay" class="game-overlay">
-                <h3>🧱 Cyber Bricks — Neon Block Breaker</h3>
-                <p>Deflect the energy ball to demolish the cyber firewall! Move paddle with Mouse, Touch, or <kbd>←</kbd> <kbd>→</kbd> keys.</p>
-                <button class="btn btn-primary" id="start-bricks-btn">Launch Ball</button>
-              </div>
-
-              <div id="bricks-over-overlay" class="game-overlay hidden">
-                <h3 class="over-text">💥 Core Breached!</h3>
-                <p>Final Score: <span id="bricks-final-score">0</span></p>
-                <button class="btn btn-primary" id="restart-bricks-btn">Play Again</button>
-              </div>
-
-              <div id="bricks-win-overlay" class="game-overlay hidden">
-                <h3 style="color:#10b981;">🏆 Firewall Demolished!</h3>
-                <p>Victory! Final Score: <span id="bricks-win-score">0</span></p>
-                <button class="btn btn-primary" id="next-bricks-btn">Play Again</button>
-              </div>
-            </div>
-
-            <div class="game-controls-hint">
-              <span>💡 Controls: Move mouse or slide finger to position paddle • Break all neon blocks to win!</span>
-            </div>
-          </div>
-
-          <!-- GAME 3: WHIRLY BIRD -->
-          <div id="game-whirly" class="game-container hidden">
-            <div class="whirly-hud">
-              <div class="hud-score">Score: <span id="whirly-score">0</span></div>
-              <div class="hud-high">High Score: <span id="whirly-high">0</span></div>
-            </div>
-
-            <div class="canvas-wrapper">
-              <canvas id="whirly-canvas" width="600" height="380"></canvas>
-
-              <div id="whirly-start-overlay" class="game-overlay">
-                <h3>🐦 Whirly Bird Developer Edition</h3>
-                <p>Press <strong>SPACEBAR</strong> or <strong>CLICK / TAP</strong> to flap!</p>
-                <button class="btn btn-primary" id="start-whirly-btn">Start Game</button>
-              </div>
-
-              <div id="whirly-over-overlay" class="game-overlay hidden">
-                <h3 class="over-text">💥 Game Over!</h3>
-                <p>Final Score: <span id="whirly-final-score">0</span></p>
-                <button class="btn btn-primary" id="restart-whirly-btn">Play Again</button>
-              </div>
-            </div>
-
-            <div class="game-controls-hint">
-              <span>💡 Controls: Press <kbd>SPACE</kbd> or Click screen to flap • Sound active when 🔊 is ON</span>
-            </div>
-          </div>
-
-          <!-- GAME 4: TIC-TAC-TOE -->
-          <div id="game-tictactoe" class="game-container hidden">
-            <div class="ttt-hud">
-              <span class="ttt-turn" id="ttt-status">Your Turn (X)</span>
-              <div class="ttt-scores">
-                <span>Player (X): <strong id="ttt-score-x">0</strong></span>
-                <span>AI (O): <strong id="ttt-score-o">0</strong></span>
-              </div>
-            </div>
-
-            <div class="ttt-board" id="ttt-board">
-              <button class="ttt-cell" data-idx="0" aria-label="Cell 1"></button>
-              <button class="ttt-cell" data-idx="1" aria-label="Cell 2"></button>
-              <button class="ttt-cell" data-idx="2" aria-label="Cell 3"></button>
-              <button class="ttt-cell" data-idx="3" aria-label="Cell 4"></button>
-              <button class="ttt-cell" data-idx="4" aria-label="Cell 5"></button>
-              <button class="ttt-cell" data-idx="5" aria-label="Cell 6"></button>
-              <button class="ttt-cell" data-idx="6" aria-label="Cell 7"></button>
-              <button class="ttt-cell" data-idx="7" aria-label="Cell 8"></button>
-              <button class="ttt-cell" data-idx="8" aria-label="Cell 9"></button>
-            </div>
-
-            <div class="ttt-actions">
-              <button class="btn btn-secondary btn-sm" id="reset-ttt-btn">Reset Board</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="contact-section section">
-      <div class="container">
-        <div class="contact-card glass-panel fade-in-up">
-          <div class="contact-grid">
-            
-            <div class="contact-info">
-              <span class="section-tag">06. GET IN TOUCH</span>
-              <h2 class="contact-title">Let's build something accessible & impactful together.</h2>
-              <p class="contact-desc">
-                Whether you have a question about <strong>SignBridge</strong>, an opportunity for collaboration, 
-                or just want to talk about Flutter and AI, my inbox is always open!
-              </p>
-
-              <div class="contact-methods">
-                <div class="method-item">
-                  <div class="method-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                      <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                  </div>
-                  <div>
-                    <span class="method-label">Direct Email</span>
-                    <a href="mailto:akashvg2005@gmail.com" class="method-value">akashvg2005@gmail.com</a>
-                  </div>
-                </div>
-
-                <div class="method-item">
-                  <div class="method-icon whatsapp-icon-bg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <span class="method-label">WhatsApp &amp; Phone</span>
-                    <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="method-value highlight-link">+91 88489 48105</a>
-                  </div>
-                </div>
-
-                <div class="method-item">
-                  <div class="method-icon instagram-icon-bg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <span class="method-label">Instagram</span>
-                    <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer" class="method-value highlight-link">@a.k_a.s_h__</a>
-                  </div>
-                </div>
-
-                <div class="method-item">
-                  <div class="method-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                  </div>
-                  <div>
-                    <span class="method-label">Location</span>
-                    <span class="method-value">Vaikom, Kerala, India</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Quick Action Options -->
-              <div class="contact-resume-box">
-                <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-hero">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                  </svg>
-                  <span>Chat on WhatsApp</span>
-                </a>
-                <a href="assets/resume.pdf" download class="btn btn-secondary">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Download CV (PDF)</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- Quick Contact Form -->
-            <form id="contact-form" class="contact-form">
-              <div class="form-group">
-                <label for="form-name">Your Name</label>
-                <input type="text" id="form-name" required placeholder="John Doe" autocomplete="name" />
-              </div>
-
-              <div class="form-group">
-                <label for="form-email">Your Email Address</label>
-                <input type="email" id="form-email" required placeholder="john@example.com" autocomplete="email" />
-              </div>
-
-              <div class="form-group">
-                <label for="form-message">Message</label>
-                <textarea id="form-message" rows="4" required placeholder="Hello Akash, I'd like to talk about..."></textarea>
-              </div>
-
-              <button type="submit" class="btn btn-primary btn-full" id="form-submit-btn">
-                <span>Send Message</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
-              <div id="form-feedback" class="form-feedback hidden"></div>
-            </form>
-
-          </div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <p>© 2026 Akash V G. Crafted with care &amp; AI accessibility focus.</p>
-      <div class="footer-links">
-        <a href="https://github.com/Akashvg2005" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/akash-v-g-76b46a291/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://www.instagram.com/a.k_a.s_h__/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://wa.me/918848948105" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a href="#hero" class="back-to-top" aria-label="Back to Top">
-          ↑ Top
-        </a>
-      </div>
+  <!-- ========================================================================
+       FOOTER TELEMETRY PLATE
+       ======================================================================== -->
+  <footer class="camera-footer">
+    <div class="footer-inner">
+      <span>AKASH V G &bull; SILVER HALIDE ARCHIVE &bull; 2026</span>
+      <span>35mm ANALOG OPTICS &bull; 50mm f/1.4</span>
+      <span>HOSTED ON GITHUB PAGES &bull; ZERO BUILD STEP</span>
     </div>
   </footer>
 
-  <!-- Main JavaScript File -->
-  <script src="script.js"></script>
+  <!-- ========================================================================
+       MODAL: RESUME (CV) INSPECTOR
+       ======================================================================== -->
+  <div id="resume-modal" class="silver-modal" role="dialog" aria-modal="true" aria-label="Curriculum Vitae Preview">
+    <div class="modal-backdrop"></div>
+    <div class="modal-camera-dialog">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 class="modal-title">Curriculum Vitae // Akash V G</h3>
+          <span class="modal-subline">AI Engineer &bull; Cinematographer &bull; B.Tech CSE</span>
+        </div>
+        <button type="button" class="modal-close-btn" aria-label="Close Modal">&times;</button>
+      </div>
+
+      <div class="modal-viewport-frame">
+        <iframe src="assets/resume.pdf#toolbar=0" class="resume-modal-iframe" title="Akash V G Resume PDF"></iframe>
+      </div>
+
+      <div class="modal-footer">
+        <span class="spec-key">SPEC: PDF 151KB &bull; VERIFIED</span>
+        <a href="assets/resume.pdf" download="Akash_VG_Resume.pdf" class="btn-machined-silver trigger-shutter-sound">
+          <span>Download CV PDF</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: CERTIFICATE INSPECTOR
+       ======================================================================== -->
+  <div id="cert-modal" class="silver-modal" role="dialog" aria-modal="true" aria-label="Certificate Inspector">
+    <div class="modal-backdrop"></div>
+    <div class="modal-camera-dialog">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 id="cert-modal-title" class="modal-title">Accredited Certificate</h3>
+          <span id="cert-modal-issuer" class="modal-subline">Verified Issuer</span>
+        </div>
+        <button type="button" class="modal-close-btn" aria-label="Close Modal">&times;</button>
+      </div>
+
+      <div id="cert-modal-frame" class="modal-viewport-frame">
+        <!-- Injected via JavaScript dynamically -->
+      </div>
+
+      <div class="modal-footer">
+        <span id="cert-modal-grade" class="spec-key">VERIFIED ACCREDITATION</span>
+        <a id="cert-modal-download" href="#" target="_blank" rel="noopener noreferrer"
+          class="btn-machined-silver trigger-shutter-sound">
+          <span>Open Full Certificate</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SCRIPTS: CDN LIBRARIES & ES MODULES
+       ======================================================================== -->
+  <!-- GSAP Core & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroller -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Three.js (3D Chrome Lens & Optic) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Main ES Module Entry Point -->
+  <script type="module" src="js/main.js"></script>
+
 </body>
+
 </html>
