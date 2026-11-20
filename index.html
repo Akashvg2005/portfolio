@@ -35,6 +35,9 @@
 
 <body>
 
+  <!-- Optical Exposure Shutter Theme Transition Flash -->
+  <div id="theme-transition-flash" class="theme-transition-flash" aria-hidden="true"></div>
+
   <!-- Procedural 35mm Analog Film Grain Overlay -->
   <canvas id="film-grain-canvas" aria-hidden="true"></canvas>
 
@@ -198,6 +201,14 @@
       <!-- Right Top Bar Telemetry & CV Shutter -->
       <div class="top-bar-telemetry">
         <span class="telemetry-readout">ISO 100 · 1/250s · f/1.4</span>
+        <button type="button" id="btn-theme-toggle" class="btn-machined-silver btn-theme-toggle"
+          aria-label="Toggle Camera Finish: Silver Chrome / Matte Black">
+          <svg class="theme-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+          <span id="theme-toggle-label">FINISH // NOIR</span>
+        </button>
         <button type="button" id="btn-audio-toggle" class="btn-machined-silver btn-audio-toggle is-active"
           aria-label="Toggle Camera Audio FX & 35mm Motor Roll">
           <span class="audio-pulse-dot"></span>

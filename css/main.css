@@ -2677,3 +2677,217 @@ body.has-custom-cursor textarea {
   }
 }
 
+/* ==========================================================================
+   20. THEME TRANSITION SYSTEM & BRIGHT SILVER CHROME PALETTE
+   ========================================================================== */
+
+/* Shutter Flash Exposure Overlay */
+.theme-transition-flash {
+  position: fixed;
+  inset: 0;
+  background: #FFFFFF;
+  pointer-events: none;
+  z-index: 1000000;
+  opacity: 0;
+  transition: opacity 0.22s ease-out;
+}
+
+.theme-transition-flash.is-flashing {
+  opacity: 0.5;
+}
+
+/* Global Hardware Surface Transitions */
+body,
+.top-bar-nav,
+.tilt-metal-card,
+.spec-tile,
+.film-frame,
+.leadership-card,
+.arcade-cabinet,
+.camera-footer,
+.modal-camera-dialog,
+.btn-machined-silver,
+.nav-link-item,
+.arcade-header-plate,
+.arcade-viewport,
+.sprocket-bar {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.4s ease;
+}
+
+/* Toggle Button Styling */
+.btn-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theme-icon {
+  stroke: currentColor;
+  transition: transform 0.35s ease;
+}
+
+.btn-theme-toggle.is-chrome .theme-icon {
+  transform: rotate(45deg);
+}
+
+/* ==========================================================================
+   21. BRIGHT FINISH: SILVER CHROME & CARBON BLACK (High-End Machined Platinum)
+   ========================================================================== */
+body.theme-chrome {
+  --bg-graphite: #D8DCE1;        /* Brushed anodized silver-grey canvas */
+  --bg-charcoal: #E5E9EE;        /* Elevated satin plates & cards */
+  --bg-dark-plate: #CCD1D7;      /* Recessed milled aluminum wells */
+  --border-steel: #A4ACB5;       /* Precision hairline brushed-steel dividers */
+  --border-subtle: rgba(18, 20, 24, 0.12);
+  --border-bright: rgba(18, 20, 24, 0.35);
+
+  --text-slate: #525862;         /* Crisp graphite secondary readouts & metadata */
+  --text-silver: #202328;        /* Rich carbon black/charcoal body copy */
+  --text-light-silver: #090A0C;  /* Pure deep black headings & active states */
+  --highlight-specular: #000000; /* Deepest black mechanical accents */
+
+  /* Inverted Satin Chrome Gradients */
+  --metal-gradient-h: linear-gradient(90deg, #A8B0B8 0%, #FFFFFF 50%, #A8B0B8 100%);
+  --metal-gradient-diag: linear-gradient(135deg, #A2AAA2 0%, #FFFFFF 45%, #A2AAA2 100%);
+  --metal-gradient-dark: linear-gradient(135deg, #CFD4DA 0%, #EBEEF2 100%);
+}
+
+/* Top Navigation Bar in Chrome Finish */
+body.theme-chrome .top-bar-nav {
+  background: rgba(226, 230, 235, 0.94);
+  border-bottom: 1px solid var(--border-steel);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-chrome .nav-link-item {
+  color: #202328;
+}
+
+body.theme-chrome .nav-link-item:hover {
+  color: #000000;
+}
+
+body.theme-chrome .nav-aperture-icon {
+  stroke: #202328;
+}
+
+/* Typography Gradient Mask in Chrome Finish */
+body.theme-chrome .text-brushed-metal {
+  background: linear-gradient(135deg, #090A0C 0%, #353942 50%, #090A0C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Machined Buttons in Chrome Finish */
+body.theme-chrome .btn-machined-silver {
+  background: linear-gradient(135deg, #E2E6EB 0%, #CCD1D7 100%);
+  border-color: #9EA6B0;
+  color: #101114;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), inset 0 1px 1px #FFFFFF;
+}
+
+body.theme-chrome .btn-machined-silver:hover {
+  border-color: #000000;
+  color: #000000;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), inset 0 1px 1px #FFFFFF;
+}
+
+body.theme-chrome .btn-shutter {
+  background: linear-gradient(135deg, #181A1D 0%, #000000 100%);
+  color: #F6F7F8;
+  border-color: #000000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+/* Cards & Surface Treatments */
+body.theme-chrome .tilt-metal-card,
+body.theme-chrome .spec-tile,
+body.theme-chrome .leadership-card,
+body.theme-chrome .arcade-cabinet {
+  background: #E5E9EE;
+  border-color: #A4ACB5;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-chrome .sprocket-bar {
+  background: #C4C9D0;
+  border-color: #A4ACB5;
+}
+
+body.theme-chrome .sprocket-hole {
+  background: #9EA6B0;
+}
+
+body.theme-chrome .sprocket-film-name {
+  color: #181A1E;
+}
+
+/* Arcade Console Surfaces in Chrome Finish */
+body.theme-chrome .arcade-header-plate {
+  background: #CCD2D9;
+  border-color: #A4ACB5;
+}
+
+body.theme-chrome .arcade-viewport {
+  background: #C0C6CE;
+}
+
+body.theme-chrome .arcade-tab-btn {
+  background: #D8DCE2;
+  color: #3C4148;
+  border-color: #A4ACB5;
+}
+
+body.theme-chrome .arcade-tab-btn.active {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+body.theme-chrome .shutter-focal-track {
+  background: #B6BCC4;
+  border-color: #9AA2AC;
+}
+
+body.theme-chrome .runner-canvas-container,
+body.theme-chrome .rangefinder-canvas-container,
+body.theme-chrome .focus-optical-viewport {
+  border-color: #9EA6B0;
+}
+
+/* Modals */
+body.theme-chrome .modal-camera-dialog {
+  background: #DCE0E5;
+  border-color: #9EA6B0;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-chrome .modal-header,
+body.theme-chrome .modal-footer {
+  background: #E5E9EE;
+  border-color: #B5BDC6;
+}
+
+body.theme-chrome .modal-close-btn {
+  color: #202328;
+  border-color: #A4ACB5;
+}
+
+/* Scrollbar in Chrome Finish */
+body.theme-chrome ::-webkit-scrollbar-track {
+  background: #D8DCE1;
+}
+
+body.theme-chrome ::-webkit-scrollbar-thumb {
+  background: #A4ACB5;
+}
+
+body.theme-chrome ::-webkit-scrollbar-thumb:hover {
+  background: #707782;
+}
+

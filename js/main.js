@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Core interactive systems
+  initThemeToggle();
   initSliders();
   initThreeScene();
   initScrollSystem();
@@ -45,6 +46,51 @@ function initPostLoader() {
   const heroReveal = document.querySelector('.hero-exposure-cue');
   if (heroReveal) {
     heroReveal.classList.add('is-exposed');
+  }
+}
+
+/**
+ * Camera Finish Theme Switcher: Silver Chrome (Bright) & Matte Black Halide (Dark)
+ * Includes optical shutter flash transition & mechanical sound
+ */
+function initThemeToggle() {
+  const themeToggleBtn = document.getElementById('btn-theme-toggle');
+  const themeToggleLabel = document.getElementById('theme-toggle-label');
+  const flashEl = document.getElementById('theme-transition-flash');
+
+  const savedTheme = localStorage.getItem('silver_camera_finish') || 'noir';
+  applyTheme(savedTheme, false);
+
+  function applyTheme(theme, animate = true) {
+    if (animate) {
+      if (flashEl) {
+        flashEl.classList.add('is-flashing');
+        setTimeout(() => {
+          flashEl.classList.remove('is-flashing');
+        }, 220);
+      }
+      window.__playShutterSound?.();
+    }
+
+    if (theme === 'chrome') {
+      document.body.classList.add('theme-chrome');
+      if (themeToggleLabel) themeToggleLabel.textContent = 'FINISH // CHROME';
+      if (themeToggleBtn) themeToggleBtn.classList.add('is-chrome');
+    } else {
+      document.body.classList.remove('theme-chrome');
+      if (themeToggleLabel) themeToggleLabel.textContent = 'FINISH // NOIR';
+      if (themeToggleBtn) themeToggleBtn.classList.remove('is-chrome');
+    }
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const current = document.body.classList.contains('theme-chrome') ? 'chrome' : 'noir';
+      const next = current === 'chrome' ? 'noir' : 'chrome';
+      localStorage.setItem('silver_camera_finish', next);
+      applyTheme(next, true);
+    });
   }
 }
 
