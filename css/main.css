@@ -198,15 +198,15 @@ body:not(.site-entered) #viewfinder-cursor {
 
 .intro-letterbox-top {
   top: 0;
-  border-bottom: 1px solid var(--intro-border);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.95);
+  border-bottom: none;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.98);
   animation: letterboxTopIn 1.2s var(--ease-cinematic) 0.6s both;
 }
 
 .intro-letterbox-bottom {
   bottom: 0;
-  border-top: 1px solid var(--intro-border);
-  box-shadow: 0 -10px 35px rgba(0, 0, 0, 0.95);
+  border-top: none;
+  box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.98);
   animation: letterboxBottomIn 1.2s var(--ease-cinematic) 0.6s both;
 }
 
@@ -228,25 +228,79 @@ body:not(.site-entered) #viewfinder-cursor {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 16px;
   text-align: center;
   padding: 0 24px;
   max-width: 950px;
 }
 
-/* Name Container (Used for smooth FLIP coordinate translation to hero-name) */
+/* Name Container */
 .intro-name-wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transform-origin: center center;
-  will-change: transform, opacity, letter-spacing;
+  will-change: transform, opacity;
+}
+
+/* Volumetric Cinematic Lens Bloom (Organic Anamorphic Back-Illumination — No Lines) */
+.intro-lens-bloom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(280px, 50vw, 650px);
+  height: clamp(90px, 18vw, 220px);
+  transform: translate(-50%, -50%) scale(0.9);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(225, 235, 250, 0.14) 0%,
+    rgba(190, 210, 235, 0.07) 35%,
+    rgba(140, 165, 195, 0.02) 60%,
+    transparent 78%
+  );
+  filter: blur(28px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  animation: bloomPulseIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
+             bloomBreathe 5.5s ease-in-out 3.4s infinite;
+  will-change: transform, opacity, filter;
+}
+
+@keyframes bloomPulseIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+    filter: blur(14px);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.12);
+    filter: blur(34px);
+  }
+  100% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(1.0);
+    filter: blur(28px);
+  }
+}
+
+@keyframes bloomBreathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.82;
+  }
 }
 
 /* "Akash V G" in Editorial Display Serif (Instrument Serif)
-   Optical Rack-Focus Hunting: First blurs out heavily into luminous bokeh,
-   then locks pin-sharp onto the name! */
+   Optical Rack-Focus Hunting: First blurs out into luminous bokeh,
+   then snaps pin-sharp onto the name with subtle exposure bloom */
 .intro-title-name {
   font-family: var(--font-display);
   font-size: clamp(4.2rem, 9vw, 8.2rem);
@@ -265,101 +319,37 @@ body:not(.site-entered) #viewfinder-cursor {
   animation: opticalFocusHunting 1.9s cubic-bezier(0.16, 1, 0.3, 1) 1.2s both,
              nameLightSweep 6.5s ease-in-out 3.2s infinite;
   will-change: filter, transform, opacity;
+  position: relative;
+  z-index: 2;
 }
 
-/* Optical Defocus Hunting -> Sharp Focus Lock (GPU Compositor Accelerated) */
+/* Optical Defocus Hunting -> Sharp Focus Lock with Subtle Exposure Burst */
 @keyframes opticalFocusHunting {
   0% {
     opacity: 0;
-    filter: blur(14px);
+    filter: blur(14px) brightness(0.9);
     transform: scale(0.92) translateZ(0);
   }
-  30% {
-    opacity: 0.82;
-    filter: blur(8px);
-    transform: scale(1.04) translateZ(0);
-  }
-  65% {
-    opacity: 0.96;
-    filter: blur(2px);
-    transform: scale(1.01) translateZ(0);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0px);
-    transform: scale(1.0) translateZ(0);
-  }
-}
-
-/* Anamorphic Lens Flare Streak Cutting Across the Name */
-.intro-anamorphic-streak {
-  position: absolute;
-  top: 50%;
-  left: -20%;
-  right: -20%;
-  height: 1.5px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(180, 205, 235, 0.25) 20%,
-    rgba(255, 255, 255, 0.95) 50%,
-    rgba(180, 205, 235, 0.25) 80%,
-    transparent 100%
-  );
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.85), 0 0 36px rgba(180, 215, 255, 0.45);
-  transform: translateY(-50%) scaleX(0);
-  transform-origin: center;
-  pointer-events: none;
-  opacity: 0;
-  animation: anamorphicFlash 1.4s cubic-bezier(0.16, 1, 0.3, 1) 3.6s forwards;
-}
-
-@keyframes anamorphicFlash {
-  0% {
-    transform: translateY(-50%) scaleX(0);
-    opacity: 0;
-  }
-  30% {
-    transform: translateY(-50%) scaleX(1.15);
-    opacity: 1;
-  }
-  70% {
-    transform: translateY(-50%) scaleX(1.0);
+  32% {
     opacity: 0.85;
+    filter: blur(7px) brightness(1.15);
+    transform: scale(1.03) translateZ(0);
+  }
+  68% {
+    opacity: 0.96;
+    filter: blur(1.5px) brightness(1.04);
+    transform: scale(1.008) translateZ(0);
   }
   100% {
-    transform: translateY(-50%) scaleX(0.7);
-    opacity: 0.2;
+    opacity: 1;
+    filter: blur(0px) brightness(1.0);
+    transform: scale(1.0) translateZ(0);
   }
 }
 
 @keyframes nameLightSweep {
   0% { background-position: 130% 0; }
   45%, 100% { background-position: -130% 0; }
-}
-
-/* Thin Silver Rule Draws Out From Centre (4.4s - 5.0s) */
-.intro-silver-rule {
-  width: 150px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #c9ced6 50%, transparent);
-  transform-origin: center;
-  animation: ruleExpand 0.6s var(--ease-cinematic) 4.4s both;
-  will-change: transform, opacity;
-}
-
-@keyframes ruleExpand {
-  0% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(1);
-    opacity: 0.85;
-  }
 }
 
 /* Role Line Fades in Beneath Name (3.6s - 4.4s) */
@@ -494,8 +484,8 @@ body:not(.site-entered) #viewfinder-cursor {
 }
 
 /* ==========================================================================
-   CINEMATIC ENTRY TRANSITION: Scroll-to-Enter (Zoom-In Blur-Out)
-   Silky 60fps/120fps GPU compositor animation entering the home page
+   CINEMATIC ENTRY TRANSITION: Scroll-to-Enter (Optical Bloom-Through)
+   Dolly-in Zoom & Luminous Dissolve into the Home Page (Zero Lines)
    ========================================================================== */
 .cinematic-intro.intro-dismissing,
 .cinematic-intro.intro-flowing {
@@ -504,7 +494,7 @@ body:not(.site-entered) #viewfinder-cursor {
   transition: background-color 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Layer 1: Foreground Anamorphic Matte Bars slide out smoothly */
+/* Layer 1: Seamless 2.39:1 Anamorphic Matte Bars slide open smoothly */
 .cinematic-intro.intro-dismissing .intro-letterbox-top,
 .cinematic-intro.intro-flowing .intro-letterbox-top {
   transform: translateY(-100%) !important;
@@ -517,33 +507,41 @@ body:not(.site-entered) #viewfinder-cursor {
   transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Layer 2: Intro Name ZOOMS IN with BLUR OUT effect */
+/* Layer 2: Intro Name DOLLIES FORWARD & DISSOLVES WITH OPTICAL BLOOM
+   Camera pushes right through the luminous letters into the home page */
 .cinematic-intro.intro-dismissing .intro-name-wrap,
 .cinematic-intro.intro-flowing .intro-name-wrap,
 .cinematic-intro.intro-dismissing .intro-title-name,
 .cinematic-intro.intro-flowing .intro-title-name {
-  transform: scale(2.8) translateZ(0) !important;
-  filter: blur(20px) !important;
+  transform: scale(3.4) translateZ(0) !important;
+  filter: blur(26px) brightness(1.7) !important;
   opacity: 0 !important;
   transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
               filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Layer 2b: Supporting Cues dissolve cleanly and scale down slightly */
+/* Layer 2b: Volumetric Lens Bloom expands softly as camera passes through */
+.cinematic-intro.intro-dismissing .intro-lens-bloom,
+.cinematic-intro.intro-flowing .intro-lens-bloom {
+  transform: translate(-50%, -50%) scale(2.4) !important;
+  filter: blur(48px) brightness(1.5) !important;
+  opacity: 0 !important;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Layer 2c: Subtitle / Role Line drifts downward and softly defocuses */
 .cinematic-intro.intro-dismissing .intro-role-line,
-.cinematic-intro.intro-dismissing .intro-silver-rule,
-.cinematic-intro.intro-dismissing .intro-anamorphic-streak,
 .cinematic-intro.intro-dismissing .intro-enter-cue,
 .cinematic-intro.intro-dismissing .intro-skip-btn,
 .cinematic-intro.intro-flowing .intro-role-line,
-.cinematic-intro.intro-flowing .intro-silver-rule,
-.cinematic-intro.intro-flowing .intro-anamorphic-streak,
 .cinematic-intro.intro-flowing .intro-enter-cue,
 .cinematic-intro.intro-flowing .intro-skip-btn {
   opacity: 0 !important;
-  transform: scale(0.92) translateY(14px) !important;
-  filter: blur(6px) !important;
+  transform: scale(0.92) translateY(18px) !important;
+  filter: blur(8px) !important;
   transition: opacity 0.3s ease, transform 0.4s ease, filter 0.35s ease !important;
 }
 
@@ -560,7 +558,7 @@ body:not(.site-entered) #viewfinder-cursor {
   .cinematic-intro,
   .intro-bg-stage,
   .intro-title-name,
-  .intro-silver-rule,
+  .intro-lens-bloom,
   .intro-role-line,
   .intro-letterbox-top,
   .intro-letterbox-bottom,

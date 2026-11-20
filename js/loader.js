@@ -44,7 +44,7 @@ export function initLoader(onComplete) {
 
   const bgStage = introEl.querySelector('.intro-bg-stage');
   const titleFrame = document.getElementById('intro-title-frame');
-  const streak = document.querySelector('.intro-anamorphic-streak');
+  const bloom = introEl.querySelector('.intro-lens-bloom');
 
   // Silky smooth rAF lerp parallax (zero layout thrashing, capped at display refresh rate)
   function renderParallax() {
@@ -58,8 +58,8 @@ export function initLoader(onComplete) {
     if (titleFrame) {
       titleFrame.style.transform = `perspective(1000px) rotateX(${-currentY * 3}deg) rotateY(${currentX * 4}deg) translate3d(${currentX * 6}px, ${currentY * 4}px, 0)`;
     }
-    if (streak) {
-      streak.style.transform = `translateY(-50%) translate3d(${currentX * 14}px, 0, 0)`;
+    if (bloom) {
+      bloom.style.transform = `translate(-50%, -50%) translate3d(${currentX * 12}px, ${currentY * 8}px, 0)`;
     }
 
     rafParallaxId = requestAnimationFrame(renderParallax);
@@ -95,7 +95,7 @@ export function initLoader(onComplete) {
     // Clear inline transforms so GPU CSS transitions cleanly take over for zoom-in blur-out
     if (titleFrame) titleFrame.style.transform = '';
     if (bgStage) bgStage.style.transform = '';
-    if (streak) streak.style.transform = '';
+    if (bloom) bloom.style.transform = '';
 
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
@@ -186,20 +186,20 @@ export function initLoader(onComplete) {
 
       const titleFrame = document.getElementById('intro-title-frame');
       const bgStage = introEl.querySelector('.intro-bg-stage');
-      const streak = document.querySelector('.intro-anamorphic-streak');
+      const bloom = introEl.querySelector('.intro-lens-bloom');
 
       if (titleFrame) titleFrame.style.transform = '';
       if (bgStage) bgStage.style.transform = '';
-      if (streak) streak.style.transform = '';
+      if (bloom) bloom.style.transform = '';
 
       // Re-trigger CSS animations by reflow
       const titleName = document.getElementById('intro-title-name');
       if (titleName) {
         titleName.style.animation = 'none';
-        if (streak) streak.style.animation = 'none';
+        if (bloom) bloom.style.animation = 'none';
         void titleName.offsetWidth;
         titleName.style.animation = '';
-        if (streak) streak.style.animation = '';
+        if (bloom) bloom.style.animation = '';
       }
 
       if (!prefersReducedMotion && !rafParallaxId) {
