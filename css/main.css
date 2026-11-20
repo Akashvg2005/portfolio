@@ -488,38 +488,41 @@ body.has-custom-cursor textarea {
 .nav-link-list {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 20px;
   list-style: none;
 }
 
 .nav-link-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--text-slate);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #D2D6DC; /* Crisp high-visibility silver in dark mode */
   text-decoration: none;
   text-transform: uppercase;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, opacity 0.2s ease;
   position: relative;
-  padding: 6px 0;
+  padding: 6px 2px;
 }
 
 .nav-aperture-icon {
-  width: 10px;
-  height: 10px;
-  opacity: 0.5;
+  width: 11px;
+  height: 11px;
+  opacity: 0.75;
+  stroke: currentColor;
   transition: transform 0.4s var(--ease-mechanical), opacity 0.2s ease;
 }
 
 .nav-link-item:hover {
-  color: var(--text-light-silver);
+  color: #FFFFFF;
 }
 
 .nav-link-item:hover .nav-aperture-icon {
   opacity: 1;
+  transform: rotate(60deg);
 }
 
 /* Right Top Bar Actions */
@@ -2626,6 +2629,16 @@ body.has-custom-cursor textarea {
 /* ==========================================================================
    19. RESPONSIVE BREAKPOINTS (Tablet & Mobile)
    ========================================================================== */
+/* Responsive Top Bar Accommodations */
+@media (max-width: 1200px) {
+  .telemetry-readout {
+    display: none; /* Hide telemetry text first to preserve crisp navigation links */
+  }
+  .nav-link-list {
+    gap: 16px;
+  }
+}
+
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
@@ -2641,7 +2654,11 @@ body.has-custom-cursor textarea {
   }
 
   .nav-link-list {
-    display: none; /* Mobile menu drawer or streamlined actions */
+    gap: 14px;
+  }
+
+  .nav-link-item {
+    font-size: 0.76rem;
   }
 
   .fixed-side-telemetry {
@@ -2650,16 +2667,43 @@ body.has-custom-cursor textarea {
 }
 
 @media (max-width: 768px) {
-  .section-camera-frame {
-    padding: 100px 20px 60px;
+  .camera-top-bar {
+    height: auto;
+    min-height: 56px;
+    padding: 8px 0;
   }
 
   .top-bar-inner {
-    padding: 0 20px;
+    padding: 0 16px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .telemetry-readout {
-    display: none;
+  .camera-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0 2px;
+  }
+
+  .nav-link-list {
+    display: flex !important;
+    gap: 16px;
+    white-space: nowrap;
+  }
+
+  .nav-link-item {
+    font-size: 0.74rem;
+  }
+
+  .btn-theme-toggle,
+  .btn-audio-toggle {
+    padding: 5px 10px;
+  }
+
+  .section-camera-frame {
+    padding: 100px 20px 60px;
   }
 
   .arcade-viewport {
@@ -2756,14 +2800,34 @@ body.theme-chrome {
 }
 
 /* Top Navigation Bar in Chrome Finish */
-body.theme-chrome .top-bar-nav {
-  background: rgba(226, 230, 235, 0.94);
-  border-bottom: 1px solid var(--border-steel);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+body.theme-chrome .camera-top-bar {
+  background: rgba(226, 230, 235, 0.96);
+  border-bottom: 1px solid #A4ACB5;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body.theme-chrome .brand-camera-plate {
+  color: #090A0C;
+}
+
+body.theme-chrome .brand-name {
+  color: #090A0C;
+  font-weight: 600;
+}
+
+body.theme-chrome .brand-subline {
+  color: #525862;
+  font-weight: 500;
+}
+
+body.theme-chrome .brand-aperture-icon {
+  stroke: #090A0C;
 }
 
 body.theme-chrome .nav-link-item {
-  color: #202328;
+  color: #0D0E11; /* Pitch black high-contrast text */
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 body.theme-chrome .nav-link-item:hover {
@@ -2771,7 +2835,8 @@ body.theme-chrome .nav-link-item:hover {
 }
 
 body.theme-chrome .nav-aperture-icon {
-  stroke: #202328;
+  stroke: #0D0E11;
+  opacity: 0.95;
 }
 
 /* Typography Gradient Mask in Chrome Finish */
