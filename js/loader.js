@@ -11,6 +11,8 @@
  *  - Layered Parallax Handoff: letterbox bars peel away, title dollies in Z-space, and hero plane rises with rack focus
  */
 
+import { initIntro3D } from './intro-3d.js';
+
 export function initLoader(onComplete) {
   const introEl = document.getElementById('cinematic-intro');
   const skipBtn = document.getElementById('intro-skip-btn');
@@ -50,6 +52,10 @@ export function initLoader(onComplete) {
   const reticle = introEl.querySelector('.intro-focus-reticle');
   const timecodeEl = document.getElementById('intro-hud-timecode');
   const telemetryEl = document.getElementById('intro-hud-telemetry');
+  const canvas3D = introEl.querySelector('.intro-3d-canvas');
+
+  // Initialize Rotating 3D Optical Aperture Gyroscope behind name
+  const intro3D = initIntro3D();
 
   // 24 FPS Rolling Timecode (Cinematic Precision)
   let tcSeconds = 1;
@@ -99,6 +105,9 @@ export function initLoader(onComplete) {
     if (reticle) {
       reticle.style.transform = `translate3d(${currentX * 8}px, ${currentY * 6}px, 0)`;
     }
+    if (intro3D) {
+      intro3D.setTilt(currentX, currentY);
+    }
 
     rafParallaxId = requestAnimationFrame(renderParallax);
   }
@@ -146,6 +155,10 @@ export function initLoader(onComplete) {
     if (bloom) bloom.style.transform = '';
     if (transparentGlow) transparentGlow.style.transform = '';
     if (reticle) reticle.style.transform = '';
+    if (canvas3D) canvas3D.style.transform = '';
+
+    // Pause 3D model during site entry
+    intro3D?.pause();
 
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
@@ -240,6 +253,13 @@ export function initLoader(onComplete) {
       if (bloom) bloom.style.transform = '';
       if (transparentGlow) transparentGlow.style.transform = '';
       if (reticle) reticle.style.transform = '';
+      if (canvas3D) {
+        canvas3D.style.transform = '';
+        canvas3D.style.animation = 'none';
+        void canvas3D.offsetWidth;
+        canvas3D.style.animation = '';
+      }
+      intro3D?.resume();
 
       // Restart timecode
       tcSeconds = 1;
