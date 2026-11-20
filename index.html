@@ -42,23 +42,40 @@
   <canvas id="film-grain-canvas" aria-hidden="true"></canvas>
 
   <!-- ========================================================================
-       1. CINEMATIC SHOT ENTRY (2.39:1 Anamorphic Cinema Curtain Opening)
+       1. FILM TITLE SEQUENCE INTRO (2.39:1 Anamorphic Short Film Opening)
        ======================================================================== -->
-  <div id="cinematic-curtain" class="cinematic-curtain" aria-hidden="true">
-    <!-- Widescreen Anamorphic Matte Letterbox Bars -->
-    <div class="curtain-bar curtain-bar-top"></div>
-    <div class="curtain-bar curtain-bar-bottom"></div>
-
-    <!-- Center Cinematic Production Slate -->
-    <div class="cinematic-slate" id="cinematic-slate">
-      <div class="slate-meta">
-        <span class="slate-rec-dot"></span>
-        <span>ROLL 01 &bull; SCENE 01 &bull; 35mm ANAMORPHIC</span>
-      </div>
-      <h1 class="slate-name">AKASH V G</h1>
-      <div class="slate-sub">AI ENGINEER &bull; CINEMATOGRAPHER</div>
-      <div class="slate-cue">[ TAKE 01 &bull; EXPOSURE ]</div>
+  <div id="cinematic-intro" class="cinematic-intro" role="dialog" aria-modal="true" aria-label="Cinematic Film Opening Title Sequence">
+    <!-- Push-in Background Stage with Grain & Vignette -->
+    <div class="intro-bg-stage">
+      <div class="intro-vignette"></div>
+      <div class="intro-grain"></div>
     </div>
+
+    <!-- 2.39:1 Anamorphic Letterbox Bars -->
+    <div class="intro-letterbox intro-letterbox-top"></div>
+    <div class="intro-letterbox intro-letterbox-bottom"></div>
+
+    <!-- Center Title Frame -->
+    <div class="intro-title-frame">
+      <h1 class="intro-title-name" id="intro-title-name">AKASH</h1>
+      <div class="intro-silver-rule" aria-hidden="true"></div>
+      <p class="intro-role-line">Engineer &bull; Cinematographer &bull; Storyteller</p>
+    </div>
+
+    <!-- Waiting State Prompt (5.0s onward) -->
+    <div class="intro-enter-cue" id="intro-enter-cue">
+      <span class="enter-cue-dot"></span>
+      <span class="enter-cue-text">Click to enter or press Enter</span>
+      <span class="enter-cue-key">[ &crarr; ]</span>
+    </div>
+
+    <!-- Skip Intro Button -->
+    <button type="button" class="intro-skip-btn" id="intro-skip-btn" aria-label="Skip Title Sequence">
+      <span>SKIP INTRO</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
   </div>
 
   <!-- ========================================================================
@@ -136,7 +153,7 @@
                 <circle cx="12" cy="12" r="9"></circle>
                 <path d="M12 3v6l5 3"></path>
               </svg>
-              <span>Roles</span>
+              <span>Experience</span>
             </a>
           </li>
           <li>
@@ -210,10 +227,10 @@
       <div class="hero-grid">
         <!-- Hero Left Content -->
         <div class="hero-content-box">
-          <button type="button" class="hero-exposure-badge btn-magnetic" id="btn-recalibrate-optics" title="Click to Re-Calibrate 3D Optics">
+          <button type="button" class="hero-exposure-badge btn-magnetic" id="btn-recalibrate-optics" title="Click to Replay Intro Title Sequence">
             <span class="rec-pulse-dot"></span>
             <span>EXPOSURE 01 // 35mm CHROMATIC SENSOR</span>
-            <span class="recalibrate-cue">&bull; RE-CALIBRATE 3D</span>
+            <span class="recalibrate-cue">&bull; REPLAY INTRO</span>
           </button>
 
           <h1 class="hero-name">
@@ -223,7 +240,7 @@
           </h1>
 
           <div class="hero-role-readout">
-            <span>AI ENGINEER</span> &bull; <span>CINEMATOGRAPHER</span>
+            <span>ENGINEER</span> &bull; <span>CINEMATOGRAPHER</span> &bull; <span>STORYTELLER</span>
           </div>
 
           <p class="hero-synopsis">
@@ -257,6 +274,14 @@
           </div>
         </div>
       </div>
+
+      <!-- Minimalist Optical Scroll Cue -->
+      <a href="#about" class="hero-scroll-cue" aria-label="Scroll to explore">
+        <span class="scroll-cue-track">
+          <span class="scroll-cue-dot"></span>
+        </span>
+        <span class="scroll-cue-label">SCROLL TO EXPLORE</span>
+      </a>
     </section>
 
     <!-- ======================================================================
