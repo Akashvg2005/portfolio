@@ -288,6 +288,7 @@ body.has-custom-cursor textarea {
   border-radius: 50%;
   pointer-events: none;
   will-change: transform;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 .cursor-ring {
@@ -300,7 +301,7 @@ body.has-custom-cursor textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: width 0.28s var(--ease-mechanical), height 0.28s var(--ease-mechanical), border-radius 0.28s var(--ease-mechanical);
+  transition: width 0.28s var(--ease-mechanical), height 0.28s var(--ease-mechanical), border-radius 0.28s var(--ease-mechanical), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, width, height;
 }
 
@@ -312,7 +313,7 @@ body.has-custom-cursor textarea {
   border-color: var(--text-light-silver);
   border-style: solid;
   opacity: 0;
-  transition: opacity 0.2s ease, transform 0.25s var(--ease-mechanical);
+  transition: opacity 0.2s ease, transform 0.25s var(--ease-mechanical), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cursor-bracket-tl { top: -1px; left: -1px; border-width: 1.5px 0 0 1.5px; }
@@ -337,7 +338,7 @@ body.has-custom-cursor textarea {
   border-radius: 50%;
   border: 1px dashed var(--text-silver);
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 
@@ -367,7 +368,7 @@ body.has-custom-cursor textarea {
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Crosshair for Media / Video */
@@ -384,6 +385,7 @@ body.has-custom-cursor textarea {
   content: '';
   position: absolute;
   background: var(--text-silver);
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cursor-crosshair::before {
   top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%);
@@ -1392,34 +1394,51 @@ body.has-custom-cursor textarea {
   gap: 24px;
 }
 
-/* Tilting Card with Moving Specular Sheen */
+/* Tilting Card with Sandblasted Matte Finish & Diffuse Specular Sheen */
 .tilt-metal-card {
   position: relative;
-  background: var(--bg-charcoal);
-  border: 1px solid var(--border-steel);
-  border-radius: 4px;
-  padding: 28px;
+  background: linear-gradient(160deg, #14161a 0%, #0c0e11 100%);
+  border: 1px solid rgba(138, 147, 158, 0.2);
+  border-radius: 6px;
+  padding: 30px 28px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   transform-style: preserve-3d;
-  transition: border-color 0.25s ease, transform 0.18s ease;
+  transition: border-color 0.3s ease, transform 0.18s ease, box-shadow 0.3s ease, background 0.4s ease;
   overflow: hidden;
   will-change: transform;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
 }
 
+/* Fine Sandblasted Anodized Micro-Grain Overlay */
+.tilt-metal-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='matteGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23matteGrain)' opacity='0.15'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.65;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* Diffuse Matte Specular Sheen */
 .tilt-metal-card::before {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
-    circle 280px at var(--sheen-x, 50%) var(--sheen-y, 50%),
-    rgba(246, 247, 248, 0.12) 0%,
-    transparent 70%
+    circle 340px at var(--sheen-x, 50%) var(--sheen-y, 50%),
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 72%
   );
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease;
+  z-index: 2;
 }
 
 .tilt-metal-card:hover::before {
@@ -1427,48 +1446,67 @@ body.has-custom-cursor textarea {
 }
 
 .tilt-metal-card:hover {
-  border-color: var(--text-silver);
+  border-color: rgba(228, 230, 233, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 16px 40px rgba(0, 0, 0, 0.6);
 }
 
 .lens-spec-header {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
-  color: var(--text-slate);
+  color: #A4ACB6;
 }
 
+/* Precision Engraved Lens Index Badge */
 .lens-focal-mm {
-  color: var(--text-light-silver);
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(138, 147, 158, 0.14);
+  border: 1px solid rgba(138, 147, 158, 0.28);
+  border-radius: 3px;
+  color: #FFFFFF;
   font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.09em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .lens-name {
+  position: relative;
+  z-index: 3;
   font-family: var(--font-display);
   font-size: 1.65rem;
   font-weight: 400;
-  color: var(--text-light-silver);
+  color: #F6F7F8;
+  line-height: 1.15;
 }
 
 .lens-desc {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-silver);
+  position: relative;
+  z-index: 3;
+  font-size: 0.94rem;
+  line-height: 1.62;
+  color: #C0C6CF;
 }
 
 .lens-specs-row {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
-  padding-top: 14px;
+  padding-top: 16px;
   margin-top: auto;
-  border-top: 1px solid var(--border-steel);
-  color: var(--text-slate);
+  border-top: 1px solid rgba(138, 147, 158, 0.18);
+  color: #A0A8B4;
 }
 
 /* ==========================================================================
@@ -2828,6 +2866,57 @@ body.theme-chrome {
   --metal-gradient-dark: linear-gradient(135deg, #CFD4DA 0%, #EBEEF2 100%);
 }
 
+/* Precision Camera Reticle Cursor in Bright Chrome Mode */
+body.theme-chrome #viewfinder-cursor {
+  mix-blend-mode: normal;
+}
+
+body.theme-chrome .cursor-dot {
+  background-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);
+}
+
+body.theme-chrome .cursor-ring {
+  border-color: #000000;
+  border-width: 1.5px;
+}
+
+body.theme-chrome .cursor-corner {
+  border-color: #000000;
+}
+
+body.theme-chrome #viewfinder-cursor.cursor-locked .cursor-ring {
+  border-color: transparent;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-chrome .cursor-ticks-overlay {
+  border-color: rgba(0, 0, 0, 0.65);
+}
+
+body.theme-chrome #viewfinder-cursor.cursor-view .cursor-ring {
+  border-color: #000000;
+}
+
+body.theme-chrome .cursor-label {
+  color: #000000;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+body.theme-chrome .cursor-crosshair::before,
+body.theme-chrome .cursor-crosshair::after {
+  background: #000000;
+}
+
+body.theme-chrome #viewfinder-cursor.cursor-rec .cursor-ring {
+  border-color: #000000;
+}
+
+body.theme-chrome #viewfinder-cursor.cursor-shutter-pulse .cursor-ring {
+  background: rgba(0, 0, 0, 0.25);
+}
+
 /* Top Navigation Bar in Chrome Finish */
 body.theme-chrome .camera-top-bar {
   background: rgba(226, 230, 235, 0.96);
@@ -2898,13 +2987,65 @@ body.theme-chrome .btn-shutter {
 }
 
 /* Cards & Surface Treatments */
-body.theme-chrome .tilt-metal-card,
 body.theme-chrome .spec-tile,
 body.theme-chrome .leadership-card,
 body.theme-chrome .arcade-cabinet {
   background: #E5E9EE;
   border-color: #A4ACB5;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+/* Technical Optics Cards in Satin Matte Chrome Finish */
+body.theme-chrome .tilt-metal-card {
+  background: linear-gradient(160deg, #E6EAEF 0%, #D8DDE4 100%);
+  border-color: #A8B0BA;
+  box-shadow: inset 0 1px 0 #FFFFFF, 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-chrome .tilt-metal-card:hover {
+  border-color: #000000;
+  box-shadow: inset 0 1px 0 #FFFFFF, 0 14px 34px rgba(0, 0, 0, 0.12);
+}
+
+body.theme-chrome .tilt-metal-card::after {
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+body.theme-chrome .tilt-metal-card::before {
+  background: radial-gradient(
+    circle 340px at var(--sheen-x, 50%) var(--sheen-y, 50%),
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 72%
+  );
+}
+
+body.theme-chrome .lens-spec-header {
+  color: #40454D;
+  font-weight: 600;
+}
+
+body.theme-chrome .lens-focal-mm {
+  background: #CCD2D9;
+  border-color: #9AA2AC;
+  color: #000000;
+  font-weight: 700;
+  text-shadow: none;
+}
+
+body.theme-chrome .lens-name {
+  color: #090A0C;
+  font-weight: 600;
+}
+
+body.theme-chrome .lens-desc {
+  color: #22252B;
+}
+
+body.theme-chrome .lens-specs-row {
+  border-top-color: #B5BDC6;
+  color: #383D45;
+  font-weight: 500;
 }
 
 body.theme-chrome .sprocket-bar {
