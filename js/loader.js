@@ -6,6 +6,7 @@
  *  - Optical Defocus Hunting: first blurs out heavily into deep bokeh, then critically focuses onto the name
  *  - Editorial Display Serif font style with brushed platinum sheen
  *  - Anamorphic horizontal flare streak across the letters
+ *  - 3D Interactive Cursor Parallax during playback and waiting state
  *  - FLIP morph transition: smoothly glides from screen-center straight down onto .hero-name,
  *    blending seamlessly with the home page text without changing the home page.
  */
@@ -36,9 +37,39 @@ export function initLoader(onComplete) {
 
   let isDismissing = false;
 
+  // 3D Optical Parallax during title sequence
+  function onIntroMouseMove(e) {
+    if (isDismissing || introEl.style.display === 'none' || prefersReducedMotion) return;
+    const { innerWidth: w, innerHeight: h } = window;
+    const nx = (e.clientX / w - 0.5) * 2;
+    const ny = (e.clientY / h - 0.5) * 2;
+
+    const bgStage = introEl.querySelector('.intro-bg-stage');
+    const titleFrame = document.getElementById('intro-title-frame');
+    const streak = document.querySelector('.intro-anamorphic-streak');
+
+    if (bgStage) {
+      bgStage.style.transform = `translate3d(${-nx * 14}px, ${-ny * 14}px, 0)`;
+    }
+    if (titleFrame) {
+      titleFrame.style.transform = `perspective(1000px) rotateX(${-ny * 4}deg) rotateY(${nx * 5}deg) translate3d(${nx * 8}px, ${ny * 6}px, 0)`;
+    }
+    if (streak) {
+      streak.style.transform = `translateY(-50%) translate3d(${nx * 20}px, 0, 0)`;
+    }
+  }
+  window.addEventListener('mousemove', onIntroMouseMove, { passive: true });
+
   function enterSite() {
     if (isDismissing) return;
     isDismissing = true;
+    window.removeEventListener('mousemove', onIntroMouseMove);
+
+    // Reset 3D tilt on title frame to ensure baseline coordinates for FLIP measurement
+    const titleFrame = document.getElementById('intro-title-frame');
+    if (titleFrame) {
+      titleFrame.style.transform = 'none';
+    }
 
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
@@ -124,6 +155,10 @@ export function initLoader(onComplete) {
       isDismissing = false;
 
       const introNameWrap = document.getElementById('intro-name-wrap') || document.getElementById('intro-title-name');
+      const titleFrame = document.getElementById('intro-title-frame');
+      const bgStage = introEl.querySelector('.intro-bg-stage');
+      const streak = document.querySelector('.intro-anamorphic-streak');
+
       if (introNameWrap) {
         introNameWrap.style.transform = '';
         introNameWrap.style.transition = '';
@@ -131,10 +166,12 @@ export function initLoader(onComplete) {
         introNameWrap.style.letterSpacing = '';
         introNameWrap.style.willChange = '';
       }
+      if (titleFrame) titleFrame.style.transform = '';
+      if (bgStage) bgStage.style.transform = '';
+      if (streak) streak.style.transform = '';
 
       // Re-trigger CSS animations by reflow
       const titleName = document.getElementById('intro-title-name');
-      const streak = document.querySelector('.intro-anamorphic-streak');
       if (titleName) {
         titleName.style.animation = 'none';
         if (streak) streak.style.animation = 'none';
@@ -142,6 +179,8 @@ export function initLoader(onComplete) {
         titleName.style.animation = '';
         if (streak) streak.style.animation = '';
       }
+
+      window.addEventListener('mousemove', onIntroMouseMove, { passive: true });
     };
 
     if (recalibrateBtn) {
