@@ -1002,7 +1002,7 @@ function initRangefinderSnipeGame() {
         x: mouseX,
         y: mouseY - 10,
         text: 'MISSED -50',
-        color: '#8A939E',
+        color: '#B5BCC7',
         life: 20
       });
     }
@@ -1128,7 +1128,7 @@ function initRangefinderSnipeGame() {
         ft.y -= 0.8;
         ft.life--;
         ctx.fillStyle = ft.color;
-        ctx.font = '10px "IBM Plex Mono", monospace';
+        ctx.font = '600 11px "IBM Plex Mono", monospace';
         ctx.fillText(ft.text, ft.x - 40, ft.y);
         if (ft.life <= 0) floatingTexts.splice(i, 1);
       }
