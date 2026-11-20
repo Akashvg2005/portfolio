@@ -449,6 +449,22 @@ body:not(.site-entered) #viewfinder-cursor {
   box-shadow: 0 0 8px rgba(201, 206, 214, 0.8);
 }
 
+.enter-cue-scroll-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--intro-silver);
+}
+
+.mouse-scroll-wheel {
+  animation: mouseWheelNudge 1.6s ease-in-out infinite;
+}
+
+@keyframes mouseWheelNudge {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(3px); opacity: 0.35; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
 .enter-cue-key {
   color: var(--intro-silver);
   font-weight: 500;
@@ -511,24 +527,40 @@ body:not(.site-entered) #viewfinder-cursor {
   100% { opacity: 0.75; transform: translateY(0); }
 }
 
-/* Dismissing & Flowing Transition: On Enter (about 1.4s) */
+/* Dismissing & Layered Parallax Transformation: On Scroll or Enter (~1.25s) */
 .cinematic-intro.intro-flowing {
   background-color: transparent !important;
   pointer-events: none !important;
 }
 
+/* Layer 1: Foreground Anamorphic Matte Bars peel away smoothly */
 .cinematic-intro.intro-flowing .intro-letterbox-top,
 .cinematic-intro.intro-dismissing .intro-letterbox-top {
   transform: translateY(-100%) !important;
-  transition: transform 1.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 1.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .cinematic-intro.intro-flowing .intro-letterbox-bottom,
 .cinematic-intro.intro-dismissing .intro-letterbox-bottom {
   transform: translateY(100%) !important;
-  transition: transform 1.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 1.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+/* Layer 2: Intro Name in Depth Parallax Plane:
+   Dollies forward slightly (scale 1.05) and drifts upward (translateY -45px),
+   softly defocusing into the live scene as the camera moves past the title card */
+.cinematic-intro.intro-flowing .intro-name-wrap,
+.cinematic-intro.intro-flowing .intro-title-name,
+.cinematic-intro.intro-dismissing .intro-title-name {
+  transform: translateY(-45px) scale(1.05) translateZ(20px) !important;
+  filter: blur(14px) !important;
+  opacity: 0 !important;
+  transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Layer 2b: Supporting Cues dissolve downward */
 .cinematic-intro.intro-flowing .intro-role-line,
 .cinematic-intro.intro-flowing .intro-silver-rule,
 .cinematic-intro.intro-flowing .intro-anamorphic-streak,
@@ -539,23 +571,17 @@ body:not(.site-entered) #viewfinder-cursor {
 .cinematic-intro.intro-dismissing .intro-enter-cue,
 .cinematic-intro.intro-dismissing .intro-skip-btn {
   opacity: 0 !important;
-  transform: translateY(16px) !important;
-  transition: opacity 0.35s ease, transform 0.35s ease !important;
+  transform: translateY(24px) !important;
+  filter: blur(8px) !important;
+  transition: opacity 0.4s ease, transform 0.5s ease, filter 0.4s ease !important;
 }
 
+/* Layer 4: Deep Background Stage fades out smoothly */
 .cinematic-intro.intro-flowing .intro-bg-stage,
 .cinematic-intro.intro-dismissing .intro-bg-stage {
   opacity: 0 !important;
-  transition: opacity 1.1s ease !important;
-}
-
-.cinematic-intro.intro-dismissing .intro-title-frame {
-  opacity: 0 !important;
-  filter: blur(14px) !important;
-  transform: scale(1.04) !important;
-  transition: opacity 1.2s var(--ease-cinematic),
-              filter 1.2s var(--ease-cinematic),
-              transform 1.2s var(--ease-cinematic) !important;
+  transform: scale(0.96) !important;
+  transition: opacity 1.1s ease, transform 1.2s ease !important;
 }
 
 /* Reduced Motion Override */

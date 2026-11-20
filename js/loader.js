@@ -7,8 +7,8 @@
  *  - Editorial Display Serif font style with brushed platinum sheen
  *  - Anamorphic horizontal flare streak across the letters
  *  - 3D Interactive Cursor Parallax during playback and waiting state
- *  - FLIP morph transition: smoothly glides from screen-center straight down onto .hero-name,
- *    blending seamlessly with the home page text without changing the home page.
+ *  - Scroll-to-Enter: scrolling down (wheel, touch drag, down arrow) smoothly transforms the intro card into the home page
+ *  - Layered Parallax Handoff: letterbox bars peel away, title dollies in Z-space, and hero plane rises with rack focus
  */
 
 export function initLoader(onComplete) {
@@ -63,9 +63,15 @@ export function initLoader(onComplete) {
   function enterSite() {
     if (isDismissing) return;
     isDismissing = true;
-    window.removeEventListener('mousemove', onIntroMouseMove);
 
-    // Reset 3D tilt on title frame to ensure baseline coordinates for FLIP measurement
+    // Clean up input listeners
+    window.removeEventListener('mousemove', onIntroMouseMove);
+    window.removeEventListener('wheel', onIntroWheel);
+    window.removeEventListener('touchstart', onTouchStart);
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('keydown', onKeyDown);
+
+    // Reset 3D tilt on title frame
     const titleFrame = document.getElementById('intro-title-frame');
     if (titleFrame) {
       titleFrame.style.transform = 'none';
@@ -74,53 +80,57 @@ export function initLoader(onComplete) {
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
 
-    // 1. Target hero element and intro title element
-    const heroTarget = document.querySelector('.hero-name .mask-line') || document.querySelector('.hero-name');
-    const introNameWrap = document.getElementById('intro-name-wrap') || document.getElementById('intro-title-name');
-
-    // 2. Add exposed and site-entered so home page hero layout is active
+    // 1. Activate home page hero so it pulls focus and rises in Layer 3 parallax
     document.body.classList.add('exposed', 'site-entered');
 
-    // 3. Compute deltaX, deltaY, scaleRatio for FLIP transition
-    if (heroTarget && introNameWrap) {
-      const heroRect = heroTarget.getBoundingClientRect();
-      const introRect = introNameWrap.getBoundingClientRect();
-
-      const deltaX = (heroRect.left + heroRect.width / 2) - (introRect.left + introRect.width / 2);
-      const deltaY = (heroRect.top + heroRect.height / 2) - (introRect.top + introRect.height / 2);
-      const scaleRatio = (heroRect.height > 0 && introRect.height > 0) ? (heroRect.height / introRect.height) : 1;
-
-      // Smooth FLIP motion directly landing on top of hero-name
-      introNameWrap.style.willChange = 'transform, opacity, letter-spacing';
-      introNameWrap.style.transition = 'transform 1.35s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 1.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease 1.0s';
-      introNameWrap.style.transform = `translate3d(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px, 0) scale(${scaleRatio.toFixed(3)})`;
-      introNameWrap.style.letterSpacing = '-0.025em';
-      introNameWrap.style.opacity = '0';
-    }
-
-    // 4. Trigger letterbox bars slide-out and secondary elements dismissal
+    // 2. Add intro-flowing to trigger multi-layer parallax transformation
     introEl.classList.add('intro-flowing');
 
     try {
       sessionStorage.setItem('portfolio_intro_seen', 'true');
     } catch (_) {}
 
-    // 5. Complete handoff at 1.45s and clean up
+    // 3. Complete handoff at 1.25s and clean up
     setTimeout(() => {
       introEl.style.display = 'none';
       introEl.setAttribute('aria-hidden', 'true');
       introEl.classList.remove('intro-flowing');
-      if (introNameWrap) {
-        introNameWrap.style.transform = '';
-        introNameWrap.style.transition = '';
-        introNameWrap.style.opacity = '';
-        introNameWrap.style.letterSpacing = '';
-        introNameWrap.style.willChange = '';
-      }
       if (typeof onComplete === 'function') onComplete();
       setupReplayTrigger();
-    }, 1450);
+    }, 1250);
   }
+
+  // Scroll down detection: Mouse wheel
+  let wheelDelta = 0;
+  function onIntroWheel(e) {
+    if (isDismissing || introEl.style.display === 'none') return;
+    if (e.deltaY > 0) {
+      wheelDelta += e.deltaY;
+      if (wheelDelta > 15) {
+        enterSite();
+      }
+    }
+  }
+  window.addEventListener('wheel', onIntroWheel, { passive: true });
+
+  // Touch drag detection: Touch gestures (swiping up = scrolling down)
+  let touchStartY = 0;
+  function onTouchStart(e) {
+    if (e.touches && e.touches[0]) {
+      touchStartY = e.touches[0].clientY;
+    }
+  }
+  function onTouchMove(e) {
+    if (isDismissing || introEl.style.display === 'none') return;
+    if (e.touches && e.touches[0]) {
+      const diff = touchStartY - e.touches[0].clientY;
+      if (diff > 20) {
+        enterSite();
+      }
+    }
+  }
+  window.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: true });
 
   // Interactive triggers: click anywhere on intro
   introEl.addEventListener('click', () => {
@@ -135,10 +145,10 @@ export function initLoader(onComplete) {
     });
   }
 
-  // Keyboard navigation: Enter or Space
+  // Keyboard navigation: Enter, Space, ArrowDown, PageDown
   function onKeyDown(e) {
     if (introEl.style.display === 'none' || isDismissing) return;
-    if (e.key === 'Enter' || e.key === ' ' || e.code === 'Space') {
+    if (e.key === 'Enter' || e.key === ' ' || e.code === 'Space' || e.key === 'ArrowDown' || e.key === 'PageDown') {
       e.preventDefault();
       enterSite();
     }
@@ -153,19 +163,12 @@ export function initLoader(onComplete) {
       introEl.removeAttribute('aria-hidden');
       introEl.classList.remove('intro-flowing', 'intro-dismissing');
       isDismissing = false;
+      wheelDelta = 0;
 
-      const introNameWrap = document.getElementById('intro-name-wrap') || document.getElementById('intro-title-name');
       const titleFrame = document.getElementById('intro-title-frame');
       const bgStage = introEl.querySelector('.intro-bg-stage');
       const streak = document.querySelector('.intro-anamorphic-streak');
 
-      if (introNameWrap) {
-        introNameWrap.style.transform = '';
-        introNameWrap.style.transition = '';
-        introNameWrap.style.opacity = '';
-        introNameWrap.style.letterSpacing = '';
-        introNameWrap.style.willChange = '';
-      }
       if (titleFrame) titleFrame.style.transform = '';
       if (bgStage) bgStage.style.transform = '';
       if (streak) streak.style.transform = '';
@@ -181,6 +184,10 @@ export function initLoader(onComplete) {
       }
 
       window.addEventListener('mousemove', onIntroMouseMove, { passive: true });
+      window.addEventListener('wheel', onIntroWheel, { passive: true });
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: true });
+      window.addEventListener('keydown', onKeyDown);
     };
 
     if (recalibrateBtn) {
