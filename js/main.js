@@ -209,6 +209,16 @@ function initGameCentre() {
       tab.classList.add('active');
       const targetView = document.getElementById(targetId);
       if (targetView) targetView.classList.add('active');
+
+      // Dispatch resize so canvas games recalculate container width/height
+      window.dispatchEvent(new Event('resize'));
+
+      // Lifecycle management for Focus Puller
+      if (targetId === 'game-focus-puller') {
+        window.__activateFocusPuller?.();
+      } else {
+        window.__deactivateFocusPuller?.();
+      }
     });
   });
 
@@ -740,7 +750,17 @@ function initFocusPullerGame() {
     }
   });
 
-  setupTake();
+  window.__activateFocusPuller = function() {
+    setupTake();
+  };
+
+  window.__deactivateFocusPuller = function() {
+    clearInterval(timerInterval);
+    if (timerVal) timerVal.textContent = 'PAUSED';
+  };
+
+  // Initial visual calibration only (timer starts when tab is opened)
+  updateVisuals(parseFloat(slider.value));
 }
 
 /**
