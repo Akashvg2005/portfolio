@@ -588,19 +588,28 @@ body:not(.site-entered) #viewfinder-cursor {
   transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Layer 2: 3D Textured Name DOLLIES FORWARD & DISSOLVES WITH OPTICAL BLOOM
-   Camera pushes right through the luminous letters into the home page */
+/* Layer 2: 3D Textured Name ZOOMS IN, FADES OUT & BLENDS WITH THE HOME PAGE
+   The name zooms in towards the user, expanding and dissolving directly into the home page hero */
 .cinematic-intro.intro-dismissing .intro-name-wrap,
 .cinematic-intro.intro-flowing .intro-name-wrap,
 .cinematic-intro.intro-dismissing .intro-title-name,
 .cinematic-intro.intro-flowing .intro-title-name {
-  transform: scale(3.4) translateZ(140px) !important;
-  filter: blur(26px) brightness(1.7)
+  transform: scale(2.2) translate3d(-5vw, -3vh, 80px) !important;
+  filter: blur(20px) brightness(1.6)
     drop-shadow(0 0 35px rgba(220, 240, 255, 0.6)) !important;
   opacity: 0 !important;
   transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
               filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+              opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@media (max-width: 768px) {
+  .cinematic-intro.intro-dismissing .intro-name-wrap,
+  .cinematic-intro.intro-flowing .intro-name-wrap,
+  .cinematic-intro.intro-dismissing .intro-title-name,
+  .cinematic-intro.intro-flowing .intro-title-name {
+    transform: scale(1.9) translate3d(0, -3vh, 60px) !important;
+  }
 }
 
 /* Layer 2b: Transparent Glow & Volumetric Lens Bloom expand softly as camera passes through */
@@ -1181,9 +1190,9 @@ body.exposed .fixed-side-telemetry {
   position: relative;
   padding-top: calc(var(--nav-height) + 40px);
   padding-bottom: 60px;
-  filter: blur(10px);
-  transform: scale(0.96) translateY(20px) translateZ(0);
-  transition: filter 1.4s var(--ease-cinematic), transform 1.5s var(--ease-cinematic);
+  filter: blur(8px);
+  transform: scale(0.98) translateY(14px) translateZ(0);
+  transition: filter 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: filter, transform;
 }
 
@@ -1275,9 +1284,29 @@ body.theme-chrome .scroll-cue-dot {
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.hero-name .mask-line-wrapper {
+  overflow: visible;
+}
+
+/* Hero Name Initial State (Pre-Enter: soft luminous blur ready to receive the zoom-in blend) */
+body:not(.exposed) .hero-name .mask-line {
+  opacity: 0;
+  filter: blur(14px) brightness(1.5);
+  transform: translateY(8px) scale(0.94);
+}
+
 .hero-name .mask-line {
-  transform: translateY(110%);
-  transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+  will-change: transform, opacity, filter;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.exposed .hero-name .mask-line {
+  opacity: 1;
+  filter: blur(0px) brightness(1.0);
+  transform: translateY(0) scale(1.0);
 }
 
 body.exposed .hero-exposure-badge {
@@ -1286,27 +1315,22 @@ body.exposed .hero-exposure-badge {
   transition-delay: 0.1s;
 }
 
-body.exposed .hero-name .mask-line {
-  transform: translateY(0);
-  transition-delay: 0.18s;
-}
-
 body.exposed .hero-role-readout {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.28s;
+  transition-delay: 0.22s;
 }
 
 body.exposed .hero-synopsis {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.36s;
+  transition-delay: 0.32s;
 }
 
 body.exposed .hero-cta-group {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.44s;
+  transition-delay: 0.42s;
 }
 
 /* Re-calibrate 3D Optics button */
