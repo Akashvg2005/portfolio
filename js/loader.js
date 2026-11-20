@@ -2,21 +2,17 @@
  * SILVER HALIDE - 2.39:1 CINEMATIC FILM INTRO (Title Sequence)
  * Based on the UI Plan for Akash's Portfolio Build
  * 
- * Timeline:
- *  0.0 - 1.0 s: Black screen. Film grain fades in at low opacity.
- *  0.6 - 1.8 s: Letterbox bars slide in from top & bottom (2.39:1 ratio).
- *  1.2 - 3.5 s: Slow push-in (scale 1.06 to 1.0) on background.
- *  2.0 - 3.8 s: "AKASH" resolves from heavy blur to sharp, letter-spacing tightening (focus pull).
- *  3.6 - 4.4 s: Role line fades in ("Engineer · Cinematographer · Storyteller").
- *  4.4 - 5.0 s: Thin silver rule draws out from centre.
- *  5.0 s onward: Waiting state cue ("Click to enter or press Enter").
- *  On enter (~1.6 s): Letterbox bars slide out. Intro fades & blurs; home page rises in with gentle focus pull.
+ * Features:
+ *  - Optical Defocus Hunting: first blurs out heavily into deep bokeh, then critically focuses onto the name
+ *  - Editorial Display Serif font style with brushed platinum sheen
+ *  - Anamorphic horizontal flare streak across the letters
+ *  - FLIP morph transition: smoothly glides from screen-center straight down onto .hero-name,
+ *    blending seamlessly with the home page text without changing the home page.
  */
 
 export function initLoader(onComplete) {
   const introEl = document.getElementById('cinematic-intro');
   const skipBtn = document.getElementById('intro-skip-btn');
-  const enterCue = document.getElementById('intro-enter-cue');
   const recalibrateBtn = document.getElementById('btn-recalibrate-optics');
 
   if (!introEl) {
@@ -47,24 +43,52 @@ export function initLoader(onComplete) {
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
 
-    // Begin cinematic handoff: bars slide out, title blurs and fades
-    introEl.classList.add('intro-dismissing');
+    // 1. Target hero element and intro title element
+    const heroTarget = document.querySelector('.hero-name .mask-line') || document.querySelector('.hero-name');
+    const introNameWrap = document.getElementById('intro-name-wrap') || document.getElementById('intro-title-name');
 
-    // Home page rises in with optical rack-focus pull & dolly push-in
+    // 2. Add exposed and site-entered so home page hero layout is active
     document.body.classList.add('exposed', 'site-entered');
+
+    // 3. Compute deltaX, deltaY, scaleRatio for FLIP transition
+    if (heroTarget && introNameWrap) {
+      const heroRect = heroTarget.getBoundingClientRect();
+      const introRect = introNameWrap.getBoundingClientRect();
+
+      const deltaX = (heroRect.left + heroRect.width / 2) - (introRect.left + introRect.width / 2);
+      const deltaY = (heroRect.top + heroRect.height / 2) - (introRect.top + introRect.height / 2);
+      const scaleRatio = (heroRect.height > 0 && introRect.height > 0) ? (heroRect.height / introRect.height) : 1;
+
+      // Smooth FLIP motion directly landing on top of hero-name
+      introNameWrap.style.willChange = 'transform, opacity, letter-spacing';
+      introNameWrap.style.transition = 'transform 1.35s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 1.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease 1.0s';
+      introNameWrap.style.transform = `translate3d(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px, 0) scale(${scaleRatio.toFixed(3)})`;
+      introNameWrap.style.letterSpacing = '-0.025em';
+      introNameWrap.style.opacity = '0';
+    }
+
+    // 4. Trigger letterbox bars slide-out and secondary elements dismissal
+    introEl.classList.add('intro-flowing');
 
     try {
       sessionStorage.setItem('portfolio_intro_seen', 'true');
     } catch (_) {}
 
-    // Complete handoff at 1.6s
+    // 5. Complete handoff at 1.45s and clean up
     setTimeout(() => {
       introEl.style.display = 'none';
       introEl.setAttribute('aria-hidden', 'true');
-      introEl.classList.remove('intro-dismissing');
+      introEl.classList.remove('intro-flowing');
+      if (introNameWrap) {
+        introNameWrap.style.transform = '';
+        introNameWrap.style.transition = '';
+        introNameWrap.style.opacity = '';
+        introNameWrap.style.letterSpacing = '';
+        introNameWrap.style.willChange = '';
+      }
       if (typeof onComplete === 'function') onComplete();
       setupReplayTrigger();
-    }, 1550);
+    }, 1450);
   }
 
   // Interactive triggers: click anywhere on intro
@@ -96,15 +120,27 @@ export function initLoader(onComplete) {
       document.body.classList.remove('exposed', 'site-entered');
       introEl.style.display = 'flex';
       introEl.removeAttribute('aria-hidden');
-      introEl.classList.remove('intro-dismissing');
+      introEl.classList.remove('intro-flowing', 'intro-dismissing');
       isDismissing = false;
+
+      const introNameWrap = document.getElementById('intro-name-wrap') || document.getElementById('intro-title-name');
+      if (introNameWrap) {
+        introNameWrap.style.transform = '';
+        introNameWrap.style.transition = '';
+        introNameWrap.style.opacity = '';
+        introNameWrap.style.letterSpacing = '';
+        introNameWrap.style.willChange = '';
+      }
 
       // Re-trigger CSS animations by reflow
       const titleName = document.getElementById('intro-title-name');
+      const streak = document.querySelector('.intro-anamorphic-streak');
       if (titleName) {
         titleName.style.animation = 'none';
+        if (streak) streak.style.animation = 'none';
         void titleName.offsetWidth;
         titleName.style.animation = '';
+        if (streak) streak.style.animation = '';
       }
     };
 
