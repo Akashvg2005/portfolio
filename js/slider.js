@@ -86,12 +86,15 @@ export class FilmStripSlider {
   }
 
   goToIndex(index, immediate = false) {
+    const prev = this.currentIndex;
     this.currentIndex = Math.max(0, Math.min(index, this.slideCount - 1));
     this.targetPosition = -(this.currentIndex * this.stepSize) + this.centerOffset;
 
     if (immediate) {
       this.currentPosition = this.targetPosition;
       this.applyTransform();
+    } else if (prev !== this.currentIndex) {
+      window.__playFilmAdvanceSound?.();
     }
 
     this.updateCounter();

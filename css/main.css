@@ -579,6 +579,53 @@ body.has-custom-cursor textarea {
   color: var(--highlight-specular);
 }
 
+/* Machined Camera Audio Motor Toggle */
+.btn-audio-toggle {
+  padding: 6px 14px;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  background: var(--bg-dark-plate);
+  border: 1px solid var(--border-steel);
+  color: var(--text-slate);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.btn-audio-toggle:hover {
+  color: var(--text-light-silver);
+  border-color: var(--text-slate);
+}
+
+.btn-audio-toggle.is-active {
+  color: var(--text-light-silver);
+  border-color: var(--text-silver);
+  background: var(--metal-gradient-dark);
+}
+
+.audio-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-slate);
+  transition: all 0.25s ease;
+}
+
+.btn-audio-toggle.is-active .audio-pulse-dot {
+  background: #E4E6E9;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.85);
+  animation: audioPulseDot 1.8s infinite ease-in-out;
+}
+
+@keyframes audioPulseDot {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
 /* ==========================================================================
    6. FIXED SIDE TELEMETRY HUD (Section Indicator)
    ========================================================================== */

@@ -113,6 +113,7 @@ function initViewfinderSlideshow() {
     if (flash) {
       flash.classList.add('flashing');
     }
+    window.__playShutterSound?.();
 
     // Outgoing slide
     slides[currentIndex].classList.remove('active');
@@ -714,6 +715,7 @@ function initFocusPullerGame() {
 
   slider.addEventListener('input', () => {
     updateVisuals(parseFloat(slider.value));
+    window.__playRatchetClick?.();
   });
 
   if (viewport) {
@@ -1192,12 +1194,14 @@ function initModals() {
     if (!modal) return;
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    window.__playClapperSound?.('in');
   }
 
   function closeModal(modal) {
     if (!modal) return;
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
+    window.__playClapperSound?.('out');
   }
 
   closeBtns.forEach((btn) => {
@@ -1221,49 +1225,282 @@ function initModals() {
 }
 
 /**
- * Web Audio API: Synthesized Mechanical Camera Shutter Click
+ * Procedural Analog Sound Design (Web Audio API)
+ * - 35mm Background Camera Rolling Motor
+ * - Director's Clapperboard (Clap In / Clap Out)
+ * - Dual-Curtain Focal-Plane Shutter Click
+ * - Film Advance / Winding Sprocket Ratchet
+ * - Optical Dial / Focus Ring Micro-ticks
  */
 function initMechanicalAudio() {
   let audioCtx = null;
+  let isAudioEnabled = localStorage.getItem('silver_audio_enabled') !== 'false';
+  let motorSourceNode = null;
+  let motorGainNode = null;
+  let isMotorRolling = false;
 
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return null;
+      audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  // 1. Dual-Curtain Mechanical Camera Shutter
   function playShutterClick() {
+    if (!isAudioEnabled) return;
     try {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        audioCtx = new AudioContext();
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+
+      // Curtain 1 (Opening transient)
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      const filter1 = ctx.createBiquadFilter();
+      filter1.type = 'highpass';
+      filter1.frequency.setValueAtTime(1600, t);
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(2600, t);
+      osc1.frequency.exponentialRampToValueAtTime(100, t + 0.03);
+      gain1.gain.setValueAtTime(0.045, t);
+      gain1.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+      osc1.connect(filter1);
+      filter1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(t);
+      osc1.stop(t + 0.035);
+
+      // Curtain 2 (Closing brake snap, +30ms delay)
+      const t2 = t + 0.03;
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      const filter2 = ctx.createBiquadFilter();
+      filter2.type = 'bandpass';
+      filter2.frequency.setValueAtTime(1200, t2);
+      osc2.type = 'square';
+      osc2.frequency.setValueAtTime(1800, t2);
+      osc2.frequency.exponentialRampToValueAtTime(80, t2 + 0.035);
+      gain2.gain.setValueAtTime(0.035, t2);
+      gain2.gain.exponentialRampToValueAtTime(0.0001, t2 + 0.035);
+      osc2.connect(filter2);
+      filter2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(t2);
+      osc2.stop(t2 + 0.04);
+    } catch (e) {}
+  }
+
+  // 2. Director's Clapperboard ("Clap In" / "Clap Out")
+  function playClapperSound(type = 'in') {
+    if (!isAudioEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+
+      // Primary Wooden Slate Slap (High frequency impulse)
+      const bufferSize = Math.floor(ctx.sampleRate * 0.02);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.22));
       }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = 'bandpass';
+      noiseFilter.frequency.setValueAtTime(type === 'in' ? 2400 : 1900, t);
+      noiseFilter.Q.setValueAtTime(2.0, t);
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.08, t);
+      noiseGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.025);
+      noise.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      noise.start(t);
 
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      const filter = audioCtx.createBiquadFilter();
-
-      filter.type = 'highpass';
-      filter.frequency.setValueAtTime(1800, audioCtx.currentTime);
-
+      // Resonant Wooden Body Thud
+      const osc = ctx.createOscillator();
+      const oscGain = ctx.createGain();
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(2400, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.035);
+      const startFreq = type === 'in' ? 480 : 360;
+      const endFreq = type === 'in' ? 140 : 110;
+      osc.frequency.setValueAtTime(startFreq, t);
+      osc.frequency.exponentialRampToValueAtTime(endFreq, t + 0.05);
+      oscGain.gain.setValueAtTime(0.07, t);
+      oscGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.065);
+    } catch (e) {}
+  }
 
-      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.035);
+  // 3. Film Winding / Advance Sprocket Ratchet
+  function playFilmAdvanceSound() {
+    if (!isAudioEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      [0, 0.035, 0.075].forEach((offset) => {
+        const clickTime = t + offset;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.setValueAtTime(2200, clickTime);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(3200 - offset * 800, clickTime);
+        osc.frequency.exponentialRampToValueAtTime(300, clickTime + 0.018);
+        gain.gain.setValueAtTime(0.025, clickTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, clickTime + 0.018);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(clickTime);
+        osc.stop(clickTime + 0.02);
+      });
+    } catch (e) {}
+  }
 
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(audioCtx.destination);
+  // 4. Optical Focus Ring Dial Ratchet Tick
+  function playRatchetClick() {
+    if (!isAudioEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(3400, t);
+      osc.frequency.exponentialRampToValueAtTime(600, t + 0.008);
+      gain.gain.setValueAtTime(0.015, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.008);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.01);
+    } catch (e) {}
+  }
 
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.04);
+  // 5. 35mm Background Camera Rolling Motor (Continuous Subtle Whir)
+  function startCameraMotorRoll() {
+    if (!isAudioEnabled || isMotorRolling) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      isMotorRolling = true;
+
+      const bufferSize = ctx.sampleRate * 2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        const timeSec = i / ctx.sampleRate;
+        const flutter = Math.sin(timeSec * Math.PI * 2 * 24);
+        const noise = (Math.random() * 2 - 1) * 0.4;
+        const motorHum = Math.sin(timeSec * Math.PI * 2 * 72) * 0.25;
+        data[i] = (noise + motorHum) * (0.6 + 0.4 * flutter);
+      }
+
+      motorSourceNode = ctx.createBufferSource();
+      motorSourceNode.buffer = buffer;
+      motorSourceNode.loop = true;
+
+      const bandpass = ctx.createBiquadFilter();
+      bandpass.type = 'bandpass';
+      bandpass.frequency.setValueAtTime(260, ctx.currentTime);
+      bandpass.Q.setValueAtTime(2.2, ctx.currentTime);
+
+      motorGainNode = ctx.createGain();
+      motorGainNode.gain.setValueAtTime(0.0001, ctx.currentTime);
+      motorGainNode.gain.linearRampToValueAtTime(0.02, ctx.currentTime + 1.2);
+
+      motorSourceNode.connect(bandpass);
+      bandpass.connect(motorGainNode);
+      motorGainNode.connect(ctx.destination);
+
+      motorSourceNode.start();
     } catch (e) {
-      // Audio autoplay policy or unsupported: fail silently
+      isMotorRolling = false;
     }
   }
 
+  function stopCameraMotorRoll() {
+    if (!isMotorRolling) return;
+    try {
+      if (motorGainNode && audioCtx) {
+        motorGainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+        setTimeout(() => {
+          if (motorSourceNode) {
+            try { motorSourceNode.stop(); } catch (e) {}
+            motorSourceNode.disconnect();
+          }
+          isMotorRolling = false;
+        }, 450);
+      } else {
+        isMotorRolling = false;
+      }
+    } catch (e) {
+      isMotorRolling = false;
+    }
+  }
+
+  // Audio Toggle UI in Header
+  const audioToggleBtn = document.getElementById('btn-audio-toggle');
+  const audioToggleLabel = document.getElementById('audio-toggle-label');
+
+  function updateAudioUI() {
+    if (!audioToggleBtn) return;
+    if (isAudioEnabled) {
+      audioToggleBtn.classList.add('is-active');
+      if (audioToggleLabel) audioToggleLabel.textContent = 'AUDIO // 35mm ON';
+      startCameraMotorRoll();
+    } else {
+      audioToggleBtn.classList.remove('is-active');
+      if (audioToggleLabel) audioToggleLabel.textContent = 'AUDIO // MUTE';
+      stopCameraMotorRoll();
+    }
+  }
+
+  if (audioToggleBtn) {
+    audioToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      getAudioContext();
+      isAudioEnabled = !isAudioEnabled;
+      localStorage.setItem('silver_audio_enabled', String(isAudioEnabled));
+      if (isAudioEnabled) {
+        playClapperSound('in');
+      }
+      updateAudioUI();
+    });
+  }
+
+  const onFirstGesture = () => {
+    getAudioContext();
+    if (isAudioEnabled) {
+      startCameraMotorRoll();
+    }
+    window.removeEventListener('click', onFirstGesture);
+    window.removeEventListener('keydown', onFirstGesture);
+  };
+  window.addEventListener('click', onFirstGesture);
+  window.addEventListener('keydown', onFirstGesture);
+
+  // Global triggers
   window.__playShutterSound = playShutterClick;
+  window.__playClapperSound = playClapperSound;
+  window.__playFilmAdvanceSound = playFilmAdvanceSound;
+  window.__playRatchetClick = playRatchetClick;
+  window.__startCameraMotor = startCameraMotorRoll;
+  window.__stopCameraMotor = stopCameraMotorRoll;
 
   const shutterButtons = document.querySelectorAll('.trigger-shutter-sound, .btn-shutter, .btn-arcade-shutter');
   shutterButtons.forEach((btn) => {
@@ -1271,4 +1508,6 @@ function initMechanicalAudio() {
       playShutterClick();
     });
   });
+
+  updateAudioUI();
 }
