@@ -46,6 +46,36 @@ export function initLoader(onComplete) {
   const titleFrame = document.getElementById('intro-title-frame');
   const bloom = introEl.querySelector('.intro-lens-bloom');
   const transparentGlow = introEl.querySelector('.intro-transparent-glow');
+  const reticle = introEl.querySelector('.intro-focus-reticle');
+  const timecodeEl = document.getElementById('intro-hud-timecode');
+  const telemetryEl = document.getElementById('intro-hud-telemetry');
+
+  // 24 FPS Rolling Timecode (Cinematic Precision)
+  let tcSeconds = 1;
+  let tcFrames = 0;
+  let timecodeTimer = null;
+  function startTimecode() {
+    if (timecodeTimer) clearInterval(timecodeTimer);
+    timecodeTimer = setInterval(() => {
+      if (isDismissing || introEl.style.display === 'none') {
+        clearInterval(timecodeTimer);
+        return;
+      }
+      tcFrames++;
+      if (tcFrames >= 24) {
+        tcFrames = 0;
+        tcSeconds++;
+      }
+      if (timecodeEl) {
+        const ss = String(tcSeconds).padStart(2, '0');
+        const ff = String(tcFrames).padStart(2, '0');
+        timecodeEl.textContent = `00:00:${ss}:${ff}`;
+      }
+    }, 1000 / 24);
+  }
+  if (!prefersReducedMotion) {
+    startTimecode();
+  }
 
   // Silky smooth rAF lerp parallax (zero layout thrashing, capped at display refresh rate)
   function renderParallax() {
@@ -65,6 +95,9 @@ export function initLoader(onComplete) {
     if (transparentGlow) {
       transparentGlow.style.transform = `translate(-50%, -50%) translateZ(6px) translate3d(${currentX * 8}px, ${currentY * 5}px, 0)`;
     }
+    if (reticle) {
+      reticle.style.transform = `translate3d(${currentX * 8}px, ${currentY * 6}px, 0)`;
+    }
 
     rafParallaxId = requestAnimationFrame(renderParallax);
   }
@@ -75,8 +108,14 @@ export function initLoader(onComplete) {
   function onIntroMouseMove(e) {
     if (isDismissing || introEl.style.display === 'none' || prefersReducedMotion) return;
     const { innerWidth: w, innerHeight: h } = window;
-    targetX = (e.clientX / w - 0.5) * 2;
-    targetY = (e.clientY / h - 0.5) * 2;
+    const nx = (e.clientX / w - 0.5) * 2;
+    const ny = (e.clientY / h - 0.5) * 2;
+    targetX = nx;
+    targetY = ny;
+
+    if (telemetryEl) {
+      telemetryEl.textContent = `TILT: ${(-ny * 6).toFixed(1)}° • PAN: ${(nx * 8).toFixed(1)}°`;
+    }
   }
   window.addEventListener('mousemove', onIntroMouseMove, { passive: true });
 
@@ -87,6 +126,10 @@ export function initLoader(onComplete) {
     if (rafParallaxId) {
       cancelAnimationFrame(rafParallaxId);
       rafParallaxId = null;
+    }
+    if (timecodeTimer) {
+      clearInterval(timecodeTimer);
+      timecodeTimer = null;
     }
 
     // Clean up input listeners immediately
@@ -101,6 +144,7 @@ export function initLoader(onComplete) {
     if (bgStage) bgStage.style.transform = '';
     if (bloom) bloom.style.transform = '';
     if (transparentGlow) transparentGlow.style.transform = '';
+    if (reticle) reticle.style.transform = '';
 
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
@@ -193,22 +237,38 @@ export function initLoader(onComplete) {
       const bgStage = introEl.querySelector('.intro-bg-stage');
       const bloom = introEl.querySelector('.intro-lens-bloom');
       const transparentGlow = introEl.querySelector('.intro-transparent-glow');
+      const reticle = introEl.querySelector('.intro-focus-reticle');
 
       if (titleFrame) titleFrame.style.transform = '';
       if (bgStage) bgStage.style.transform = '';
       if (bloom) bloom.style.transform = '';
       if (transparentGlow) transparentGlow.style.transform = '';
+      if (reticle) reticle.style.transform = '';
 
-      // Re-trigger CSS animations by reflow
+      // Restart timecode
+      tcSeconds = 1;
+      tcFrames = 0;
+      if (!prefersReducedMotion) {
+        startTimecode();
+      }
+
+      // Re-trigger CSS animations on characters and title
       const titleName = document.getElementById('intro-title-name');
       if (titleName) {
         titleName.style.animation = 'none';
         if (bloom) bloom.style.animation = 'none';
         if (transparentGlow) transparentGlow.style.animation = 'none';
+        if (reticle) reticle.style.animation = 'none';
+        const chars = titleName.querySelectorAll('.intro-char');
+        chars.forEach(c => c.style.animation = 'none');
+
         void titleName.offsetWidth;
+
         titleName.style.animation = '';
         if (bloom) bloom.style.animation = '';
         if (transparentGlow) transparentGlow.style.animation = '';
+        if (reticle) reticle.style.animation = '';
+        chars.forEach(c => c.style.animation = '');
       }
 
       if (!prefersReducedMotion && !rafParallaxId) {

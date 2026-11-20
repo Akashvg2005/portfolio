@@ -52,6 +52,25 @@
       <div class="intro-grain"></div>
     </div>
 
+    <!-- 35mm Cinema Viewfinder HUD Overlays -->
+    <div class="intro-hud-layer" aria-hidden="true">
+      <div class="intro-hud-item intro-hud-tl">
+        <span class="hud-rec-pulse"></span>
+        <span class="hud-mono-text" id="intro-hud-timecode">00:00:01:00</span>
+        <span class="hud-mono-dim">REC &bull; 24 FPS</span>
+      </div>
+      <div class="intro-hud-item intro-hud-tr">
+        <span class="hud-mono-dim">ANAMORPHIC 2.39:1</span>
+        <span class="hud-mono-text">35mm &bull; T1.4</span>
+      </div>
+      <div class="intro-hud-item intro-hud-bl">
+        <span class="hud-mono-text" id="intro-hud-telemetry">TILT: 0.0&deg; &bull; PAN: 0.0&deg;</span>
+      </div>
+      <div class="intro-hud-item intro-hud-br">
+        <span class="hud-mono-dim">SHUTTER: 1/50s &bull; ISO 100</span>
+      </div>
+    </div>
+
     <!-- 2.39:1 Anamorphic Letterbox Bars -->
     <div class="intro-letterbox intro-letterbox-top"></div>
     <div class="intro-letterbox intro-letterbox-bottom"></div>
@@ -61,12 +80,32 @@
       <div class="intro-name-wrap" id="intro-name-wrap">
         <div class="intro-lens-bloom" aria-hidden="true"></div>
         <div class="intro-transparent-glow" aria-hidden="true"></div>
-        <h1 class="intro-title-name" id="intro-title-name">Akash V G</h1>
+
+        <!-- Optical Viewfinder Registration Brackets -->
+        <div class="intro-focus-reticle" aria-hidden="true">
+          <div class="reticle-bracket reticle-tl"></div>
+          <div class="reticle-bracket reticle-tr"></div>
+          <div class="reticle-bracket reticle-bl"></div>
+          <div class="reticle-bracket reticle-br"></div>
+          <span class="reticle-crosshair">+</span>
+        </div>
+
+        <h1 class="intro-title-name" id="intro-title-name" aria-label="Akash V G">
+          <span class="intro-char" style="--char-idx: 0">A</span>
+          <span class="intro-char" style="--char-idx: 1">k</span>
+          <span class="intro-char" style="--char-idx: 2">a</span>
+          <span class="intro-char" style="--char-idx: 3">s</span>
+          <span class="intro-char" style="--char-idx: 4">h</span>
+          <span class="intro-char-space">&nbsp;</span>
+          <span class="intro-char" style="--char-idx: 5">V</span>
+          <span class="intro-char-space">&nbsp;</span>
+          <span class="intro-char" style="--char-idx: 6">G</span>
+        </h1>
       </div>
       <p class="intro-role-line">Aspiring Engineer &bull; Cinematographer &bull; Developer</p>
     </div>
 
-    <!-- Waiting State Prompt (5.0s onward) -->
+    <!-- Waiting State Prompt (Ready immediately from 0.8s) -->
     <div class="intro-enter-cue" id="intro-enter-cue">
       <span class="enter-cue-scroll-icon" aria-hidden="true">
         <svg width="14" height="18" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -75,7 +114,7 @@
         </svg>
       </span>
       <span class="enter-cue-text">Scroll down or click to enter</span>
-      <span class="enter-cue-key">[ &darr; &crarr; ]</span>
+      <span class="enter-cue-key">[ ROLL WHEEL &darr; ]</span>
     </div>
 
     <!-- Skip Intro Button -->

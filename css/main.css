@@ -220,6 +220,63 @@ body:not(.site-entered) #viewfinder-cursor {
   100% { transform: translateY(0); }
 }
 
+/* 35mm Cinema Viewfinder HUD Overlay */
+.intro-hud-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: calc(var(--intro-bar-height) + 14px) 28px;
+  animation: hudFadeIn 0.8s var(--ease-cinematic) 0.25s both;
+  will-change: opacity, transform;
+}
+
+@keyframes hudFadeIn {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1.0); }
+}
+
+.intro-hud-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.intro-hud-tl { align-self: start; justify-self: start; }
+.intro-hud-tr { align-self: start; justify-self: end; text-align: right; }
+.intro-hud-bl { align-self: end; justify-self: start; }
+.intro-hud-br { align-self: end; justify-self: end; text-align: right; }
+
+.hud-rec-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #E84D38;
+  box-shadow: 0 0 8px rgba(232, 77, 56, 0.85);
+  animation: recBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes recBlink {
+  0%, 100% { opacity: 1; transform: scale(1.0); }
+  50% { opacity: 0.25; transform: scale(0.85); }
+}
+
+.hud-mono-text {
+  color: var(--intro-silver);
+  font-weight: 500;
+}
+
+.hud-mono-dim {
+  color: var(--intro-graphite);
+}
+
 /* Center Title Frame */
 .intro-title-frame {
   position: relative;
@@ -246,6 +303,64 @@ body:not(.site-entered) #viewfinder-cursor {
   will-change: transform, opacity;
 }
 
+/* Optical Focus Reticle Brackets Framing the Title */
+.intro-focus-reticle {
+  position: absolute;
+  inset: -14px -26px;
+  pointer-events: none;
+  z-index: 1;
+  animation: reticleFocusIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both,
+             reticleBreathe 4.5s ease-in-out 1.1s infinite;
+  will-change: transform, opacity;
+}
+
+.reticle-bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(200, 215, 235, 0.55);
+  border-style: solid;
+  transition: border-color 0.3s ease;
+}
+
+.reticle-tl { top: 0; left: 0; border-width: 1.5px 0 0 1.5px; }
+.reticle-tr { top: 0; right: 0; border-width: 1.5px 1.5px 0 0; }
+.reticle-bl { bottom: 0; left: 0; border-width: 0 0 1.5px 1.5px; }
+.reticle-br { bottom: 0; right: 0; border-width: 0 1.5px 1.5px 0; }
+
+.reticle-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: rgba(200, 215, 235, 0.3);
+  pointer-events: none;
+}
+
+@keyframes reticleFocusIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.0);
+  }
+}
+
+@keyframes reticleBreathe {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1.0);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.02);
+  }
+}
+
 /* Volumetric Cinematic Lens Bloom (Organic Anamorphic Back-Illumination — No Lines) */
 .intro-lens-bloom {
   position: absolute;
@@ -266,8 +381,8 @@ body:not(.site-entered) #viewfinder-cursor {
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-  animation: bloomPulseIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
-             bloomBreathe 5.5s ease-in-out 3.4s infinite;
+  animation: bloomPulseIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards,
+             bloomBreathe 5.5s ease-in-out 2.2s infinite;
   will-change: transform, opacity, filter;
 }
 
@@ -321,8 +436,8 @@ body:not(.site-entered) #viewfinder-cursor {
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-  animation: transparentGlowFade 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards,
-             transparentGlowBreathe 5.5s ease-in-out 3.8s infinite;
+  animation: transparentGlowFade 1.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards,
+             transparentGlowBreathe 5.5s ease-in-out 2.4s infinite;
   will-change: transform, opacity, filter;
 }
 
@@ -348,9 +463,7 @@ body:not(.site-entered) #viewfinder-cursor {
   }
 }
 
-/* "Akash V G" in 3D Machined Metallic Texture with Transparent Glow
-   Optical Rack-Focus Hunting: First blurs out into luminous bokeh,
-   then snaps pin-sharp onto the 3D relief texture with transparent glow */
+/* "Akash V G" in 3D Machined Metallic Texture with Transparent Glow */
 .intro-title-name {
   font-family: var(--font-display);
   font-size: clamp(4.2rem, 9vw, 8.2rem);
@@ -391,40 +504,39 @@ body:not(.site-entered) #viewfinder-cursor {
     drop-shadow(0 0 18px rgba(210, 232, 255, 0.45))
     drop-shadow(0 0 42px rgba(180, 215, 255, 0.22));
 
-  animation: opticalFocusHunting 1.9s cubic-bezier(0.16, 1, 0.3, 1) 1.2s both,
-             nameLightSweep 6.5s ease-in-out 3.2s infinite;
+  animation: nameLightSweep 6.5s ease-in-out 1.8s infinite;
   will-change: filter, transform, opacity;
 }
 
-/* Optical Defocus Hunting -> Sharp Focus Lock with 3D Texture & Transparent Glow */
-@keyframes opticalFocusHunting {
+/* Kinetic Individual Glyphs with Staggered 3D Rack Focus */
+.intro-char {
+  display: inline-block;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform, filter, opacity;
+  animation: kineticCharRack 0.85s cubic-bezier(0.16, 1, 0.3, 1) calc(0.12s + var(--char-idx) * 0.045s) both;
+}
+
+.intro-char-space {
+  display: inline-block;
+  width: 0.32em;
+}
+
+@keyframes kineticCharRack {
   0% {
     opacity: 0;
-    filter: blur(14px) brightness(0.85) drop-shadow(0 0 8px rgba(180, 215, 255, 0.2));
-    transform: scale(0.92) translateZ(0);
+    filter: blur(14px) brightness(1.6);
+    transform: scale(0.82) rotateX(24deg) translateZ(-40px);
   }
-  32% {
-    opacity: 0.85;
-    filter: blur(7px) brightness(1.2) drop-shadow(0 0 24px rgba(210, 235, 255, 0.6));
-    transform: scale(1.03) translateZ(14px);
-  }
-  68% {
-    opacity: 0.96;
-    filter: blur(1.5px) brightness(1.06)
-      drop-shadow(-1px -1px 0.5px rgba(255, 255, 255, 0.8))
-      drop-shadow(1.5px 2px 1px rgba(8, 10, 14, 0.9))
-      drop-shadow(0 0 16px rgba(210, 230, 255, 0.4));
-    transform: scale(1.008) translateZ(20px);
+  45% {
+    opacity: 0.88;
+    filter: blur(5px) brightness(1.2);
+    transform: scale(1.04) rotateX(-5deg) translateZ(8px);
   }
   100% {
     opacity: 1;
-    filter: blur(0px) brightness(1.0)
-      drop-shadow(-1.5px -2px 0.5px rgba(255, 255, 255, 0.95))
-      drop-shadow(2px 3px 1.5px rgba(8, 10, 14, 0.95))
-      drop-shadow(4px 6px 8px rgba(0, 0, 0, 0.75))
-      drop-shadow(0 0 18px rgba(210, 232, 255, 0.45))
-      drop-shadow(0 0 42px rgba(180, 215, 255, 0.22));
-    transform: scale(1.0) translateZ(24px);
+    filter: blur(0px) brightness(1.0);
+    transform: scale(1.0) rotateX(0deg) translateZ(0);
   }
 }
 
@@ -433,7 +545,7 @@ body:not(.site-entered) #viewfinder-cursor {
   45%, 100% { background-position: -130% 0; }
 }
 
-/* Role Line Fades in Beneath Name (3.6s - 4.4s) */
+/* Role Line Fades in Beneath Name (0.65s - 1.3s) */
 .intro-role-line {
   font-family: var(--font-body);
   font-size: clamp(0.72rem, 1.4vw, 0.88rem);
@@ -442,7 +554,7 @@ body:not(.site-entered) #viewfinder-cursor {
   color: var(--intro-graphite);
   text-transform: uppercase;
   margin: 0;
-  animation: roleFadeIn 0.8s var(--ease-cinematic) 3.6s both;
+  animation: roleFadeIn 0.7s var(--ease-cinematic) 0.65s both;
   will-change: transform, opacity;
 }
 
@@ -459,7 +571,7 @@ body:not(.site-entered) #viewfinder-cursor {
   }
 }
 
-/* Waiting State: "Click to enter" or "Press Enter" (5.0s onward) */
+/* Waiting State: "Scroll down or click to enter" (Ready immediately from 0.8s) */
 .intro-enter-cue {
   position: absolute;
   bottom: calc(var(--intro-bar-height) + 24px);
@@ -468,6 +580,15 @@ body:not(.site-entered) #viewfinder-cursor {
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--intro-graphite);
+  pointer-events: auto;
+  cursor: pointer;
+  animation: cueEnterPulse 3.0s ease-in-out 0.8s infinite both;
+  will-change: opacity, transform;
+}
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -638,6 +759,23 @@ body:not(.site-entered) #viewfinder-cursor {
   transition: opacity 0.3s ease, transform 0.4s ease, filter 0.35s ease !important;
 }
 
+/* Layer 2d: HUD Layer & Focus Reticle dissolve swiftly with aperture pull */
+.cinematic-intro.intro-dismissing .intro-hud-layer,
+.cinematic-intro.intro-flowing .intro-hud-layer {
+  opacity: 0 !important;
+  transform: scale(0.96) !important;
+  filter: blur(6px) !important;
+  transition: opacity 0.35s ease, transform 0.4s ease, filter 0.35s ease !important;
+}
+
+.cinematic-intro.intro-dismissing .intro-focus-reticle,
+.cinematic-intro.intro-flowing .intro-focus-reticle {
+  opacity: 0 !important;
+  transform: scale(1.3) !important;
+  filter: blur(8px) !important;
+  transition: opacity 0.35s ease, transform 0.4s ease, filter 0.35s ease !important;
+}
+
 /* Layer 3: Deep Background Stage pushes forward and fades */
 .cinematic-intro.intro-dismissing .intro-bg-stage,
 .cinematic-intro.intro-flowing .intro-bg-stage {
@@ -651,8 +789,11 @@ body:not(.site-entered) #viewfinder-cursor {
   .cinematic-intro,
   .intro-bg-stage,
   .intro-title-name,
+  .intro-char,
   .intro-transparent-glow,
   .intro-lens-bloom,
+  .intro-focus-reticle,
+  .intro-hud-layer,
   .intro-role-line,
   .intro-letterbox-top,
   .intro-letterbox-bottom,
