@@ -45,6 +45,7 @@ export function initLoader(onComplete) {
   const bgStage = introEl.querySelector('.intro-bg-stage');
   const titleFrame = document.getElementById('intro-title-frame');
   const bloom = introEl.querySelector('.intro-lens-bloom');
+  const transparentGlow = introEl.querySelector('.intro-transparent-glow');
 
   // Silky smooth rAF lerp parallax (zero layout thrashing, capped at display refresh rate)
   function renderParallax() {
@@ -59,7 +60,10 @@ export function initLoader(onComplete) {
       titleFrame.style.transform = `perspective(1000px) rotateX(${-currentY * 3}deg) rotateY(${currentX * 4}deg) translate3d(${currentX * 6}px, ${currentY * 4}px, 0)`;
     }
     if (bloom) {
-      bloom.style.transform = `translate(-50%, -50%) translate3d(${currentX * 12}px, ${currentY * 8}px, 0)`;
+      bloom.style.transform = `translate(-50%, -50%) translateZ(-15px) translate3d(${currentX * 12}px, ${currentY * 8}px, 0)`;
+    }
+    if (transparentGlow) {
+      transparentGlow.style.transform = `translate(-50%, -50%) translateZ(6px) translate3d(${currentX * 8}px, ${currentY * 5}px, 0)`;
     }
 
     rafParallaxId = requestAnimationFrame(renderParallax);
@@ -96,6 +100,7 @@ export function initLoader(onComplete) {
     if (titleFrame) titleFrame.style.transform = '';
     if (bgStage) bgStage.style.transform = '';
     if (bloom) bloom.style.transform = '';
+    if (transparentGlow) transparentGlow.style.transform = '';
 
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
@@ -187,19 +192,23 @@ export function initLoader(onComplete) {
       const titleFrame = document.getElementById('intro-title-frame');
       const bgStage = introEl.querySelector('.intro-bg-stage');
       const bloom = introEl.querySelector('.intro-lens-bloom');
+      const transparentGlow = introEl.querySelector('.intro-transparent-glow');
 
       if (titleFrame) titleFrame.style.transform = '';
       if (bgStage) bgStage.style.transform = '';
       if (bloom) bloom.style.transform = '';
+      if (transparentGlow) transparentGlow.style.transform = '';
 
       // Re-trigger CSS animations by reflow
       const titleName = document.getElementById('intro-title-name');
       if (titleName) {
         titleName.style.animation = 'none';
         if (bloom) bloom.style.animation = 'none';
+        if (transparentGlow) transparentGlow.style.animation = 'none';
         void titleName.offsetWidth;
         titleName.style.animation = '';
         if (bloom) bloom.style.animation = '';
+        if (transparentGlow) transparentGlow.style.animation = '';
       }
 
       if (!prefersReducedMotion && !rafParallaxId) {
