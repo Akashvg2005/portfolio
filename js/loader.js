@@ -22,11 +22,12 @@ export function initLoader(onComplete) {
     return;
   }
 
-  const hasVisited = sessionStorage.getItem('portfolio_intro_seen');
+  const urlParams = new URLSearchParams(window.location.search);
+  const skipRequested = urlParams.get('skipIntro') === 'true' || urlParams.get('skip') === '1';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Returning visitor or reduced-motion user bypasses intro automatically
-  if (hasVisited === 'true' || prefersReducedMotion) {
+  // Reduced motion or explicit URL skip (?skipIntro=1) bypasses intro
+  if (skipRequested || prefersReducedMotion) {
     introEl.style.display = 'none';
     introEl.setAttribute('aria-hidden', 'true');
     document.body.classList.add('exposed', 'site-entered');
@@ -155,10 +156,6 @@ export function initLoader(onComplete) {
     // 2. Trigger zoom-in blur-out entry transition
     introEl.classList.add('intro-dismissing', 'intro-flowing');
 
-    try {
-      sessionStorage.setItem('portfolio_intro_seen', 'true');
-    } catch (_) {}
-
     // 3. Complete handoff at 850ms (matches 0.85s cubic-bezier CSS duration)
     setTimeout(() => {
       introEl.style.display = 'none';
@@ -222,7 +219,6 @@ export function initLoader(onComplete) {
 
   function setupReplayTrigger() {
     window.__replayCinematicShot = function() {
-      sessionStorage.removeItem('portfolio_intro_seen');
       document.body.classList.remove('exposed', 'site-entered');
       introEl.style.display = 'flex';
       introEl.removeAttribute('aria-hidden');
