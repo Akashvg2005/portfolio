@@ -42,99 +42,22 @@
   <canvas id="film-grain-canvas" aria-hidden="true"></canvas>
 
   <!-- ========================================================================
-       1. CINEMATIC 3D OPTICAL EXPOSURE ENTRY (MNC-Grade 3D Parallax Calibration)
+       1. CINEMATIC SHOT ENTRY (2.39:1 Anamorphic Cinema Curtain Opening)
        ======================================================================== -->
-  <div id="aperture-loader" role="dialog" aria-label="Calibrating Camera Optic" class="optical-3d-stage">
-    
-    <!-- Optical Shutter Flash Flare -->
-    <div id="loader-shutter-flash" class="loader-shutter-flash" aria-hidden="true"></div>
+  <div id="cinematic-curtain" class="cinematic-curtain" aria-hidden="true">
+    <!-- Widescreen Anamorphic Matte Letterbox Bars -->
+    <div class="curtain-bar curtain-bar-top"></div>
+    <div class="curtain-bar curtain-bar-bottom"></div>
 
-    <!-- 3D Perspective Lens Chamber -->
-    <div class="loader-spatial-chamber" id="loader-spatial-chamber">
-      
-      <!-- Spatial Layer 1: Background Depth Grid & Orbiting Calibration Telemetry (Z: -200px) -->
-      <div class="loader-spatial-layer layer-bg" data-depth="-200">
-        <div class="loader-telemetry-top">
-          <span class="loader-brand">SILVER HALIDE // 35mm</span>
-          <span id="loader-status-tag" class="loader-status-tag">CALIBRATING OPTICS &bull; ISO 100</span>
-        </div>
-        <div class="loader-optical-grid" aria-hidden="true"></div>
+    <!-- Center Cinematic Production Slate -->
+    <div class="cinematic-slate" id="cinematic-slate">
+      <div class="slate-meta">
+        <span class="slate-rec-dot"></span>
+        <span>ROLL 01 &bull; SCENE 01 &bull; 35mm ANAMORPHIC</span>
       </div>
-
-      <!-- Spatial Layer 2: Intermediate Knurled Barrel & Floating T-Stop Ring (Z: -80px) -->
-      <div class="loader-spatial-layer layer-mid" data-depth="-80">
-        <div class="aperture-outer-ring"></div>
-        <div class="aperture-fstops">
-          <span class="fstop-mark fstop-1">f/1.4</span>
-          <span class="fstop-mark fstop-2">f/2.8</span>
-          <span class="fstop-mark fstop-3">f/5.6</span>
-          <span class="fstop-mark fstop-4">f/11</span>
-        </div>
-        <div class="loader-barrel-flange" aria-hidden="true"></div>
-      </div>
-
-      <!-- Spatial Layer 3: Core Mechanical Aperture & Dual Shutter Blades (Z: 0px) -->
-      <div class="loader-spatial-layer layer-core" data-depth="0">
-        <div class="loader-center-iris" id="loader-center-iris">
-          
-          <!-- Optical Peaking Ring Glow -->
-          <div class="loader-peaking-ring" id="loader-peaking-ring" aria-hidden="true"></div>
-
-          <!-- Dual Mechanical Shutter Curtains -->
-          <div class="shutter-curtain curtain-left" id="shutter-curtain-left"></div>
-          <div class="shutter-curtain curtain-right" id="shutter-curtain-right"></div>
-
-          <!-- Six Machined Silver Aperture Blades -->
-          <svg id="aperture-iris" class="iris-svg" viewBox="0 0 200 200">
-            <defs>
-              <linearGradient id="blade-silver-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#9AA0A8" />
-                <stop offset="50%" stop-color="#FFFFFF" />
-                <stop offset="100%" stop-color="#3A3D43" />
-              </linearGradient>
-            </defs>
-            <g id="blades-group" transform="translate(100, 100)">
-              <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#111215" stroke-width="1"
-                d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
-              <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#111215" stroke-width="1"
-                d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
-              <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#111215" stroke-width="1"
-                d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
-              <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#111215" stroke-width="1"
-                d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
-              <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#111215" stroke-width="1"
-                d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
-              <path class="aperture-blade" fill="url(#blade-silver-grad)" stroke="#111215" stroke-width="1"
-                d="M0,-80 L55,-55 L35,-15 L-20,-45 Z" />
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Spatial Layer 4: Foreground Viewfinder Glass, Reticle Brackets & Gyro Telemetry (Z: +160px) -->
-      <div class="loader-spatial-layer layer-fore" data-depth="160">
-        <div class="loader-viewfinder-reticle">
-          <span class="reticle-corner reticle-tl"></span>
-          <span class="reticle-corner reticle-tr"></span>
-          <span class="reticle-corner reticle-bl"></span>
-          <span class="reticle-corner reticle-br"></span>
-          <span class="reticle-axis-h"></span>
-          <span class="reticle-axis-v"></span>
-          <div class="reticle-split-prism"></div>
-        </div>
-
-        <div class="loader-telemetry-bottom">
-          <div class="loader-mono-tag">
-            <span class="rec-pulse-dot"></span>
-            <span id="loader-shutter-speed-cue">SHUTTER [1/8000s] &bull; 35mm FOCAL PLANE</span>
-          </div>
-          <div class="loader-counter-wrap">
-            <span id="loader-counter" class="loader-counter-digits">000</span>
-            <span class="loader-counter-unit">%</span>
-          </div>
-        </div>
-      </div>
-
+      <h1 class="slate-name">AKASH V G</h1>
+      <div class="slate-sub">AI ENGINEER &bull; CINEMATOGRAPHER</div>
+      <div class="slate-cue">[ TAKE 01 &bull; EXPOSURE ]</div>
     </div>
   </div>
 
