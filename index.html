@@ -44,7 +44,8 @@
   <!-- ========================================================================
        1. FILM TITLE SEQUENCE INTRO (2.39:1 Anamorphic Short Film Opening)
        ======================================================================== -->
-  <div id="cinematic-intro" class="cinematic-intro" role="dialog" aria-modal="true" aria-label="Cinematic Film Opening Title Sequence">
+  <div id="cinematic-intro" class="cinematic-intro" role="dialog" aria-modal="true"
+    aria-label="Cinematic Film Opening Title Sequence">
     <!-- Push-in Background Stage with Grain & Vignette -->
     <div class="intro-bg-stage">
       <div class="intro-vignette"></div>
@@ -62,7 +63,7 @@
         <div class="intro-anamorphic-streak" aria-hidden="true"></div>
       </div>
       <div class="intro-silver-rule" aria-hidden="true"></div>
-      <p class="intro-role-line">Engineer &bull; Cinematographer &bull; Storyteller</p>
+      <p class="intro-role-line">Aspiring Engineer &bull; Cinematographer &bull; Developer</p>
     </div>
 
     <!-- Waiting State Prompt (5.0s onward) -->
@@ -190,9 +191,12 @@
         <span class="telemetry-readout">ISO 100 · 1/250s · f/1.4</span>
         <button type="button" id="btn-theme-toggle" class="btn-machined-silver btn-theme-toggle"
           aria-label="Toggle Camera Finish: Silver Chrome / Matte Black">
-          <svg class="theme-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <svg class="theme-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.2">
             <circle cx="12" cy="12" r="5"></circle>
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42">
+            </path>
           </svg>
           <span id="theme-toggle-label">FINISH // NOIR</span>
         </button>
@@ -235,7 +239,8 @@
       <div class="hero-grid">
         <!-- Hero Left Content -->
         <div class="hero-content-box">
-          <button type="button" class="hero-exposure-badge btn-magnetic" id="btn-recalibrate-optics" title="Click to Replay Intro Title Sequence">
+          <button type="button" class="hero-exposure-badge btn-magnetic" id="btn-recalibrate-optics"
+            title="Click to Replay Intro Title Sequence">
             <span class="rec-pulse-dot"></span>
             <span>EXPOSURE 01 // 35mm CHROMATIC SENSOR</span>
             <span class="recalibrate-cue">&bull; REPLAY INTRO</span>
@@ -321,18 +326,21 @@
 
           <div class="curtain-reveal-box" id="viewfinder-curtain-box">
             <div class="silver-curtain"></div>
-            
+
             <!-- Automated & Interactive Camera Shutter Slideshow (5 Frames) -->
             <div class="viewfinder-slideshow" id="viewfinder-slideshow">
               <!-- Frame 01: Main Cinematographer Shot -->
               <div class="slideshow-slide active" data-slide-index="0">
-                <img src="assets/images/akash-cinematographer.jpg" alt="Akash V G — Cinematographer" class="portrait-image" loading="lazy" />
+                <img src="assets/images/akash-cinematographer.jpg" alt="Akash V G — Cinematographer"
+                  class="portrait-image" loading="lazy" />
               </div>
               <div class="slideshow-slide" data-slide-index="1">
-                <img src="assets/images/akash-portrait-monument.jpg" alt="Akash V G" class="portrait-image" loading="lazy" />
+                <img src="assets/images/akash-portrait-monument.jpg" alt="Akash V G" class="portrait-image"
+                  loading="lazy" />
               </div>
               <div class="slideshow-slide" data-slide-index="2">
-                <img src="assets/images/akash-portrait-urban.jpg" alt="Akash V G" class="portrait-image" loading="lazy" />
+                <img src="assets/images/akash-portrait-urban.jpg" alt="Akash V G" class="portrait-image"
+                  loading="lazy" />
               </div>
               <div class="slideshow-slide" data-slide-index="3">
                 <img src="assets/images/akash-mountains.jpg" alt="Akash V G" class="portrait-image" loading="lazy" />
@@ -360,7 +368,8 @@
 
           <!-- Minimalist Shutter Frame Progress Controls (No Names) -->
           <div class="slideshow-progress-bar" aria-label="Slideshow Controls">
-            <button type="button" class="slideshow-arrow-btn prev" id="slideshow-prev-btn" aria-label="Previous Frame">&lsaquo;</button>
+            <button type="button" class="slideshow-arrow-btn prev" id="slideshow-prev-btn"
+              aria-label="Previous Frame">&lsaquo;</button>
             <div class="slideshow-dashes">
               <button type="button" class="slide-dash-btn active" data-dash-index="0" aria-label="Slide 1"></button>
               <button type="button" class="slide-dash-btn" data-dash-index="1" aria-label="Slide 2"></button>
@@ -368,7 +377,8 @@
               <button type="button" class="slide-dash-btn" data-dash-index="3" aria-label="Slide 4"></button>
               <button type="button" class="slide-dash-btn" data-dash-index="4" aria-label="Slide 5"></button>
             </div>
-            <button type="button" class="slideshow-arrow-btn next" id="slideshow-next-btn" aria-label="Next Frame">&rsaquo;</button>
+            <button type="button" class="slideshow-arrow-btn next" id="slideshow-next-btn"
+              aria-label="Next Frame">&rsaquo;</button>
           </div>
         </div>
 
@@ -816,7 +826,7 @@
 
       <!-- Machined Arcade Console Cabinet -->
       <div class="arcade-cabinet">
-        
+
         <!-- Console Header Plate & Game Switcher -->
         <div class="arcade-header-plate">
           <div class="arcade-title-box">
@@ -842,11 +852,11 @@
 
         <!-- Arcade Viewport Container -->
         <div class="arcade-viewport">
-          
+
           <!-- GAME 1: THE DECISIVE SHUTTER -->
           <div id="game-decisive-shutter" class="arcade-game-view active">
             <div class="shutter-game-wrap">
-              
+
               <div class="shutter-hud-readout">
                 <span>MODE: FOCAL-PLANE TIMING</span>
                 <span>TARGET: f/1.4 CENTER RETICLE</span>
@@ -865,7 +875,8 @@
               <!-- Real-time Feedback & Combo -->
               <div class="shutter-result-box">
                 <div id="shutter-feedback-text" class="shutter-feedback-text">READY FOR EXPOSURE</div>
-                <div id="shutter-delta-text" class="shutter-delta-text">ALIGN NEEDLE WITH CENTER &bull; TRIGGER SHUTTER</div>
+                <div id="shutter-delta-text" class="shutter-delta-text">ALIGN NEEDLE WITH CENTER &bull; TRIGGER SHUTTER
+                </div>
               </div>
 
               <!-- Controls -->
@@ -892,10 +903,10 @@
           <!-- GAME 2: HALIDE RUNNER -->
           <div id="game-halide-runner" class="arcade-game-view">
             <div class="runner-stage-wrap">
-              
+
               <div class="runner-canvas-container">
                 <canvas id="halide-runner-canvas"></canvas>
-                
+
                 <div class="runner-overlay-hud">
                   <span>SCORE: <span id="runner-score-val" class="arcade-stat-highlight">0</span></span>
                   <span>INTEGRITY: <span id="runner-integrity-val" class="arcade-stat-highlight">100%</span></span>
@@ -922,20 +933,22 @@
           <!-- GAME 3: FOCUS PULLER (Rack Focus & Focus Peaking) -->
           <div id="game-focus-puller" class="arcade-game-view">
             <div class="focus-game-wrap">
-              
+
               <div class="focus-hud-readout">
-                <span>DIRECTOR CALL: <span id="focus-director-call" class="arcade-stat-highlight">TARGET: ACTOR FOREGROUND (0.8m)</span></span>
+                <span>DIRECTOR CALL: <span id="focus-director-call" class="arcade-stat-highlight">TARGET: ACTOR
+                    FOREGROUND (0.8m)</span></span>
                 <span>PEAKING: <span id="focus-peaking-indicator" class="focus-peaking-tag">SEARCHING</span></span>
                 <span>SHOT TIMER: <span id="focus-timer-val" class="arcade-stat-highlight">5.0s</span></span>
               </div>
 
               <!-- Cinematic Focus Preview Viewport (3 Optical Depth Planes) -->
               <div class="focus-optical-viewport" id="focus-optical-viewport">
-                
+
                 <!-- Plane 1: Foreground (0.8m) -->
                 <div class="focus-subject-card plane-fore" id="focus-plane-fore" data-depth="0.8">
                   <div class="subject-silhouette">
-                    <svg width="48" height="72" viewBox="0 0 24 36" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <svg width="48" height="72" viewBox="0 0 24 36" fill="none" stroke="currentColor"
+                      stroke-width="1.8">
                       <circle cx="12" cy="8" r="5" fill="rgba(246, 247, 248, 0.15)" />
                       <path d="M4 32 C4 20, 20 20, 20 32" stroke-width="2" />
                     </svg>
@@ -946,7 +959,8 @@
                 <!-- Plane 2: Midground (2.0m) -->
                 <div class="focus-subject-card plane-mid" id="focus-plane-mid" data-depth="2.0">
                   <div class="subject-silhouette">
-                    <svg width="38" height="58" viewBox="0 0 24 36" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <svg width="38" height="58" viewBox="0 0 24 36" fill="none" stroke="currentColor"
+                      stroke-width="1.8">
                       <circle cx="12" cy="8" r="5" fill="rgba(246, 247, 248, 0.15)" />
                       <path d="M4 32 C4 20, 20 20, 20 32" stroke-width="2" />
                     </svg>
@@ -957,7 +971,8 @@
                 <!-- Plane 3: Background (4.5m) -->
                 <div class="focus-subject-card plane-back" id="focus-plane-back" data-depth="4.5">
                   <div class="subject-silhouette">
-                    <svg width="28" height="44" viewBox="0 0 24 36" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <svg width="28" height="44" viewBox="0 0 24 36" fill="none" stroke="currentColor"
+                      stroke-width="1.8">
                       <circle cx="12" cy="8" r="5" fill="rgba(246, 247, 248, 0.15)" />
                       <path d="M4 32 C4 20, 20 20, 20 32" stroke-width="2" />
                     </svg>
@@ -986,22 +1001,25 @@
                   <span class="scale-mark">4.5m</span>
                   <span class="scale-mark">&infin;</span>
                 </div>
-                
+
                 <div class="focus-slider-row">
                   <span class="focus-scale-label">FOCAL RING:</span>
-                  <input type="range" id="focus-ring-slider" min="0.5" max="5.5" step="0.05" value="0.8" class="focus-ring-slider" aria-label="Lens Focus Barrel" />
+                  <input type="range" id="focus-ring-slider" min="0.5" max="5.5" step="0.05" value="0.8"
+                    class="focus-ring-slider" aria-label="Lens Focus Barrel" />
                   <span id="focus-current-dist-readout" class="focus-dist-readout">0.80m</span>
                 </div>
 
                 <div class="focus-hardware-buttons">
                   <button type="button" id="btn-lock-focus" class="btn-arcade-shutter btn-magnetic">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
                       <circle cx="12" cy="12" r="9"></circle>
                       <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
                     </svg>
                     <span>Lock Take / Expose</span>
                   </button>
-                  <span class="shutter-key-cue">DRAG SLIDER / SCROLL WHEEL &bull; PRESS [SPACEBAR] OR CLICK TO EXPOSE</span>
+                  <span class="shutter-key-cue">DRAG SLIDER / SCROLL WHEEL &bull; PRESS [SPACEBAR] OR CLICK TO
+                    EXPOSE</span>
                 </div>
               </div>
 
@@ -1018,7 +1036,7 @@
           <!-- GAME 4: RANGEFINDER SNIPE (Rule-of-Thirds Target Shooting) -->
           <div id="game-rangefinder-snipe" class="arcade-game-view">
             <div class="rangefinder-stage-wrap">
-              
+
               <div class="rangefinder-hud-readout">
                 <span>VIEWFINDER: 35mm ANAMORPHIC 2.39:1</span>
                 <span>POWER NODES: 4 GOLDEN INTERSECTIONS</span>
@@ -1031,7 +1049,8 @@
                 <!-- Start / Game Over Modal -->
                 <div id="snipe-modal" class="runner-game-over-modal is-active">
                   <h4 class="runner-over-title" id="snipe-modal-title">Rangefinder Snipe</h4>
-                  <p id="snipe-modal-desc" class="runner-over-score">Align moving subjects with the 4 golden Rule-of-Thirds crosshairs &bull; Click to Shoot</p>
+                  <p id="snipe-modal-desc" class="runner-over-score">Align moving subjects with the 4 golden
+                    Rule-of-Thirds crosshairs &bull; Click to Shoot</p>
                   <button type="button" id="snipe-start-btn" class="btn-machined-silver">
                     <span>Load 35mm Film &rarr;</span>
                   </button>

@@ -36,27 +36,43 @@ export function initLoader(onComplete) {
   }
 
   let isDismissing = false;
+  let rafParallaxId = null;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
 
-  // 3D Optical Parallax during title sequence
+  const bgStage = introEl.querySelector('.intro-bg-stage');
+  const titleFrame = document.getElementById('intro-title-frame');
+  const streak = document.querySelector('.intro-anamorphic-streak');
+
+  // Silky smooth rAF lerp parallax (zero layout thrashing, capped at display refresh rate)
+  function renderParallax() {
+    if (isDismissing || introEl.style.display === 'none' || prefersReducedMotion) return;
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
+
+    if (bgStage) {
+      bgStage.style.transform = `translate3d(${-currentX * 10}px, ${-currentY * 10}px, 0)`;
+    }
+    if (titleFrame) {
+      titleFrame.style.transform = `perspective(1000px) rotateX(${-currentY * 3}deg) rotateY(${currentX * 4}deg) translate3d(${currentX * 6}px, ${currentY * 4}px, 0)`;
+    }
+    if (streak) {
+      streak.style.transform = `translateY(-50%) translate3d(${currentX * 14}px, 0, 0)`;
+    }
+
+    rafParallaxId = requestAnimationFrame(renderParallax);
+  }
+  if (!prefersReducedMotion) {
+    rafParallaxId = requestAnimationFrame(renderParallax);
+  }
+
   function onIntroMouseMove(e) {
     if (isDismissing || introEl.style.display === 'none' || prefersReducedMotion) return;
     const { innerWidth: w, innerHeight: h } = window;
-    const nx = (e.clientX / w - 0.5) * 2;
-    const ny = (e.clientY / h - 0.5) * 2;
-
-    const bgStage = introEl.querySelector('.intro-bg-stage');
-    const titleFrame = document.getElementById('intro-title-frame');
-    const streak = document.querySelector('.intro-anamorphic-streak');
-
-    if (bgStage) {
-      bgStage.style.transform = `translate3d(${-nx * 14}px, ${-ny * 14}px, 0)`;
-    }
-    if (titleFrame) {
-      titleFrame.style.transform = `perspective(1000px) rotateX(${-ny * 4}deg) rotateY(${nx * 5}deg) translate3d(${nx * 8}px, ${ny * 6}px, 0)`;
-    }
-    if (streak) {
-      streak.style.transform = `translateY(-50%) translate3d(${nx * 20}px, 0, 0)`;
-    }
+    targetX = (e.clientX / w - 0.5) * 2;
+    targetY = (e.clientY / h - 0.5) * 2;
   }
   window.addEventListener('mousemove', onIntroMouseMove, { passive: true });
 
@@ -64,56 +80,56 @@ export function initLoader(onComplete) {
     if (isDismissing) return;
     isDismissing = true;
 
-    // Clean up input listeners
+    if (rafParallaxId) {
+      cancelAnimationFrame(rafParallaxId);
+      rafParallaxId = null;
+    }
+
+    // Clean up input listeners immediately
     window.removeEventListener('mousemove', onIntroMouseMove);
     window.removeEventListener('wheel', onIntroWheel);
     window.removeEventListener('touchstart', onTouchStart);
     window.removeEventListener('touchmove', onTouchMove);
     window.removeEventListener('keydown', onKeyDown);
 
-    // Reset 3D tilt on title frame
-    const titleFrame = document.getElementById('intro-title-frame');
-    if (titleFrame) {
-      titleFrame.style.transform = 'none';
-    }
+    // Clear inline transforms so GPU CSS transitions cleanly take over for zoom-in blur-out
+    if (titleFrame) titleFrame.style.transform = '';
+    if (bgStage) bgStage.style.transform = '';
+    if (streak) streak.style.transform = '';
 
     // Trigger subtle acoustic camera shutter release
     window.__playShutterSound?.();
 
-    // 1. Activate home page hero so it pulls focus and rises in Layer 3 parallax
+    // 1. Activate home page hero so it pulls focus and reveals smoothly
     document.body.classList.add('exposed', 'site-entered');
 
-    // 2. Add intro-flowing to trigger multi-layer parallax transformation
-    introEl.classList.add('intro-flowing');
+    // 2. Trigger zoom-in blur-out entry transition
+    introEl.classList.add('intro-dismissing', 'intro-flowing');
 
     try {
       sessionStorage.setItem('portfolio_intro_seen', 'true');
     } catch (_) {}
 
-    // 3. Complete handoff at 1.25s and clean up
+    // 3. Complete handoff at 850ms (matches 0.85s cubic-bezier CSS duration)
     setTimeout(() => {
       introEl.style.display = 'none';
       introEl.setAttribute('aria-hidden', 'true');
-      introEl.classList.remove('intro-flowing');
+      introEl.classList.remove('intro-dismissing', 'intro-flowing');
       if (typeof onComplete === 'function') onComplete();
       setupReplayTrigger();
-    }, 1250);
+    }, 850);
   }
 
-  // Scroll down detection: Mouse wheel
-  let wheelDelta = 0;
+  // Scroll down detection: Mouse wheel (any scroll down immediately triggers zoom-in entry)
   function onIntroWheel(e) {
     if (isDismissing || introEl.style.display === 'none') return;
     if (e.deltaY > 0) {
-      wheelDelta += e.deltaY;
-      if (wheelDelta > 15) {
-        enterSite();
-      }
+      enterSite();
     }
   }
   window.addEventListener('wheel', onIntroWheel, { passive: true });
 
-  // Touch drag detection: Touch gestures (swiping up = scrolling down)
+  // Touch drag detection: Swiping up = scrolling down
   let touchStartY = 0;
   function onTouchStart(e) {
     if (e.touches && e.touches[0]) {
@@ -124,7 +140,7 @@ export function initLoader(onComplete) {
     if (isDismissing || introEl.style.display === 'none') return;
     if (e.touches && e.touches[0]) {
       const diff = touchStartY - e.touches[0].clientY;
-      if (diff > 20) {
+      if (diff > 12) {
         enterSite();
       }
     }
@@ -163,7 +179,10 @@ export function initLoader(onComplete) {
       introEl.removeAttribute('aria-hidden');
       introEl.classList.remove('intro-flowing', 'intro-dismissing');
       isDismissing = false;
-      wheelDelta = 0;
+      targetX = 0;
+      targetY = 0;
+      currentX = 0;
+      currentY = 0;
 
       const titleFrame = document.getElementById('intro-title-frame');
       const bgStage = introEl.querySelector('.intro-bg-stage');
@@ -181,6 +200,10 @@ export function initLoader(onComplete) {
         void titleName.offsetWidth;
         titleName.style.animation = '';
         if (streak) streak.style.animation = '';
+      }
+
+      if (!prefersReducedMotion && !rafParallaxId) {
+        rafParallaxId = requestAnimationFrame(renderParallax);
       }
 
       window.addEventListener('mousemove', onIntroMouseMove, { passive: true });
